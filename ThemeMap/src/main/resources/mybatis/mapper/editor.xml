@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="edu.ssafy.spring.user.model.mapper.UserMapper">
+	<!-- resultMap -->
+	<resultMap type="editorDto" id="editor">
+		<result column="id" property="id"/>
+		<result column="pw" property="pw"/>
+		<result column="salt" property="salt"/>
+		<result column="salt" property="editorName"/>
+		<result column="like_sum" property="likeSum"/>
+		<result column="join_date" property="joinDate"/>
+		<result column="token" property="token"/>
+	</resultMap>
+	
+    <!-- login -->
+    <select id="login" parameterType="editorDto" resultMap="editor">
+		SELECT id, editor_name, token
+		FROM editor
+		WHERE id = #{Id} AND user_password = #{Pw}
+    </select>
+
+    <!-- getUser -->
+    <select id="editorInfo" parameterType="string" resultMap="editor">
+        SELECT *
+        FROM editor
+        WHERE id = #{Id}
+    </select>
+    
+    <!-- regist -->
+    <insert id="regist" parameterType="editorDto">
+        INSERT INTO editor ()
+        VALUES (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, #{salt})
+    </insert>
+
+</mapper>
