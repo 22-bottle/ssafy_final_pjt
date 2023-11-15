@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.theme.theme.mapper.ThemeMapper">
+
+	<resultMap type="themeDto" id="theme">
+		<result column="theme_id" property="themeId"/>
+		<result column="theme_name" property="themeName"/>
+		<result column="editor_id" property="editorId"/>
+		<result column="type" property="type"/>
+		<result column="visible" property="visible"/>
+		<result column="like_sum" property="likeSum"/>
+	</resultMap>
+	
+	<insert id="createTheme" parameterType="themeDto">
+		insert into theme (theme_name, editor_id, type, visible, like_sum)
+		values (#{themeName}, #{editorId}, #{type}, #{visible}, 0)
+	</insert>
+	
+	<select id="hotTheme" resultMap="theme">
+		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+		where visible = 1
+		order by like_sum desc limit 10
+	</select>
+	
+	<select id="themesOfPlace" resultMap="theme">
+		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+	</select>
+
+</mapper>
