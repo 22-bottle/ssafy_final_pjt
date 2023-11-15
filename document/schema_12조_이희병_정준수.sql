@@ -19,12 +19,14 @@ USE `thememap` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `thememap`.`editor` (
   `editor_id` INT NOT NULL AUTO_INCREMENT,
-  `email` VARCHAR(100) NOT NULL,
+  `id` VARCHAR(20) NOT NULL,
+  `pw` VARCHAR(20) NOT NULL,
+  `salt` VARCHAR(100) NULL,
   `editor_name` VARCHAR(20) NOT NULL,
   `like_sum` INT UNSIGNED NOT NULL DEFAULT 0,
   `join_date` TIMESTAMP NOT NULL DEFAULT current_timestamp,
   `token` VARCHAR(1000) NOT NULL,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`id` ASC) VISIBLE,
   PRIMARY KEY (`editor_id`))
 ENGINE = InnoDB;
 
