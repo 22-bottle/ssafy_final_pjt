@@ -1,4 +1,4 @@
-package com.ssafy.theme.editor.dto;
+package com.ssafy.theme.theme.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EditorDto {
-
-	private String editorId;
-	private String email;
-	private String editorName;
-	private String likeSum;
-	private String joinDate;
-	private String token;
+public class ThemeDto {
 	
+	private String themeId;
+	private String themeName;
+	private String editorId;
+	private String type;
+	private String visible;
+	private String likeSum;
+
 }
