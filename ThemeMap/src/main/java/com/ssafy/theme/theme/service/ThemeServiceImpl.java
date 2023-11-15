@@ -32,5 +32,10 @@ public class ThemeServiceImpl implements ThemeService {
 	public List<ThemeDto> themesOfPlace(String placeId) throws Exception {
 		return themeMapper.themesOfPlace(placeId);
 	}
+
+	@Override
+	public List<ThemeDto> themesOfEditor(String editorId) throws Exception {
+		return themeMapper.themesOfEditor(editorId);
+	}
 	
 }

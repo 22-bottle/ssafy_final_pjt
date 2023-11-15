@@ -15,4 +15,6 @@ public interface ThemeMapper {
 
 	List<ThemeDto> themesOfPlace(String placeId) throws Exception;
 
+	List<ThemeDto> themesOfEditor(String editorId) throws Exception;
+
 }
