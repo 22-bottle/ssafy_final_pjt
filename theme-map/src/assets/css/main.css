@@ -17,6 +17,11 @@
   color: #016ef5;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .title {
   font-family: 'SBAggroB', sans-serif;
 }
