@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mapper namespace="edu.ssafy.spring.user.model.mapper.UserMapper">
+<mapper namespace="com.ssafy.theme.editor.mapper.EditorMapper">
 	<!-- resultMap -->
 	<resultMap type="editorDto" id="editor">
 		<result column="id" property="id"/>
@@ -16,20 +16,20 @@
     <select id="login" parameterType="editorDto" resultMap="editor">
 		SELECT id, editor_name, token
 		FROM editor
-		WHERE id = #{Id} AND user_password = #{Pw}
+		WHERE id = #{id} AND pw = #{pw}
     </select>
 
     <!-- getUser -->
     <select id="editorInfo" parameterType="string" resultMap="editor">
         SELECT *
         FROM editor
-        WHERE id = #{Id}
+        WHERE id = #{id}
     </select>
     
     <!-- regist -->
-    <insert id="regist" parameterType="editorDto">
+    <!-- <insert id="regist" parameterType="editorDto">
         INSERT INTO editor ()
         VALUES (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, #{salt})
-    </insert>
+    </insert> -->
 
 </mapper>

@@ -24,8 +24,8 @@
 		order by like_sum desc limit 10
 	</select>
 	
-	<select id="themesOfPlace" resultMap="theme">
+	<!-- <select id="themesOfPlace" resultMap="theme">
 		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
-	</select>
+	</select> -->
 
 </mapper>
