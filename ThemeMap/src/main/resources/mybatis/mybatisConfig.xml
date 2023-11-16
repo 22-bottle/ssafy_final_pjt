@@ -6,10 +6,13 @@
 	<typeAliases>
 		<typeAlias type="com.ssafy.theme.editor.dto.EditorDto" alias="editorDto"/>
 		<typeAlias type="com.ssafy.theme.theme.dto.ThemeDto" alias="themeDto"/>
+		<typeAlias type="com.ssafy.theme.theme.dto.TagDto" alias="tagDto"/>
+		<typeAlias type="com.ssafy.theme.place.dto.PlaceDto" alias="placeDto"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mapper/editor.xml"/>
 		<mapper resource="mybatis/mapper/theme.xml"/>
+		<mapper resource="mybatis/mapper/place.xml"/>
 	</mappers>
 </configuration>
