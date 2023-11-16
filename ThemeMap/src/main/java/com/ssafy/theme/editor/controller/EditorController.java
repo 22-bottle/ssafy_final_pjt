@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.theme.editor.dto.EditorDto;
@@ -108,6 +107,24 @@ public class EditorController extends HttpServlet {
 		}
     	return new ResponseEntity<Map<String, Object>>(resultMap, status);      
     }
+	
+	@PostMapping("/refresh")
+	public ResponseEntity<?> refreshToken(@RequestBody EditorDto editorDto, HttpServletRequest request) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String token = request.getHeader("refreshToken");
+		log.debug("token : {}, memberDto : {}", token, editorDto);
+		if (jwtUtil.checkToken(token)) {
+			if (token.equals(service.getRefreshToken(editorDto.getId()))) {
+				String accessToken = jwtUtil.createAccessToken(editorDto.getId());
+				resultMap.put("access-token", accessToken);
+				status = HttpStatus.CREATED;
+			}
+		} else {
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 	
 	@GetMapping("/logout/{id}")
 	public ResponseEntity<?> removeToken(@PathVariable("id") String id) {

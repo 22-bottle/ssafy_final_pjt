@@ -4,12 +4,12 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<!-- <typeAlias type="com.ssafy.theme.editor.dto.EditorDto" alias="editorDto"/> -->
+		<typeAlias type="com.ssafy.theme.editor.dto.EditorDto" alias="editorDto"/>
 		<typeAlias type="com.ssafy.theme.theme.dto.ThemeDto" alias="themeDto"/>
 	</typeAliases>
 
 	<mappers>
-		<!-- <mapper resource="mybatis/mapper/editor.xml"/> -->
+		<mapper resource="mybatis/mapper/editor.xml"/>
 		<mapper resource="mybatis/mapper/theme.xml"/>
 	</mappers>
 </configuration>

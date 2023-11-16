@@ -20,7 +20,7 @@
     <select id="login" parameterType="editorDto" resultMap="editor">
 		SELECT id, pw, salt, editor_name, token
 		FROM editor
-		WHERE id = #{id} AND pw = #{pw}
+		WHERE id = #{id}
     </select>
 
     <!-- editorInfo -->

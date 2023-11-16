@@ -66,19 +66,6 @@ public class ThemeController {
 		}
 	}
 	
-	// editor가 등록한 theme를 검색
-	@GetMapping("/editor/{editorId}")
-	public ResponseEntity<?> themesOfEditor(@PathVariable("editorId") String editorId) {
-		try {
-			List<ThemeDto> themes = themeService.themesOfEditor(editorId);
-			HttpHeaders header = new HttpHeaders();
-			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-			return ResponseEntity.ok().headers(header).body(themes);
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-	}
-	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
