@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import TheHeading from './components/layout/TheHeading.vue';
 import TheNavbar from './components/layout/TheNavbar.vue';
+
 </script>
 
 <template>

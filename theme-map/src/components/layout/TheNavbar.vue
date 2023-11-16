@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup></script>
 
 <template>
@@ -66,3 +67,12 @@ body, html {
   border-color: #016ef5;
 }
 </style>
+=======
+<script setup></script>
+
+<template>
+  <div></div>
+</template>
+
+<style scoped></style>
+>>>>>>> 7d31244 (map vue)
