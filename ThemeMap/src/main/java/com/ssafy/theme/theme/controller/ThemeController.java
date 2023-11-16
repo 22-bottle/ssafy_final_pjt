@@ -115,6 +115,10 @@ public class ThemeController {
 		}
 	}
 	
+	// tag 리스트를 입력받아서 해당하는 theme 검색
+//	{
+//	    "tags": [{"tagId":"1", "tagName":"tag1"}, {"tagId":"2", "tagName":"tag2"}]
+//	}
 	@GetMapping("/tag")
 	public ResponseEntity<?> themesOfTag(@RequestBody TagListDto tagListDto) {
 		try {
