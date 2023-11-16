@@ -63,7 +63,7 @@ function initializeMap() {
     top: 10%;
     left: 100px;
     z-index: 10;
-    width: 23%; height: 83%;
+    width: 400px; height: 750px;
     background-color: #F5FFFA;
     border-radius: 15px;
     box-shadow:0 10px 20px rgba(0,0,0,0.25);
