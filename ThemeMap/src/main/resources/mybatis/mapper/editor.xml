@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="edu.ssafy.spring.user.model.mapper.UserMapper">
+<mapper namespace="com.ssafy.theme.editor.mapper.EditorMapper">
 	<!-- resultMap -->
 	<resultMap type="editorDto" id="editor">
 		<result column="id" property="id"/>
 		<result column="pw" property="pw"/>
 		<result column="salt" property="salt"/>
-		<result column="salt" property="editorName"/>
+		<result column="email_id" property="emailId"/>
+		<result column="email_domain" property="emailDomain"/>
+		<result column="editor_name" property="editorName"/>
 		<result column="like_sum" property="likeSum"/>
 		<result column="join_date" property="joinDate"/>
 		<result column="token" property="token"/>
@@ -14,22 +18,64 @@
 	
     <!-- login -->
     <select id="login" parameterType="editorDto" resultMap="editor">
-		SELECT id, editor_name, token
+		SELECT id, pw, salt, editor_name, token
 		FROM editor
-		WHERE id = #{Id} AND user_password = #{Pw}
+		WHERE id = #{id}
     </select>
 
-    <!-- getUser -->
+    <!-- editorInfo -->
     <select id="editorInfo" parameterType="string" resultMap="editor">
         SELECT *
         FROM editor
-        WHERE id = #{Id}
+        WHERE id = #{id}
     </select>
     
     <!-- regist -->
     <insert id="regist" parameterType="editorDto">
-        INSERT INTO editor ()
-        VALUES (#{userId}, #{userName}, #{userPassword}, #{emailId}, #{emailDomain}, #{salt})
+        INSERT INTO editor (id, pw, salt, email_id, email_domain, editor_name)
+        VALUES (#{id}, #{pw}, #{salt}, #{emailId}, #{emailDomain}, #{editorName})
     </insert>
+    
+    <!-- saveRefreshToken -->
+   	<update id="saveRefreshToken" parameterType="map">
+		update editor
+		set token = #{token}
+		where id = #{id}
+	</update>
+	
+	<!-- getRefreshToken -->
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from editor
+		where id = #{id}
+	</select>
+	
+	<!-- deleteRefreshToken -->
+	<update id="deleteRefreshToken" parameterType="map">
+		update editor
+		set token = #{token, jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+    <!-- modify -->
+    <update id="modify" parameterType="editorDto">
+        UPDATE editor
+        SET pw = #{pw}, editor_name = #{editorName}, email_id = #{emailId}, email_domain = #{emailDomain}
+        WHERE id = #{id}
+    </update>
+
+    <!-- resign -->
+    <delete id="resign" parameterType="string">
+        DELETE
+        FROM editor
+        WHERE id = #{id}
+    </delete>
+
+    <!-- getSalt -->
+    <select id="getSalt" parameterType="string" resultType="string">
+        SELECT salt
+        FROM editor
+        WHERE id = #{id}
+    </select>
 
 </mapper>

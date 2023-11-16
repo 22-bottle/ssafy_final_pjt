@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.theme.editor.dto.EditorDto;
@@ -48,8 +51,6 @@ public class EditorController extends HttpServlet {
 		try {
 			EditorDto editor = service.login(editorDto);
 			if(editor != null) {
-				/*
-				 * JWT
 				String accessToken = jwtUtil.createAccessToken(editor.getId());
 				String refreshToken = jwtUtil.createRefreshToken(editor.getId());
 				
@@ -59,9 +60,6 @@ public class EditorController extends HttpServlet {
 				resultMap.put("refresh-token", refreshToken);
 				
 				status = HttpStatus.CREATED;
-				*/
-				resultMap.put("loginInfo", editor);
-				status = HttpStatus.OK;
 			} else {
 				resultMap.put("message", "아이디 또는 패스워드를 확인해주세요.");
 				status = HttpStatus.UNAUTHORIZED;
@@ -70,29 +68,14 @@ public class EditorController extends HttpServlet {
 			resultMap.put("message", e.getMessage());
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@GetMapping("/info/{userId}")
+	@GetMapping("/info/{id}")
 	public ResponseEntity<Map<String, Object>> getEditorInfo(@PathVariable("id") String id, HttpServletRequest request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		try {
-			EditorDto editorDto = service.editorInfo(id);
-			if (editorDto != null) {
-				resultMap.put("editorInfo", editorDto);
-				status = HttpStatus.OK;
-			} else {
-				resultMap.put("editorInfo", null);
-				status = HttpStatus.UNAUTHORIZED;
-			}
-		} catch (Exception e) {
-			log.error("정보조회 실패 : {}", e);
-			resultMap.put("message", e.getMessage());
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-		}
-
-		/*
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			try {
 				EditorDto editorDto = service.editorInfo(id);
@@ -107,12 +90,27 @@ public class EditorController extends HttpServlet {
 			log.error("사용 불가능 토큰!!!");
 			status = HttpStatus.UNAUTHORIZED;
 		}
-		*/
+
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@GetMapping("/logout/{userId}")
-	public ResponseEntity<?> removeToken(@PathVariable ("id") String id) {
+    @PostMapping("/regist")
+    public ResponseEntity<?> regist(@RequestBody EditorDto editorDto) throws IOException {
+    	Map<String, Object> resultMap = new HashMap<>();
+    	HttpStatus status = HttpStatus.OK;
+    	try {
+    		service.regist(editorDto);
+    		resultMap.put("message", "회원가입 성공!!");
+    		status = HttpStatus.OK;
+    	} catch (Exception e) {
+    		resultMap.put("message", e.getMessage());
+    		status = HttpStatus.CONFLICT;
+		}
+    	return new ResponseEntity<Map<String, Object>>(resultMap, status);      
+    }
+	
+	@GetMapping("/logout/{id}")
+	public ResponseEntity<?> removeToken(@PathVariable("id") String id) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		try {
@@ -126,17 +124,34 @@ public class EditorController extends HttpServlet {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-    @PostMapping("/regist")
-    public ResponseEntity<?> regist(@RequestBody EditorDto editorDto) throws IOException {
-    	Map<String, Object> resultMap = new HashMap<>();
-    	HttpStatus status = HttpStatus.ACCEPTED;
+    @PatchMapping("/modify")
+    public ResponseEntity<?> modify(@RequestBody EditorDto editorDto) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
     	try {
-    		//service.regist(editorDto);
-    		status = HttpStatus.OK;
+	        int r = service.modify(editorDto);
+	        status = r > 0 ? HttpStatus.OK : HttpStatus.NOT_MODIFIED;
+	        resultMap.put("message", r > 0 ? "회원정보 수정 성공!!" : "회원정보 수정 실패..");
     	} catch (Exception e) {
-    		resultMap.put("message", e.getMessage());
-		}
-    	return new ResponseEntity<Map<String, Object>>(resultMap, status);      
+    		status = HttpStatus.INTERNAL_SERVER_ERROR;
+    		resultMap.put("message", "회원정보 수정 오류..");
+    	}
+    	return new ResponseEntity<Map<String, Object>>(resultMap, status);  
+    }
+    
+    @DeleteMapping("/resign")
+    public ResponseEntity<?> resign(@RequestBody String id) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+    	try {
+    		int r = service.resign(id);
+    		status = r > 0 ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+	        resultMap.put("message", r > 0 ? "회원 탈퇴 성공!!" : "회원 탈퇴 실패..");
+    	} catch (Exception e) {
+    		status = HttpStatus.INTERNAL_SERVER_ERROR;
+    		resultMap.put("message", "서버 오류..");
+    	}
+    	return new ResponseEntity<Map<String, Object>>(resultMap, status);  
     }
 	
 }

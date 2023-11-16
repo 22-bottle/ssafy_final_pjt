@@ -11,6 +11,8 @@ public class EditorDto {
 	private String id;
 	private String pw;
 	private String salt;
+	private String emailId;
+	private String emailDomain;
 	private String editorName;
 	private String likeSum;
 	private String joinDate;

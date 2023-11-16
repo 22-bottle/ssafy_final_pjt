@@ -27,21 +27,21 @@ public class JWTUtil {
 	@Value("${jwt.refresh-token.expiretime}")
 	private long refreshTokenExpireTime;
 
-	public String createAccessToken(String userId) {
-		return create(userId, "access-token", accessTokenExpireTiem);
+	public String createAccessToken(String id) {
+		return create(id, "access-token", accessTokenExpireTiem);
 	}
 
-	public String createRefreshToken(String userId) {
-		return create(userId, "refresh-token", refreshTokenExpireTime);
+	public String createRefreshToken(String id) {
+		return create(id, "refresh-token", refreshTokenExpireTime);
 	}
 
-	private String create(String userId, String subject, long expireTime) {
+	private String create(String id, String subject, long expireTime) {
 		Claims claims = Jwts.claims()
 			.setSubject(subject)
 			.setIssuedAt(new Date())
 			.setExpiration(new Date(System.currentTimeMillis() + expireTime));
 
-		claims.put("userId", userId);
+		claims.put("id", id);
 
 		String jwt = Jwts.builder()
 			.setHeaderParam("typ", "JWT").setClaims(claims)
@@ -76,7 +76,7 @@ public class JWTUtil {
 		}
 	}
 	
-	public String getUserId(String authorization) {
+	public String getEditorId(String authorization) {
 		Jws<Claims> claims = null;
 		try {
 			claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(authorization);
@@ -86,7 +86,7 @@ public class JWTUtil {
 		}
 		Map<String, Object> value = claims.getBody();
 		log.info("value : {}", value);
-		return (String) value.get("userId");
+		return (String) value.get("id");
 	}
 
 }
