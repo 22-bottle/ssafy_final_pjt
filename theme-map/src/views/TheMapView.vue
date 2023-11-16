@@ -6,7 +6,7 @@ const mapContainer = ref(null);
 const key = import.meta.env.VITE_KAKAO_MAP_KEY;
 
 let map = ref(null);
-const text = ref("인기장소");
+const text = ref("내 주변 인기장소");
 
 onMounted(() => {
   setMap();
@@ -41,17 +41,8 @@ function initializeMap() {
 
         <!-- 리스트 -->
         <div class="list">
-          <div class="title">{{ text }}</div>
+          <div class="name">{{ text }}</div>
           <div class="items">
-            <div class="item">
-              샘플 아이템
-            </div>
-            <div class="item">
-              샘플 아이템
-            </div>
-            <div class="item">
-              샘플 아이템
-            </div>
           </div>
         </div>
     </div>
@@ -60,43 +51,37 @@ function initializeMap() {
 <style scoped>
 .list {
     position: absolute;
-    top: 10%;
-    left: 100px;
+    top: 20%;
+    left: 5%;
     z-index: 10;
-    width: 23%; height: 83%;
+    width: 23%; height: 73%;
     background-color: #F5FFFA;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
     box-shadow:0 10px 20px rgba(0,0,0,0.25);
 }
 
-.title {
+.name {
   position: relative;
-  top: 20px;
-  left: 20px;
-  width: 40%; height: 10%;
+  width: 90%; height: 10%;
   background-color: #016EF5;
   color: #FFFFFF;
+  font-size: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
+
 .items {
   position: relative;
-  top: 10px;
-  left: 20px;
-  width: 85%; height: 84%;
+  width: 90%; height: 84%;
   background-color: #016EF5;
   color: #FFFFFF;
 }
 
-.item {
-  position: relative;
-  margin-top: 1%;
-  top: 10px;
-  left: 10px;
-  width: 93%; height: 25%;
-  background-color: #FFFFFF;
-  color: #FFFFFF;
-}
 </style>
