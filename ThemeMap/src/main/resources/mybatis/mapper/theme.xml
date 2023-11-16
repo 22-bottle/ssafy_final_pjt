@@ -7,25 +7,31 @@
 	<resultMap type="themeDto" id="theme">
 		<result column="theme_id" property="themeId"/>
 		<result column="theme_name" property="themeName"/>
+		<result column="description" property="description"/>
 		<result column="editor_id" property="editorId"/>
 		<result column="type" property="type"/>
 		<result column="visible" property="visible"/>
 		<result column="like_sum" property="likeSum"/>
 	</resultMap>
 	
+	<resultMap type="tagDto" id="tag">
+		<result column="tag_id" property="tagId"/>
+		<result column="tag_name" property="tagName"/>
+	</resultMap>
+	
 	<insert id="createTheme" parameterType="themeDto">
-		insert into theme (theme_name, editor_id, type, visible, like_sum)
-		values (#{themeName}, #{editorId}, #{type}, #{visible}, 0)
+		insert into theme (theme_name, editor_id, description, type, visible, like_sum)
+		values (#{themeName}, #{editorId}, #{description}, #{type}, #{visible}, 0)
 	</insert>
 	
 	<select id="hotTheme" resultMap="theme">
-		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
 		where visible = 1
 		order by like_sum desc limit 10
 	</select>
 	
 	<select id="themesOfPlace" parameterType="string" resultMap="theme">
-		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+		select theme_id, theme_name, editor_id, description, type, visible, like_sum from theme
 		where theme_id = (
     		select theme_id from place_in_theme
     		where place_id = #{placeId}
@@ -33,8 +39,39 @@
 	</select>
 	
 	<select id="themesOfEditor" parameterType="string" resultMap="theme">
-		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
 		where editor_id = #{editorId}
 	</select>
-
+	
+	<select id="themesOfLike" parameterType="string" resultMap="theme">
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		where theme_id = (
+			select theme_id from like_theme
+    		where editor_id = #{editorId}
+		);
+	</select>
+	
+	<update id="updateTheme" parameterType="themeDto">
+		update theme set theme_name = #{themeName}, description = #{description}, type = #{type}, visible = #{visible}
+		where theme_id = #{themeId}
+	</update>
+	
+	<delete id="deleteTheme" parameterType="string">
+		delete from theme
+		where theme_id = #{themeId}
+	</delete>
+	
+	<select id="themesOfTag" parameterType="list" resultMap="theme">
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		where theme_id = (
+			select theme_id from tag_in_theme
+			where tag_id in
+			<foreach collection="tags" item="tag" index="idx" open="(" close=")" separator=",">
+				#{tag.tagId}
+			</foreach>
+			group by theme_id
+			having count(distinct tag_id) = ${tags.size}
+		)
+	</select>
+	
 </mapper>

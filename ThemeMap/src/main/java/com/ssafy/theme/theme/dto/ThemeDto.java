@@ -11,6 +11,7 @@ public class ThemeDto {
 	
 	private String themeId;
 	private String themeName;
+	private String description;
 	private String editorId;
 	private String type;
 	private String visible;

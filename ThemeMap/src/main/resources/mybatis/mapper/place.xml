@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.theme.place.mapper.PlaceMapper">
+
+	<resultMap type="placeDto" id="place">
+		<result column="place_id" property="placeId"/>
+		<result column="place_name" property="placeName"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+		<result column="score_sum" property="scoreSum"/>
+		<result column="score_count" property="scoreCount"/>
+	</resultMap>
+
+</mapper>
