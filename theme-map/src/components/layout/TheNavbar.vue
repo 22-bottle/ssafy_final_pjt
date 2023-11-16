@@ -15,6 +15,7 @@
 <style scoped>
 body, html {
   width: 100%;
+  height: 100%;
 }
 .flex {
   display: flex;
@@ -26,6 +27,7 @@ body, html {
   top: 0;
   left: 0;
   width: 96%;
+  height: 6%;
   flex-direction: row;
   justify-content: space-between;
   padding: 2%;
