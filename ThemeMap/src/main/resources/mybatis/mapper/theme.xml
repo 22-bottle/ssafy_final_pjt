@@ -24,8 +24,17 @@
 		order by like_sum desc limit 10
 	</select>
 	
-	<!-- <select id="themesOfPlace" resultMap="theme">
+	<select id="themesOfPlace" parameterType="string" resultMap="theme">
 		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
-	</select> -->
+		where theme_id = (
+    		select theme_id from place_in_theme
+    		where place_id = #{placeId}
+		)
+	</select>
+	
+	<select id="themesOfEditor" parameterType="string" resultMap="theme">
+		select theme_id, theme_name, editor_id, type, visible, like_sum from theme
+		where editor_id = #{editorId}
+	</select>
 
 </mapper>
