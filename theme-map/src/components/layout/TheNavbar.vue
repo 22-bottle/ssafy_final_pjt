@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <script setup></script>
 
 <template>
@@ -31,6 +30,8 @@ body, html {
   justify-content: space-between;
   padding: 2%;
   box-shadow: 0 0 28px rgba(0,0,0,0.25);
+  background-color: white;
+  z-index: 11;
 }
 #logo {
   font-size: 40px;
@@ -67,12 +68,3 @@ body, html {
   border-color: #016ef5;
 }
 </style>
-=======
-<script setup></script>
-
-<template>
-  <div></div>
-</template>
-
-<style scoped></style>
->>>>>>> 7d31244 (map vue)
