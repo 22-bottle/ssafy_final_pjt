@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
-import PlaceItem from './PlaceItem.vue';
+
+import PlaceItem from '@/components/map/PlaceItem.vue';
+import PlaceDetail from '@/components/map/PlaceDetail.vue';
 
 const hotPlaces = ref([]);
 
@@ -20,6 +22,16 @@ const getHotPlace = () => {
     }
   );
 };
+/* ========> */
+const visibility = ref(false);
+const placeToView = ref(null);
+
+const handleDetail = (place) => {
+  console.log('Enter handleDetail method');
+  visibility.value = !visibility.value;
+  placeToView.value = place;
+};
+/* <======== */
 </script>
 
 <template>
@@ -27,8 +39,21 @@ const getHotPlace = () => {
     <!-- 리스트 -->
     <div class="list">
       <div class="name">내 주변 인기장소</div>
-      <div class="items">
-        <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item>
+      <div class="items scrollbar">
+        <place-item
+          v-for="(place, index) in hotPlaces"
+          :key="place.placeId"
+          :place="place"
+          @detail="handleDetail"
+        ></place-item>
+      </div>
+      <div>
+        <!-- <place-detail v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-detail> -->
+        <!-- ===========> -->
+        <template v-if="visibility">
+          <place-detail :place="placeToView"></place-detail>
+        </template>
+        <!-- <=========== -->
       </div>
     </div>
   </div>
@@ -38,9 +63,9 @@ const getHotPlace = () => {
 .list {
   position: absolute;
   top: 20%;
-  left: 5%;
+  left: 2%;
   z-index: 10;
-  width: 23%;
+  width: 21%;
   height: 73%;
   background-color: #f5fffa;
   display: flex;
@@ -74,5 +99,10 @@ const getHotPlace = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.scrollbar {
+  overflow: auto;
 }
 </style>

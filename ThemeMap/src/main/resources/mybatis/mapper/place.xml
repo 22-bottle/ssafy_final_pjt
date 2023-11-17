@@ -11,20 +11,23 @@
 		<result column="longitude" property="longitude"/>
 		<result column="score_sum" property="scoreSum"/>
 		<result column="score_count" property="scoreCount"/>
+		<result column="address" property="address"/>
+		<result column="phone" property="phone"/>
 	</resultMap>
 	
 	<insert id="createPlace" parameterType="placeDto">
-		insert into place (place_id, place_name, latitude, longitude, score_sum, score_count)
-		values (#{placeId}, #{placeName}, #{latitude}, #{longitude}, 0, 0)
+		insert into place (place_id, place_name, latitude, longitude, address, phone)
+		values (#{placeId}, #{placeName}, #{latitude}, #{longitude}, #{address}, #{phone})
 	</insert>
 	
 	<select id="hotPlace" resultMap="place">
-		select place_id, place_name, latitude, longitude, score_sum, score_count from place
+		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
+		where score_count != 0
 		order by (score_sum / score_count) limit 10
 	</select>
 	
 	<select id="placesOfTheme" parameterType="string" resultMap="place">
-		select place_id, place_name, latitude, longitude, score_sum, score_count from place
+		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
 		where place_id = (
 			select place_id from place_in_theme
 			where theme_id = #{themeId}
