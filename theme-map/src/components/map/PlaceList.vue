@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
-
+import ThemeItem from './ThemeItem.vue';
 const hotPlaces = ref([]);
 
 onMounted(() => {
@@ -20,6 +20,19 @@ const getHotPlace = () => {
     }
   );
 };
+/* =============> */
+const placeList = defineProps(['placeList']);
+const emit = defineEmits(['keyword']);
+
+const themePlaces = placeList.placeList;
+const keyword = ref("");
+const theme = ref(true);
+
+const handleKeywordSearch = async () => {
+  console.log('Enter handleKeywordSearch method');
+  emit('keyword', keyword.value);
+};
+/* <============= */
 </script>
 
 <template>
@@ -28,7 +41,19 @@ const getHotPlace = () => {
     <div class="list">
       <div class="name">내 주변 인기장소</div>
       <div class="items">
-        <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item>
+        <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
+        <!-- =============> -->
+        <template v-if="theme">
+          <div>
+            <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 250px; height: 30px;"/>
+            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px;">검색</button>
+          </div>
+          <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
+        </template>
+        <template v-else>
+          <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item>
+        </template>
+        <!-- <============= -->
       </div>
     </div>
   </div>
