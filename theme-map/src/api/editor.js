@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { serverAxios } from '@/util/http-commons';
-=======
 import { serverAxios } from "@/util/http-commons";
->>>>>>> 9c436abc080ffb9ca10739fd7cd867d8d7545162
 
 const server = serverAxios();
 

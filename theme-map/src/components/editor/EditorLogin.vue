@@ -20,7 +20,7 @@ const handleLogin = async () => {
   console.log("Enter handleLogin method");
   await editorLogin(loginEditor.value);
 
-  if (isLogin) {
+  if (isLogin.value) {
     window.alert("로그인 성공!!");
     router.push("/");
   } else {
