@@ -11,6 +11,14 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: TheMapView,
+      redirect: '/place',
+      children: [
+        {
+          path: 'place',
+          name: 'place',
+          component: () => import('@/components/map/PlaceList.vue'),
+        },
+      ],
     },
     {
       path: '/theme',
