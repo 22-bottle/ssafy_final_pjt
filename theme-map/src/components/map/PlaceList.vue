@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
+import PlaceDetail from '@/components/map/PlaceDetail.vue';
 import ThemeItem from './ThemeItem.vue';
 const hotPlaces = ref([]);
 
@@ -27,10 +28,17 @@ const emit = defineEmits(['keyword']);
 const themePlaces = placeList.placeList;
 const keyword = ref("");
 const theme = ref(true);
+const visibility = ref(false);
+const placeToView = ref(null);
 
 const handleKeywordSearch = async () => {
   console.log('Enter handleKeywordSearch method');
   emit('keyword', keyword.value);
+};
+const handleDetail = (place) => {
+  console.log('Enter handleDetail method');
+  visibility.value = !visibility.value;
+  placeToView.value = place;
 };
 /* <============= */
 </script>
@@ -51,7 +59,17 @@ const handleKeywordSearch = async () => {
           <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
         </template>
         <template v-else>
-          <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item>
+          <div class="items scrollbar">
+            <place-item
+              v-for="(place, index) in hotPlaces"
+              :key="place.placeId"
+              :place="place"
+              @detail="handleDetail"
+            ></place-item>
+          </div>
+          <template v-if="visibility">
+            <place-detail :place="placeToView"></place-detail>
+          </template>
         </template>
         <!-- <============= -->
       </div>
@@ -63,9 +81,9 @@ const handleKeywordSearch = async () => {
 .list {
   position: absolute;
   top: 20%;
-  left: 5%;
+  left: 2%;
   z-index: 10;
-  width: 23%;
+  width: 21%;
   height: 73%;
   background-color: #f5fffa;
   display: flex;
@@ -99,5 +117,10 @@ const handleKeywordSearch = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.scrollbar {
+  overflow: auto;
 }
 </style>

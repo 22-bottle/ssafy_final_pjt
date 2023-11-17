@@ -15,5 +15,7 @@ public class PlaceDto {
 	private String longitude;
 	private String scoreSum;
 	private String scoreCount;
+	private String address;
+	private String phone;
 	
 }

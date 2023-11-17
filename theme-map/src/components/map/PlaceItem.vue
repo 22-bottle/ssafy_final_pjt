@@ -10,18 +10,37 @@ const place = ref({
   longitude: '',
   scoreSum: '',
   scoreCount: '',
+  address: '',
+  phone: '',
 });
 
 onMounted(() => {
   place.value = props.place;
 });
+
+const moveToKakao = () => {
+  window.open('https://place.map.kakao.com/' + place.value.placeId);
+};
+/* ========> */
+const emit = defineEmits(['detail']);
+
+const handlePlace = () => {
+  console.log('Enter handlePlace method');
+  console.log(place);
+  emit('detail', place.value);
+};
+
+/* <======== */
 </script>
 
 <template>
-  <div id="container">
-    <div>{{ place.placeName }}</div>
-    <div>{{ place.scoreSum / place.scoreCount }}</div>
+  <div id="container" @click="handlePlace">
+    <div>{{ place.placeName }} | {{ place.scoreSum / place.scoreCount }} ({{ place.scoreCount }})</div>
+    <div>{{ place.address }}</div>
+    <div>{{ place.phone }}</div>
+    <a href="" @click="moveToKakao">카카오맵에서 보기</a>
   </div>
+  <br />
 </template>
 
 <style scoped>
@@ -32,5 +51,8 @@ onMounted(() => {
   width: 87%;
   padding: 10px;
   font-size: 25px;
+}
+#container div {
+  color: black;
 }
 </style>
