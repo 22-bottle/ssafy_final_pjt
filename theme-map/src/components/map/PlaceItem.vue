@@ -18,11 +18,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>{{ place.placeName }}</div>
+  <div id="container">
+    <div>{{ place.placeName }}</div>
+    <div>{{ place.scoreSum / place.scoreCount }}</div>
+  </div>
 </template>
 
 <style scoped>
 * {
   background-color: white;
+}
+#container {
+  width: 87%;
+  padding: 10px;
+  font-size: 25px;
 }
 </style>

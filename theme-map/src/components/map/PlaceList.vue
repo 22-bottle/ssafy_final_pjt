@@ -71,5 +71,8 @@ const getHotPlace = () => {
   height: 84%;
   background-color: #016ef5;
   color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
