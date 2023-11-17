@@ -1,7 +1,8 @@
 <script setup>
 import { RouterView } from 'vue-router';
-import TheHeading from './components/TheHeading.vue';
+import TheHeading from './components/layout/TheHeading.vue';
 import TheNavbar from './components/layout/TheNavbar.vue';
+
 </script>
 
 <template>
