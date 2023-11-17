@@ -1,4 +1,4 @@
-import { serverAxios } from "@/util/http-commons";
+import { serverAxios } from '@/util/http-commons';
 
 const server = serverAxios();
 

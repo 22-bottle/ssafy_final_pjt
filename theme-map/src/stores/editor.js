@@ -1,12 +1,12 @@
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { defineStore } from "pinia";
-import { jwtDecode } from "jwt-decode";
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { defineStore } from 'pinia';
+import { jwtDecode } from 'jwt-decode';
 
-import { editorConfirm, findById, tokenRegeneration, logout, modify, resign } from "@/api/editor";
-import { httpStatusCode } from "@/util/http-status";
+import { editorConfirm, findById, tokenRegeneration, logout, modify, resign } from '@/api/editor';
+import { httpStatusCode } from '@/util/http-status';
 
-export const useEditorStore = defineStore("editorStore", () => {
+export const useEditorStore = defineStore('editorStore', () => {
   const router = useRouter();
 
   const isLogin = ref(false);
@@ -15,7 +15,7 @@ export const useEditorStore = defineStore("editorStore", () => {
   const isValidToken = ref(false);
 
   const cEditorInfo = computed(() => editorInfo);
-  const cIsLogin = computed(() => isLogin)
+  const cIsLogin = computed(() => isLogin);
 
   const editorLogin = async (loginEditor) => {
     await editorConfirm(
@@ -29,17 +29,17 @@ export const useEditorStore = defineStore("editorStore", () => {
             isValidToken.value = true;
 
             let { data } = response;
-            let accessToken = data["access-token"];
-            let refreshToken = data["refresh-token"];
-            console.log("accessToken", accessToken);
-            console.log("refreshToken", refreshToken);
-            sessionStorage.setItem("accessToken", accessToken);
-            sessionStorage.setItem("refreshToken", refreshToken);
+            let accessToken = data['access-token'];
+            let refreshToken = data['refresh-token'];
+            console.log('accessToken', accessToken);
+            console.log('refreshToken', refreshToken);
+            sessionStorage.setItem('accessToken', accessToken);
+            sessionStorage.setItem('refreshToken', refreshToken);
 
-            console.log("sessiontStorage에 담았다", isLogin.value);
+            console.log('sessiontStorage에 담았다', isLogin.value);
           }
         } else {
-          console.log("로그인 실패했다");
+          console.log('로그인 실패했다');
           isLogin.value = false;
           isLoginError.value = true;
           isValidToken.value = false;
@@ -53,22 +53,19 @@ export const useEditorStore = defineStore("editorStore", () => {
 
   const getEditorInfo = async (token) => {
     let decodeToken = jwtDecode(token);
-    console.log("2. decodeToken", decodeToken);
+    console.log('2. decodeToken', decodeToken);
     await findById(
       decodeToken.id,
       (response) => {
         if (response.status === httpStatusCode.OK) {
           editorInfo.value = response.data.editorInfo;
-          console.log("3. getEditorInfo data >> ", response.data);
+          console.log('3. getEditorInfo data >> ', response.data);
         } else {
-          console.log("유저 정보 없음!!!!");
+          console.log('유저 정보 없음!!!!');
         }
       },
       async (error) => {
-        console.error(
-          "getEditorInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
-          error.response.status
-        );
+        console.error('getEditorInfo() error code [토큰 만료되어 사용 불가능.] ::: ', error.response.status);
         isValidToken.value = false;
 
         await tokenRegenerate();
@@ -77,35 +74,35 @@ export const useEditorStore = defineStore("editorStore", () => {
   };
 
   const tokenRegenerate = async () => {
-    console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("accessToken"));
+    console.log('토큰 재발급 >> 기존 토큰 정보 : {}', sessionStorage.getItem('accessToken'));
     await tokenRegeneration(
       JSON.stringify(editorInfo.value),
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
-          let accessToken = response.data["access-token"];
-          console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
-          sessionStorage.setItem("accessToken", accessToken);
+          let accessToken = response.data['access-token'];
+          console.log('재발급 완료 >> 새로운 토큰 : {}', accessToken);
+          sessionStorage.setItem('accessToken', accessToken);
           isValidToken.value = true;
         }
       },
       async (error) => {
         // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
         if (error.response.status === httpStatusCode.UNAUTHORIZED) {
-          console.log("갱신 실패");
+          console.log('갱신 실패');
           // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
           await logout(
             editorInfo.value.id,
             (response) => {
               if (response.status === httpStatusCode.OK) {
-                console.log("리프레시 토큰 제거 성공");
+                console.log('리프레시 토큰 제거 성공');
               } else {
-                console.log("리프레시 토큰 제거 실패");
+                console.log('리프레시 토큰 제거 실패');
               }
-              alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+              alert('RefreshToken 기간 만료!!! 다시 로그인해 주세요.');
               isLogin.value = false;
               editorInfo.value = null;
               isValidToken.value = false;
-              router.push({ name: "editor-login" });
+              router.push({ name: 'editor-login' });
             },
             (error) => {
               console.error(error);
@@ -126,9 +123,9 @@ export const useEditorStore = defineStore("editorStore", () => {
           isLogin.value = false;
           editorInfo.value = null;
           isValidToken.value = false;
-          console.log("로그아웃 완료!!");
+          console.log('로그아웃 완료!!');
         } else {
-          console.error("에디터 정보가 없습니다!!");
+          console.error('에디터 정보가 없습니다!!');
         }
       },
       (error) => {
@@ -142,9 +139,9 @@ export const useEditorStore = defineStore("editorStore", () => {
       param,
       (response) => {
         if (response.status === httpStatusCode.OK) {
-          console.log("회원정보 수정 완료!!");
+          console.log('회원정보 수정 완료!!');
         } else {
-          console.error("회원정보 수정 실패..");
+          console.error('회원정보 수정 실패..');
         }
       },
       (error) => {
@@ -161,9 +158,9 @@ export const useEditorStore = defineStore("editorStore", () => {
           isLogin.value = false;
           editorInfo.value = null;
           isValidToken.value = false;
-          console.log("탈퇴 성공!!");
+          console.log('탈퇴 성공!!');
         } else {
-          console.error("탈퇴 실패..");
+          console.error('탈퇴 실패..');
         }
       },
       (error) => {
@@ -184,6 +181,6 @@ export const useEditorStore = defineStore("editorStore", () => {
     tokenRegenerate,
     editorLogout,
     editorModify,
-    editorResign
+    editorResign,
   };
 });
