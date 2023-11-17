@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const editorStore = useEditorStore();
 
-const { cIsLogin, editorLogout } = editorStore;
+const { cIsLogin, cEditorInfo, editorLogout } = editorStore;
 
 const editorStatus = computed(() => (cIsLogin.value ? '마이페이지' : '로그인'));
 
@@ -14,7 +14,8 @@ const routerName = computed(() => (cIsLogin.value ? 'mypage' : 'login'));
 const handleLogout = async () => {
   console.log('Enter handleLogout method');
   let token = sessionStorage.getItem('accessToken');
-  let id = jwtDecode(token).id;
+  let id = token === null ? cEditorInfo.value : jwtDecode(token).id;
+
   await editorLogout(id);
 };
 </script>
