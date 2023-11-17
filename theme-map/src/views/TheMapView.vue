@@ -69,6 +69,7 @@ function displayPlaces(places) {
   removeMarker();
 
   for (var i = 0; i < places.length; i++) {
+    console.log(places[i]);
     var placePosition = new window.kakao.maps.LatLng(places[i].y, places[i].x);
     var marker = addMarker(placePosition, i);
 
