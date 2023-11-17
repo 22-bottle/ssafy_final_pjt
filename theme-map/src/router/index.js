@@ -9,6 +9,31 @@ const router = createRouter({
       name: 'home',
       component: TheMapView,
     },
+    {
+      path: '/theme',
+      name: 'theme',
+      component: TheMapView,
+    },
+    {
+      path: '/editor',
+      name: 'editor',
+      component: TheMapView,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: EditorLogin,
+    },
+    {
+      path: '/regist',
+      name: 'regist',
+      component: EditorRegist,
+    },
+    {
+      path: '/mypage',
+      name: 'mypage',
+      component: EditorMyPage,
+    },
   ],
 });
 
