@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
-
-import PlaceItem from '@/components/map/PlaceItem.vue';
+import PlaceItem from './PlaceItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
-
+import ThemeItem from './ThemeItem.vue';
 const hotPlaces = ref([]);
 
 onMounted(() => {
@@ -22,16 +21,26 @@ const getHotPlace = () => {
     }
   );
 };
-/* ========> */
+/* =============> */
+const placeList = defineProps(['placeList']);
+const emit = defineEmits(['keyword']);
+
+const themePlaces = placeList.placeList;
+const keyword = ref("");
+const theme = ref(true);
 const visibility = ref(false);
 const placeToView = ref(null);
 
+const handleKeywordSearch = async () => {
+  console.log('Enter handleKeywordSearch method');
+  emit('keyword', keyword.value);
+};
 const handleDetail = (place) => {
   console.log('Enter handleDetail method');
   visibility.value = !visibility.value;
   placeToView.value = place;
 };
-/* <======== */
+/* <============= */
 </script>
 
 <template>
@@ -39,21 +48,30 @@ const handleDetail = (place) => {
     <!-- 리스트 -->
     <div class="list">
       <div class="name">내 주변 인기장소</div>
-      <div class="items scrollbar">
-        <place-item
-          v-for="(place, index) in hotPlaces"
-          :key="place.placeId"
-          :place="place"
-          @detail="handleDetail"
-        ></place-item>
-      </div>
-      <div>
-        <!-- <place-detail v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-detail> -->
-        <!-- ===========> -->
-        <template v-if="visibility">
-          <place-detail :place="placeToView"></place-detail>
+      <div class="items">
+        <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
+        <!-- =============> -->
+        <template v-if="theme">
+          <div>
+            <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 250px; height: 30px;"/>
+            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px;">검색</button>
+          </div>
+          <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
         </template>
-        <!-- <=========== -->
+        <template v-else>
+          <div class="items scrollbar">
+            <place-item
+              v-for="(place, index) in hotPlaces"
+              :key="place.placeId"
+              :place="place"
+              @detail="handleDetail"
+            ></place-item>
+          </div>
+          <template v-if="visibility">
+            <place-detail :place="placeToView"></place-detail>
+          </template>
+        </template>
+        <!-- <============= -->
       </div>
     </div>
   </div>
