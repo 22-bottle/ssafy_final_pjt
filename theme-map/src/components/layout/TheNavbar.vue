@@ -1,14 +1,22 @@
 <script setup>
 import { computed } from 'vue';
 import { useEditorStore } from '@/stores/editor';
+import { jwtDecode } from 'jwt-decode';
 
 const editorStore = useEditorStore();
 
-const { cIsLogin } = editorStore;
+const { cIsLogin, editorLogout } = editorStore;
 
 const editorStatus = computed(() => (cIsLogin.value ? '마이페이지' : '로그인'));
 
 const routerName = computed(() => (cIsLogin.value ? 'mypage' : 'login'));
+
+const handleLogout = async () => {
+  console.log('Enter handleLogout method');
+  let token = sessionStorage.getItem('accessToken');
+  let id = jwtDecode(token).id;
+  await editorLogout(id);
+};
 </script>
 
 <template>
@@ -22,7 +30,7 @@ const routerName = computed(() => (cIsLogin.value ? 'mypage' : 'login'));
       <router-link :to="{ name: 'editor' }" id="nav_btn">에디터별로</router-link>
       <router-link :to="{ name: routerName }" class="log_btn">{{ editorStatus }}</router-link>
       <template v-if="cIsLogin">
-        <router-link>{{ cIsLogin }}</router-link>
+        <img src="src\assets\img\logout.png" alt="logout" id="logout" @click="handleLogout" />
       </template>
     </div>
   </div>
@@ -96,5 +104,11 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+#logout {
+  height: 45px;
+  position: fixed;
+  top: 4%;
+  right: 2%;
 }
 </style>
