@@ -24,6 +24,7 @@ export const useEditorStore = defineStore('editorStore', () => {
         if (response.status === httpStatusCode.CREATE) {
           isLogin.value = true;
           isLoginError.value = false;
+          editorInfo.value = loginEditor;
 
           if (loginEditor.setToken) {
             isValidToken.value = true;
