@@ -15,23 +15,29 @@ export const useEditorStore = defineStore("editorStore", () => {
   const isValidToken = ref(false);
 
   const cEditorInfo = computed(() => editorInfo);
+  const cIsLogin = computed(() => isLogin)
 
   const editorLogin = async (loginEditor) => {
     await editorConfirm(
       loginEditor,
       (response) => {
         if (response.status === httpStatusCode.CREATE) {
-          let { data } = response;
-          let accessToken = data["access-token"];
-          let refreshToken = data["refresh-token"];
-          console.log("accessToken", accessToken);
-          console.log("refreshToken", refreshToken);
           isLogin.value = true;
           isLoginError.value = false;
-          isValidToken.value = true;
-          sessionStorage.setItem("accessToken", accessToken);
-          sessionStorage.setItem("refreshToken", refreshToken);
-          console.log("sessiontStorage에 담았다", isLogin.value);
+
+          if (loginEditor.setToken) {
+            isValidToken.value = true;
+
+            let { data } = response;
+            let accessToken = data["access-token"];
+            let refreshToken = data["refresh-token"];
+            console.log("accessToken", accessToken);
+            console.log("refreshToken", refreshToken);
+            sessionStorage.setItem("accessToken", accessToken);
+            sessionStorage.setItem("refreshToken", refreshToken);
+
+            console.log("sessiontStorage에 담았다", isLogin.value);
+          }
         } else {
           console.log("로그인 실패했다");
           isLogin.value = false;
@@ -172,6 +178,7 @@ export const useEditorStore = defineStore("editorStore", () => {
     editorInfo,
     isValidToken,
     cEditorInfo,
+    cIsLogin,
     editorLogin,
     getEditorInfo,
     tokenRegenerate,

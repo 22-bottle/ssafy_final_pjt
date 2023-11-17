@@ -13,6 +13,7 @@ const { editorLogin } = editorStore;
 const loginEditor = ref({
   id: "",
   pw: "",
+  setToken: false
 });
 
 const handleLogin = async () => {
@@ -41,17 +42,17 @@ const handleSingIn = async () => {
     <form class="loginform">
       <div class="inputContainer">
         <label for="id" class="logindata">아이디</label>
-        <input type="text" id="id" class="input"/>
+        <input type="text" id="id" class="input" v-model="loginEditor.id"/>
       </div>
       <div class="inputContainer mt-3">
         <label for="pw" class="logindata">비밀번호</label>
-        <input type="password" id="pw" class="input"/>
+        <input type="password" id="pw" class="input" v-model="loginEditor.pw"/>
       </div>
       <div class="baseContainer mt-1">
         <label for="find" class="find">비밀번호 찾기</label>
       </div>
       <div class="baseContainer mt-3">
-        <input type="checkbox" id="setToken" class="checkbox" />
+        <input type="checkbox" id="setToken" class="checkbox" v-model="loginEditor.setToken"/>
         <label for="find" class="checkboxdata">로그인 유지하기</label>
       </div>
       <div class="inputContainer">

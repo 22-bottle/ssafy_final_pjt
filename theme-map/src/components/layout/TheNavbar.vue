@@ -1,29 +1,14 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 import { useEditorStore } from '@/stores/editor';
 
-const loginCheck = ref(false);
 const editorStore = useEditorStore();
 
-const { isLogin } = editorStore;
+const { cIsLogin } = editorStore;
 
-onMounted(() => {
-  initialize();
-});
+const editorStatus = computed(() => (cIsLogin.value ? '마이페이지' : '로그인'));
 
-const initialize = () => {
-  console.log('Enter init method');
-  loginCheck.value = storeToRefs(isLogin);
-};
-
-const editorStatus = computed(() => {
-  return isLogin.value === true ? '마이페이지' : '로그인';
-});
-
-const routerName = computed(() => {
-  return loginCheck.value === true ? 'mypage' : 'login';
-});
+const routerName = computed(() => (cIsLogin.value ? 'mypage' : 'login'));
 </script>
 
 <template>
@@ -36,6 +21,9 @@ const routerName = computed(() => {
       <router-link :to="{ name: 'theme' }" id="nav_btn">테마별로</router-link>
       <router-link :to="{ name: 'editor' }" id="nav_btn">에디터별로</router-link>
       <router-link :to="{ name: routerName }" class="log_btn">{{ editorStatus }}</router-link>
+      <template v-if="cIsLogin">
+        <router-link>{{ cIsLogin }}</router-link>
+      </template>
     </div>
   </div>
 </template>
