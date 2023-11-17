@@ -2,8 +2,8 @@
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
-import PlaceDetail from '@/components/map/PlaceDetail.vue';
 import ThemeItem from './ThemeItem.vue';
+import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
 
 onMounted(() => {
