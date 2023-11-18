@@ -1,13 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { hotPlace } from '@/api/place';
+import { hotPlace, themePlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
 import ThemeItem from './ThemeItem.vue';
+import KeywordItem from './KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
+const themePlaces = ref([]);
 
 onMounted(() => {
   getHotPlace();
+  getThemePlace();
 });
 
 const getHotPlace = () => {
@@ -21,13 +24,29 @@ const getHotPlace = () => {
     }
   );
 };
+
+const getThemePlace = () => {
+  themePlace(
+    1
+    ,
+    ({ data }) => {
+      console.log(data);
+      themePlaces.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
+
 /* =============> */
 const placeList = defineProps(['placeList']);
 const emit = defineEmits(['keyword']);
 
-const themePlaces = placeList.placeList;
+const keywordPlaces = placeList.placeList;
 const keyword = ref("");
 const theme = ref(true);
+const keywordPlace = ref(true);
 const visibility = ref(false);
 const placeToView = ref(null);
 
@@ -40,6 +59,20 @@ const handleDetail = (place) => {
   visibility.value = !visibility.value;
   placeToView.value = place;
 };
+const keywordSearch = () => {
+  changeState();
+}
+const handleAdd = (place) => {
+  console.log('Enter handleAdd method');
+  // create place
+
+  // place_in_theme에 등록.
+  changeState();
+};
+
+function changeState() {
+  keywordPlace.value = !keywordPlace.value;
+}
 /* <============= */
 </script>
 
@@ -52,11 +85,17 @@ const handleDetail = (place) => {
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
         <template v-if="theme">
-          <div>
-            <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 250px; height: 30px;"/>
-            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px;">검색</button>
-          </div>
-          <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
+          <template v-if="keywordPlace">
+            <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
+            <button type="button" @click="keywordSearch" style="width: 100px; height: 35px;position: absolute; top: 100%;">장소등록</button>
+          </template>
+          <template v-else>
+            <div>
+              <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 250px; height: 30px;"/>
+              <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px;">검색</button>
+            </div>
+            <keyword-item v-for="(place, index) in keywordPlaces" :key="index" :place="place" @add="handleAdd"></keyword-item>
+          </template>
         </template>
         <template v-else>
           <div class="items scrollbar">

@@ -183,5 +183,14 @@ export const useEditorStore = defineStore('editorStore', () => {
     editorLogout,
     editorModify,
     editorResign,
+    persist: {
+      enabled: true,
+      strategies: [
+        {
+          key: 'editor-store',
+          storage: sessionStorage, // sessionStorage
+        },
+      ],
+    },
   };
 });

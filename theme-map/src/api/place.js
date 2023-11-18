@@ -54,4 +54,8 @@ function hotPlace(success, fail) {
   server.get(`${url}/hot`).then(success).catch(fail);
 }
 
-export { hotPlace, kakaoToDto, dtoToKakao };
+function themePlace(themeId, success, fail) {
+  server.get(`${url}/theme/${themeId}`).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, kakaoToDto, dtoToKakao };
