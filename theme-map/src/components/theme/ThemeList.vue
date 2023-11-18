@@ -1,7 +1,53 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted } from 'vue';
+import { hotTheme, allTheme } from '@/api/theme';
+import ThemeItem from "./ThemeItem.vue";
+
+const props = defineProps({ type: String });
+
+const themes = ref([]);
+
+onMounted(() => {
+    if (props.type === 'all') {
+        // getAllThemes();
+    } else {
+        getHotThemes();
+    }
+});
+
+const getHotThemes = () => {
+    hotTheme(
+        ({ data }) => {
+            themes.value = data;
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+};
+
+// const getAllThemes = () => {
+//     allTheme(
+//         tags,
+//         ({ data }) => {
+//             console.log(data);
+//         },
+//         (error) => {
+//             console.log(error);
+//         }
+//     );
+// };
+</script>
 
 <template>
-    <div>list</div>
+    <div id="list">
+        <theme-item v-for="(theme, index) in themes" :key="theme.themeId" :theme="theme"></theme-item>
+    </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+#list {
+    display: flex;
+    flex-direction: row;
+}
+</style>

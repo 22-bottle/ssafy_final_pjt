@@ -1,29 +1,18 @@
 <script setup>
-const props = defineProps({ place: Object });
+const props = defineProps({ theme: Object });
 
-const place = props.place;
-// const emit = defineEmits(['미정']);
-
-const handlePlace = () => {
-  console.log('Enter handlePlace method');
-  // emit('미정', place.value);
-};
+const theme = props.theme;
 </script>
 
 <template>
-  <div id="container" @click="handlePlace">
-    <div>{{ place.placeName }} </div>
+  <div id="container">
+    <div>{{ theme.themeName }} </div>
   </div>
   <br />
 </template>
 
 <style scoped>
-* {
-  background-color: white;
-}
 #container {
-  width: 87%;
-  padding: 10px;
-  font-size: 25px;
+  margin: 2%;
 }
 </style>
