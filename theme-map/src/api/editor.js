@@ -5,7 +5,6 @@ const server = serverAxios();
 async function editorConfirm(param, success, fail) {
   console.log('param', param);
   await server.post(`/editor/login`, param).then(success).catch(fail);
-  console.log('editorConfirm ok');
 }
 
 async function findById(id, success, fail) {

@@ -2,11 +2,12 @@
 const props = defineProps({ place: Object });
 
 const place = props.place;
-// const emit = defineEmits(['미정']);
+const emit = defineEmits(['detail']);
 
 const handlePlace = () => {
   console.log('Enter handlePlace method');
-  // emit('미정', place.value);
+  console.log(place);
+  emit('add', place);
 };
 </script>
 
