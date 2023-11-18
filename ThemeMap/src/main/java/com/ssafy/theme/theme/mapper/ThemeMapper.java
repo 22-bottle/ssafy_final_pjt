@@ -26,4 +26,8 @@ public interface ThemeMapper {
 
 	List<ThemeDto> themesOfTag(List<TagDto> tags) throws Exception;
 
+	List<ThemeDto> allThemes() throws Exception;
+
+	List<TagDto> allTags() throws Exception;
+
 }

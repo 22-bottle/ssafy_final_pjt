@@ -5,6 +5,7 @@ import EditorRegist from '@/components/editor/EditorRegist.vue';
 import EditorMyPage from '@/components/editor/EditorMyPage.vue';
 import TheEditorMain from '@/views/TheEditorMain.vue';
 import TheThemeMain from '@/views/TheThemeMain.vue';
+import ThemeCreate from '@/components/theme/ThemeCreate.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,11 @@ const router = createRouter({
       name: 'mypage',
       component: EditorMyPage,
     },
+    {
+      path: '/themeCreate',
+      name: 'themeCreate',
+      component: ThemeCreate,
+    }
   ],
 });
 

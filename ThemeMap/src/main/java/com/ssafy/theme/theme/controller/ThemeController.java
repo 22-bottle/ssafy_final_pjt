@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.theme.theme.dto.TagDto;
 import com.ssafy.theme.theme.dto.TagListDto;
 import com.ssafy.theme.theme.dto.ThemeDto;
 import com.ssafy.theme.theme.service.ThemeService;
@@ -126,6 +127,30 @@ public class ThemeController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(themes);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<?> allThemes() {
+		try {
+			List<ThemeDto> themes = themeService.allThemes();
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(themes);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping("/allTags")
+	public ResponseEntity<?> allTags() {
+		try {
+			List<TagDto> tags = themeService.allTags(); 
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(tags);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

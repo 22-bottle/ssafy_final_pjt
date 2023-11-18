@@ -8,8 +8,12 @@ function hotTheme(success, fail) {
     server.get(`${url}/hot`).then(success).catch(fail);
 }
 
-function allTheme(tags, success, fail) {
-    server.get(`${url}/tag`, JSON.stringify).then(success).catch(fail);
+function allTheme(success, fail) {
+    server.get(`${url}/all`).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme };
+function allTags(success, fail) {
+    server.get(`${url}/allTags`).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags };

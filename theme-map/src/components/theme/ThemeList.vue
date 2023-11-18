@@ -9,7 +9,7 @@ const themes = ref([]);
 
 onMounted(() => {
     if (props.type === 'all') {
-        // getAllThemes();
+        getAllThemes();
     } else {
         getHotThemes();
     }
@@ -26,17 +26,16 @@ const getHotThemes = () => {
     );
 };
 
-// const getAllThemes = () => {
-//     allTheme(
-//         tags,
-//         ({ data }) => {
-//             console.log(data);
-//         },
-//         (error) => {
-//             console.log(error);
-//         }
-//     );
-// };
+const getAllThemes = () => {
+    allTheme(
+        ({ data }) => {
+            themes.value = data;
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+};
 </script>
 
 <template>
