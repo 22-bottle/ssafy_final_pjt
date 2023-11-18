@@ -19,19 +19,19 @@ const kakaoPlace = {
   y: '',
 };
 const placeDto = {
-  place_id: '',
-  place_name: '',
+  placeId: '',
+  placeName: '',
   latitude: '',
   longitude: '',
-  score_sum: '',
-  score_count: '',
+  scoreSum: '',
+  scoreCount: '',
   address: '',
   phone: '',
 };
 
 function kakaoToDto(kakao) {
-  placeDto.place_id = kakao.id;
-  placeDto.place_name = kakao.place_name;
+  placeDto.placeId = kakao.id;
+  placeDto.placeName = kakao.place_name;
   placeDto.latitude = kakao.y;
   placeDto.longitude = kakao.x;
   placeDto.address = kakao.road_address_name;
@@ -58,4 +58,12 @@ function themePlace(themeId, success, fail) {
   server.get(`${url}/theme/${themeId}`).then(success).catch(fail);
 }
 
-export { hotPlace, themePlace, kakaoToDto, dtoToKakao };
+function createPlace(placeDto, success, fail) {
+  server.post(`${url}/create`, placeDto).then(success).catch(fail);
+}
+
+function linkPlace(linkDto, success, fail) {
+  server.post(`${url}/link`, linkDto).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao };
