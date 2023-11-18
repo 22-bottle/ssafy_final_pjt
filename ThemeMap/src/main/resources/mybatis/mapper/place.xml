@@ -23,7 +23,7 @@
 	<select id="hotPlace" resultMap="place">
 		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
 		where score_count != 0
-		order by (score_sum / score_count) limit 10
+		order by (score_sum / score_count) desc limit 10
 	</select>
 	
 	<select id="placesOfTheme" parameterType="string" resultMap="place">

@@ -3,6 +3,8 @@ import TheMapView from '@/views/TheMapView.vue';
 import EditorLogin from '@/components/editor/EditorLogin.vue';
 import EditorRegist from '@/components/editor/EditorRegist.vue';
 import EditorMyPage from '@/components/editor/EditorMyPage.vue';
+import TheEditorMain from '@/views/TheEditorMain.vue';
+import TheThemeMain from '@/views/TheThemeMain.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,12 +25,12 @@ const router = createRouter({
     {
       path: '/theme',
       name: 'theme',
-      component: TheMapView,
+      component: TheThemeMain,
     },
     {
       path: '/editor',
       name: 'editor',
-      component: TheMapView,
+      component: TheEditorMain,
     },
     {
       path: '/login',

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
-import ThemeItem from './ThemeItem.vue';
+import ThemeItem from '@/components/theme/ThemeItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
 
@@ -27,7 +27,7 @@ const emit = defineEmits(['keyword']);
 
 const themePlaces = placeList.placeList;
 const keyword = ref("");
-const theme = ref(true);
+const theme = ref(false);
 const visibility = ref(false);
 const placeToView = ref(null);
 
