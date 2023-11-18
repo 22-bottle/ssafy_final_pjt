@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue';
 import { hotPlace, themePlace, kakaoToDto, createPlace, linkPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
-import ThemeItem from '@/components/theme/ThemeItem.vue';
 import KeywordItem from './KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
@@ -45,7 +44,7 @@ const emit = defineEmits(['keyword']);
 
 const keywordPlaces = placeList.placeList;
 const keyword = ref("");
-const theme = ref(false);
+const theme = ref(true);
 const keywordPlace = ref(true);
 const visibility = ref(false);
 const placeToView = ref(null);
@@ -109,7 +108,9 @@ function changeState() {
         <!-- =============> -->
         <template v-if="theme">
           <template v-if="keywordPlace">
-            <theme-item v-for="(place, index) in themePlaces" :key="index" :place="place"></theme-item>
+            <div class="items scrollbar">
+              <place-item v-for="(place, index) in themePlaces" :key="index" :place="place"></place-item>
+            </div>
             <button type="button" @click="keywordSearch" style="width: 100px; height: 35px;position: absolute; top: 100%;">장소등록</button>
           </template>
           <template v-else>

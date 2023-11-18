@@ -6,7 +6,9 @@ import { jwtDecode } from 'jwt-decode';
 import { editorConfirm, findById, tokenRegeneration, logout, modify, resign } from '@/api/editor';
 import { httpStatusCode } from '@/util/http-status';
 
-export const useEditorStore = defineStore('editorStore', () => {
+export const useEditorStore = defineStore(
+  'editorStore',
+  () => {
   const router = useRouter();
 
   const isLogin = ref(false);
@@ -183,14 +185,7 @@ export const useEditorStore = defineStore('editorStore', () => {
     editorLogout,
     editorModify,
     editorResign,
-    persist: {
-      enabled: true,
-      strategies: [
-        {
-          key: 'editor-store',
-          storage: sessionStorage, // sessionStorage
-        },
-      ],
-    },
   };
-});
+  },
+  { persist: { storage: sessionStorage } }
+);
