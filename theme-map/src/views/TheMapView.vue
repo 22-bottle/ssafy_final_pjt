@@ -81,11 +81,7 @@ function displayPlaces(places) {
 }
 
 function setListItem(index, places) {
-  placeList.value.push({
-    placeName: places.place_name,
-    address: places.address_name,
-    phone: places.phone,
-  });
+  placeList.value.push(places);
 }
 
 function addMarker(position, idx) {

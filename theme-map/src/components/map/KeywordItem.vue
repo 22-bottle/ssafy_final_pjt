@@ -13,7 +13,7 @@ const handlePlace = () => {
 
 <template>
   <div id="container" @click="handlePlace">
-    <div>{{ place.placeName }} </div>
+    <div>{{ place.place_name }} </div>
   </div>
   <br />
 </template>

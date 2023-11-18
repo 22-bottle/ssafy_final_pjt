@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { hotPlace, themePlace } from '@/api/place';
+import { hotPlace, themePlace, kakaoToDto, createPlace, linkPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
 import ThemeItem from '@/components/theme/ThemeItem.vue';
 import KeywordItem from './KeywordItem.vue';
@@ -65,8 +65,31 @@ const keywordSearch = () => {
 const handleAdd = (place) => {
   console.log('Enter handleAdd method');
   // create place
-
-  // place_in_theme에 등록.
+  createPlace(
+    kakaoToDto(place)
+    ,
+    ({ data }) => {
+      console.log(data);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  // link place
+  linkPlace(
+    {
+      themeId: "1",
+      placeId: place.id,
+      editorId: "1"
+    }
+    ,
+    ({ data }) => {
+      console.log(data);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
   changeState();
 };
 
