@@ -44,7 +44,8 @@ const emit = defineEmits(['keyword']);
 
 const keywordPlaces = placeList.placeList;
 const keyword = ref("");
-const theme = ref(true);
+const theme = ref(false);
+const title = ref(theme.value === true ? "테마입니다." : "내 주변 인기장소");
 const keywordPlace = ref(true);
 const visibility = ref(false);
 const placeToView = ref(null);
@@ -102,7 +103,7 @@ function changeState() {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">내 주변 인기장소</div>
+      <div class="name">{{ title }}</div>
       <div class="items">
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
