@@ -16,4 +16,8 @@ function allTags(success, fail) {
     server.get(`${url}/allTags`).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags };
+function createTheme(theme, success, fail) {
+    server.post(`${url}/create`, JSON.stringify(theme)).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags, createTheme };

@@ -6,7 +6,9 @@ const theme = props.theme;
 
 <template>
   <div id="container">
-    <div>{{ theme.themeName }} </div>
+    <router-link to="detail">
+      <div>{{ theme.themeName }} </div>
+    </router-link>
   </div>
   <br />
 </template>

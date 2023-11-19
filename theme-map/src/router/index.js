@@ -6,6 +6,7 @@ import EditorMyPage from '@/components/editor/EditorMyPage.vue';
 import TheEditorMain from '@/views/TheEditorMain.vue';
 import TheThemeMain from '@/views/TheThemeMain.vue';
 import ThemeCreate from '@/components/theme/ThemeCreate.vue';
+import TheThemeView from '@/views/TheThemeView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,33 @@ const router = createRouter({
     {
       path: '/theme',
       name: 'theme',
-      component: TheThemeMain,
+      component: TheThemeView,
+      redirect: '/theme/main',
+      children: [
+        {
+          path: 'main',
+          name: 'main',
+          component: TheThemeMain,
+        },
+        {
+          path: 'detail',
+          name: 'detail',
+          component: TheMapView,
+          redirect: '/theme/detail/places',
+          children: [
+            {
+              path: 'places',
+              name: 'placesOfTheme',
+              component: () => import('@/components/map/PlaceList.vue'),
+            },
+          ]
+        },
+        {
+          path: 'create',
+          name: 'create',
+          component: ThemeCreate,
+        },
+      ]
     },
     {
       path: '/editor',
@@ -48,11 +75,6 @@ const router = createRouter({
       name: 'mypage',
       component: EditorMyPage,
     },
-    {
-      path: '/themeCreate',
-      name: 'themeCreate',
-      component: ThemeCreate,
-    }
   ],
 });
 

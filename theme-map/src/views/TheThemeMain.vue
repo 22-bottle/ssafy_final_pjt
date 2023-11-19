@@ -28,7 +28,7 @@ const getTags = () => {
         <div id="header">
             <div class="title">테마로 보는 대전</div>
             <button>
-                <router-link :to="{ name: 'themeCreate' }">새 테마 등록하기</router-link>
+                <router-link :to="{ name: 'create' }">새 테마 등록하기</router-link>
             </button>
         </div>
         <div id="hotThemes">
