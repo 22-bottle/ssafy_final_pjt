@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.theme.comment.mapper.CommentMapper">
+	<!-- resultMap -->
+	<resultMap type="commentDto" id="comment">
+		<result column="comment_id" property="commentId"/>
+		<result column="place_id" property="placeId"/>
+		<result column="content" property="content"/>
+	</resultMap>
+	
+    <!-- regist -->
+    <insert id="registComment" parameterType="commentDto">
+        INSERT INTO comment (place_id, content)
+        VALUES (#{placeId}, #{content})
+    </insert>
+    
+    <!-- comments -->
+    <select id="commentsOfPlace" parameterType="string" resultMap="comment">
+		SELECT comment_id, place_id, content
+		FROM comment
+		WHERE place_id = #{placeId}
+    </select>
+	
+</mapper>
