@@ -14,9 +14,11 @@ export const useEditorStore = defineStore(
   const isLogin = ref(false);
   const isLoginError = ref(false);
   const editorInfo = ref(null);
+  const editorDto = ref(null);
   const isValidToken = ref(false);
 
   const cEditorInfo = computed(() => editorInfo);
+  const cEditorDto = computed(() => editorDto);
   const cIsLogin = computed(() => isLogin);
 
   const editorLogin = async (loginEditor) => {
@@ -26,7 +28,8 @@ export const useEditorStore = defineStore(
         if (response.status === httpStatusCode.CREATE) {
           isLogin.value = true;
           isLoginError.value = false;
-          editorInfo.value = response.data.editor;
+          editorInfo.value = response;
+          editorDto.value = response.data.editor;
 
           if (loginEditor.setToken) {
             isValidToken.value = true;
@@ -178,6 +181,7 @@ export const useEditorStore = defineStore(
     editorInfo,
     isValidToken,
     cEditorInfo,
+    cEditorDto,
     cIsLogin,
     editorLogin,
     getEditorInfo,
