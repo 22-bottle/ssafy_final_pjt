@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';
+import { registComment } from '@/api/comment';
 
 const editorStore = useEditorStore();
 
@@ -20,11 +21,17 @@ const place = ref({
   phone: '',
 });
 
+const comment = ref({
+  placeId: "",
+  content: "",
+});
+
 const themeInfos = ref([]);
 
 onMounted(() => {
   place.value = props.place;
   getThemesOfPlace();
+  comment.value.placeId = place.value.placeId;
 });
 
 const starRating = computed(() => {
@@ -51,6 +58,20 @@ const getThemesOfPlace= () => {
     }
   );
 };
+
+const handelComment = () => {
+  console.log('Enter handelComment method');
+  registComment(
+  comment.value,
+  () => {
+      console.log("댓글 등록 완료!!");
+  },
+  (error) => {
+      console.log(error);
+  }
+  );
+};
+
 </script>
 
 <template>
@@ -66,6 +87,20 @@ const getThemesOfPlace= () => {
       </div>
       <template v-for="theme in themeInfos" :key="theme.themeId">
         <div>{{ theme.themeName }}</div>
+      </template>
+      <template v-if="isLogin">
+        <div style="width: 100%; height: 50%; background-color: black;">
+          <span>평가/댓글</span>
+          <form>
+              <div class="baseContainer mt-3">
+                <label for="content" class="">후기: </label>
+                <input type="text" id="content" class="" v-model="comment.content" />
+              </div>
+              <button type="submit" class="btn" @click="handelComment">
+                <label for="btn" class="btndata">댓글 등록</label>
+              </button>
+          </form>
+        </div>
       </template>
     </div>
   </div>

@@ -1,4 +1,4 @@
-package com.ssafy.theme.place.controller;
+package com.ssafy.theme.comment.controller;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -16,51 +16,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.theme.place.dto.PlaceDto;
-import com.ssafy.theme.place.service.PlaceService;
+import com.ssafy.theme.comment.dto.CommentDto;
+import com.ssafy.theme.comment.service.CommentService;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/place")
-public class PlaceController {
+@RequestMapping("/comment")
+public class CommentController {
 
-	private PlaceService placeService;
+	private CommentService commentService;
 	
 	@Autowired
-	public PlaceController(PlaceService placeService) {
-		this.placeService = placeService;
+	public CommentController(CommentService commentService) {
+		this.commentService = commentService;
 	}
 	
-	@PostMapping("/create")
-	public ResponseEntity<?> createPlace(@RequestBody PlaceDto placeDto) {
+	// place에 comment 등록
+	@PostMapping("/regist")
+	public ResponseEntity<?> registComment(@RequestBody CommentDto commentDto) {
 		try {
-			placeService.createPlace(placeDto);
+			commentService.registComment(commentDto);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
 	}
 	
-	@GetMapping("/hot")
-	public ResponseEntity<?> hotPlace() {
+	// place에 속해 있는 comment들을 검색
+	@GetMapping("/comments/{placeId}")
+	public ResponseEntity<?> commentsOfPlace(@PathVariable("placeId") String placeId) {
 		try {
-			List<PlaceDto> places = placeService.hotPlace();
+			List<CommentDto> comments = commentService.commentsOfPlace(placeId);
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-			return ResponseEntity.ok().headers(header).body(places);
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-	}
-	
-	// theme에 속해 있는 place를 검색
-	@GetMapping("/theme/{themeId}")
-	public ResponseEntity<?> placesOfTheme(@PathVariable("themeId") String themeId) {
-		try {
-			List<PlaceDto> places = placeService.placesOfTheme(themeId);
-			HttpHeaders header = new HttpHeaders();
-			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
-			return ResponseEntity.ok().headers(header).body(places);
+			return ResponseEntity.ok().headers(header).body(comments);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
@@ -70,5 +59,5 @@ public class PlaceController {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 }
