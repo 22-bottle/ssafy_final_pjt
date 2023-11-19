@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useEditorStore } from "@/stores/editor";
 
 const editorStore = useEditorStore();
-const { editorInfo } = storeToRefs(editorStore);
+const { cEditorDto } = storeToRefs(editorStore);
 
 const editor = ref({
   id: ""
@@ -15,7 +15,8 @@ onMounted(()=> {
 });
 
 function initialize() {
-  editor.value = editorInfo.value;
+  editor.value = cEditorDto.value;
+  console.log(editor.value);
 }
 
 </script>
@@ -23,7 +24,7 @@ function initialize() {
 <template>
   <div class="mypage">
     <div>
-      <span class="editor-name">{{ editor.id }}</span>
+      <span class="editor-name">{{ editor.editorId }}</span>
     </div>
     <div>
 

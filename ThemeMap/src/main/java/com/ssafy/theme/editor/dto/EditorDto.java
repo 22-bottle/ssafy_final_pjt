@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EditorDto {
+	private String editorId;
 	private String id;
 	private String pw;
 	private String salt;

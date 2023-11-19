@@ -27,10 +27,12 @@
 	</select>
 	
 	<select id="placesOfTheme" parameterType="string" resultMap="place">
-		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
-		where place_id = (
-			select place_id from place_in_theme
-			where theme_id = #{themeId}
+		SELECT place_id, place_name, latitude, longitude, score_sum, score_count, address, phone 
+		FROM place p
+		WHERE place_id IN (
+			SELECT pit.place_id 
+			FROM place_in_theme pit
+			WHERE pit.theme_id = #{themeId}
 		)
 	</select>
 
