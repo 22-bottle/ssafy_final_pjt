@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, watch, computed, defineProps } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';
@@ -33,6 +33,13 @@ onMounted(() => {
   initialize();
 });
 
+// placeToView 객체가 변경될 때마다 initialize 함수를 호출
+watch(() => props.place, (newPlace, oldPlace) => {
+  if (newPlace !== oldPlace) {
+    initialize();
+  }
+}, { deep: true });
+
 function initialize() {
   place.value = props.place;
   comment.value.placeId = place.value.placeId;
@@ -54,9 +61,7 @@ const getThemesOfPlace = () => {
     place.value.placeId,
     ({ data }) => {
       console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        themeInfos.value.push(data[i]);
-      }
+      themeInfos.value = data;
     },
     (error) => {
       console.log(error);
@@ -69,9 +74,7 @@ const getCommentsOfPlace = () => {
     place.value.placeId,
     ({ data }) => {
       console.log(data);
-      for (let i = 0; i < data.length; i++) {
-        commentInfos.value.push(data[i]);
-      }
+      commentInfos.value = data;
     },
     (error) => {
       console.log(error);
