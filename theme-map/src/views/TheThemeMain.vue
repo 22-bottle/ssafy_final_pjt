@@ -1,11 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { allTags } from '@/api/theme';
+import { useEditorStore } from '@/stores/editor';
 
 import ThemeList from "../components/theme/ThemeList.vue";
 import TagItem from "../components/theme/TagItem.vue";
 
 const tags = ref([]);
+const editorStore = useEditorStore();
+
+const { isLogin } = storeToRefs(editorStore);
 
 onMounted(() => {
     getTags();
@@ -27,9 +32,11 @@ const getTags = () => {
     <div id="container">
         <div id="header">
             <div class="title">테마로 보는 대전</div>
-            <button>
-                <router-link :to="{ name: 'themeCreate' }">새 테마 등록하기</router-link>
-            </button>
+            <template v-if="isLogin">
+                <button>
+                    <router-link :to="{ name: 'themeCreate' }">새 테마 등록하기</router-link>
+                </button>
+            </template>
         </div>
         <div id="hotThemes">
             <div>인기 테마 Top 5</div>

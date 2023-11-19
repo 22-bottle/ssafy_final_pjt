@@ -1,17 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, provide } from 'vue';
 
 const mapContainer = ref(null);
+const map = ref(null);
+const mapLoaded = ref(false);
+const clicked = ref(false);
+provide('mapLoaded', mapLoaded);
+provide('clicked', clicked);
 
 const key = import.meta.env.VITE_KAKAO_MAP_KEY;
 
-var map = ref(null);
-
 onMounted(() => {
   setMap();
+  mapLoaded.value = true;
 });
 
 function setMap() {
+  mapLoaded.value = true;
   // 카카오 맵 스크립트를 동적으로 로드합니다.
   const script = document.createElement('script');
   script.onload = () => initializeMap(); // 스크립트 로드가 완료되면 지도를 초기화합니다.
@@ -64,8 +69,9 @@ function placesSearchCB(data, status) {
 }
 
 function displayPlaces(places) {
+  console.log(">>M",places);
   var bounds = new window.kakao.maps.LatLngBounds();
-
+  console.log("여기있어요!!!!!");
   removeMarker();
 
   for (var i = 0; i < places.length; i++) {
@@ -112,15 +118,32 @@ function removeMarker() {
   markers = [];
 }
 /* <============= */
+const updateMarkers = (places) => {
+  console.log('Enter updateMarkers method:', places);
+  displayPlaces(places);
+};
+
+const clickMap = () => {
+  console.log('Enter clickMap method:');
+  clicked.value = true;
+  console.log(clicked.value);
+};
+
+const clickPlace = () => {
+  console.log('Enter clickPlace method:');
+  clicked.value = false;
+  console.log(clicked.value);
+};
+
 </script>
 
 <template>
   <div>
     <!-- 카카오 맵 -->
-    <div class="map" ref="mapContainer" style="width: 100%; height: 100vh"></div>
+    <div class="map" ref="mapContainer" @mousedown="clickMap" style="width: 100%; height: 100vh"></div>
     <!-- <router-view></router-view> -->
     <!-- =============> -->
-    <router-view @keyword="searchKeyWord" :placeList="placeList"></router-view>
+    <router-view @keyword="searchKeyWord" @click="clickPlace" @updateMarkers="updateMarkers" :placeList="placeList" :map-loaded="mapLoaded"></router-view>
     <!-- <============= -->
   </div>
 </template>

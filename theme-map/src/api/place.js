@@ -38,18 +38,34 @@ function kakaoToDto(kakao) {
   placeDto.phone = kakao.phone;
   return placeDto;
 }
-
+/*
 function dtoToKakao(dto) {
-  kakaoPlace.id = dto.place_id;
+  kakaoPlace.id = dto.placeId;
   kakaoPlace.phone = dto.phone;
-  kakaoPlace.place_name = dto.place_name;
-  kakaoPlace.place_url = 'https://place.map.kakao.com/' + dto.place_id;
+  kakaoPlace.place_name = dto.placeName;
+  kakaoPlace.place_url = 'https://place.map.kakao.com/' + dto.placeId;
   kakaoPlace.road_address_name = dto.address;
   kakaoPlace.x = dto.longitude;
   kakaoPlace.y = dto.latitude;
   return kakaoPlace;
 }
-
+*/
+function dtoToKakao(dto) {
+  return {
+    id: dto.placeId,
+    phone: dto.phone,
+    place_name: dto.placeName,
+    place_url: 'https://place.map.kakao.com/' + dto.placeId,
+    road_address_name: dto.address,
+    x: dto.longitude,
+    y: dto.latitude,
+    address_name: 'a',
+    category_group_code: 'a',
+    category_group_name: 'a',
+    category_name: 'a',
+    distance: 'a',
+  };
+}
 function hotPlace(success, fail) {
   server.get(`${url}/hot`).then(success).catch(fail);
 }
