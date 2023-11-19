@@ -1,11 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { hotPlace, themePlace, kakaoToDto, createPlace, linkPlace } from '@/api/place';
+import { ref, onMounted, inject, watch, defineProps } from 'vue';
+import { hotPlace, themePlace, kakaoToDto, dtoToKakao, createPlace, linkPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
 import KeywordItem from './KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
 const themePlaces = ref([]);
+const markers = ref([]);
+const markerStatus = ref(false);
 
 onMounted(() => {
   getHotPlace();
@@ -17,6 +19,10 @@ const getHotPlace = () => {
     ({ data }) => {
       console.log(data[0]);
       hotPlaces.value = data;
+      for (let i = 0; i < hotPlaces.value.length; i++) {
+        markers.value.push(dtoToKakao(data[i]));
+      }
+      markerUpdate(markers);
     },
     (error) => {
       console.log(error);
@@ -39,10 +45,10 @@ const getThemePlace = () => {
 }
 
 /* =============> */
-const placeList = defineProps(['placeList']);
-const emit = defineEmits(['keyword']);
+const props = defineProps({mapLoaded: Boolean, placeList: Array});
+const emit = defineEmits(['keyword', 'makeInfos', 'clickPlace']);
 
-const keywordPlaces = placeList.placeList;
+const keywordPlaces = props.placeList;
 const keyword = ref("");
 const theme = ref(false);
 const title = ref(theme.value === true ? "테마입니다." : "내 주변 인기장소");
@@ -54,10 +60,16 @@ const handleKeywordSearch = async () => {
   console.log('Enter handleKeywordSearch method');
   emit('keyword', keyword.value);
 };
+
 const handleDetail = (place) => {
   console.log('Enter handleDetail method');
-  visibility.value = !visibility.value;
-  placeToView.value = place;
+  if (placeToView.value === place) {
+    visibility.value = !visibility.value;
+  } else {
+    visibility.value = true;
+    placeToView.value = place;
+  }
+  emit("clickPlace", false)
 };
 const keywordSearch = () => {
   changeState();
@@ -96,6 +108,22 @@ const handleAdd = (place) => {
 function changeState() {
   keywordPlace.value = !keywordPlace.value;
 }
+
+const markerUpdate = () => {
+  console.log('Enter markerUpdate method');
+  markerStatus.value = !markerStatus.value;
+};
+
+const mapLoaded = inject('mapLoaded');
+const clicked = inject('clicked');
+
+watch(markerStatus, () => {
+  console.log("끄아악",mapLoaded);
+  // if (mapLoaded) {
+  //   emit('updateMarkers', markers.value);
+  // }
+});
+
 /* <============= */
 </script>
 
@@ -131,7 +159,7 @@ function changeState() {
               @detail="handleDetail"
             ></place-item>
           </div>
-          <template v-if="visibility">
+          <template v-if="visibility && !clicked">
             <place-detail :place="placeToView"></place-detail>
           </template>
         </template>
