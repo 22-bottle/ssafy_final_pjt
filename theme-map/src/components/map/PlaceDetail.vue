@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
+import { themesOfPlace } from '@/api/theme';
 
 const editorStore = useEditorStore();
 
@@ -19,8 +20,11 @@ const place = ref({
   phone: '',
 });
 
+const themeInfos = ref([]);
+
 onMounted(() => {
   place.value = props.place;
+  getThemesOfPlace();
 });
 
 const starRating = computed(() => {
@@ -32,6 +36,21 @@ const starRating = computed(() => {
   const emptyStars = 5 - fullStars - halfStar;
   return { validRating, fullStars, halfStar, emptyStars };
 });
+
+const getThemesOfPlace= () => {
+  themesOfPlace(
+    place.value.placeId,
+    ({ data }) => {
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        themeInfos.value.push(data[i]);
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 </script>
 
 <template>
@@ -45,6 +64,9 @@ const starRating = computed(() => {
         <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
         <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
       </div>
+      <template v-for="theme in themeInfos" :key="theme.themeId">
+        <div>{{ theme.themeName }}</div>
+      </template>
     </div>
   </div>
 </template>

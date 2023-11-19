@@ -20,4 +20,9 @@ function createTheme(theme, success, fail) {
     server.post(`${url}/create`, JSON.stringify(theme)).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags, createTheme };
+function themesOfPlace(placeId, success, fail) {
+    console.log(placeId);
+    server.get(`${url}/place/${placeId}`).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags, createTheme, themesOfPlace };
