@@ -16,7 +16,6 @@ onMounted(() => {
 });
 
 function setMap() {
-  mapLoaded.value = true;
   // 카카오 맵 스크립트를 동적으로 로드합니다.
   const script = document.createElement('script');
   script.onload = () => initializeMap(); // 스크립트 로드가 완료되면 지도를 초기화합니다.
