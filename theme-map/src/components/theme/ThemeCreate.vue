@@ -9,15 +9,13 @@ const router = useRouter();
 
 const editorStore = useEditorStore();
 
-const { cEditorInfo } = editorStore;
+const { cEditorDto } = editorStore;
 
-const token = sessionStorage.getItem('accessToken');
-const id = token === null ? cEditorInfo.value.id : jwtDecode(token).id;
 
 const theme = ref({
     themeName: "",
     description: "",
-    editorId: id,
+    editorId: cEditorDto.value.editorId,
     type: "",
     visible: "",
 });

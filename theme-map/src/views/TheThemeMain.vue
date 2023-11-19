@@ -34,7 +34,7 @@ const getTags = () => {
             <div class="title">테마로 보는 대전</div>
             <template v-if="isLogin">
                 <button>
-                    <router-link :to="{ name: 'themeCreate' }">새 테마 등록하기</router-link>
+                    <router-link :to="{ name: 'create' }">새 테마 등록하기</router-link>
                 </button>
             </template>
         </div>
