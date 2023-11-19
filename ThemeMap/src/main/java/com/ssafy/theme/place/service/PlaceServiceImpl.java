@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.mapper.PlaceMapper;
 
@@ -32,5 +33,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public List<PlaceDto> placesOfTheme(String themeId) throws Exception {
 		return placeMapper.placesOfTheme(themeId);
 	}
-	
+
+	@Override
+	public void linkPlace(LinkDto linkDto) throws Exception {
+		placeMapper.linkPlace(linkDto);
+	}
+
 }

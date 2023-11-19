@@ -8,6 +8,7 @@
 		<typeAlias type="com.ssafy.theme.theme.dto.ThemeDto" alias="themeDto"/>
 		<typeAlias type="com.ssafy.theme.theme.dto.TagDto" alias="tagDto"/>
 		<typeAlias type="com.ssafy.theme.place.dto.PlaceDto" alias="placeDto"/>
+		<typeAlias type="com.ssafy.theme.place.dto.LinkDto" alias="linkDto"/>
 	</typeAliases>
 
 	<mappers>

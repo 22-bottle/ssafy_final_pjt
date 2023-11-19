@@ -59,14 +59,4 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeMapper.themesOfTag(tags);
 	}
 
-	@Override
-	public List<ThemeDto> allThemes() throws Exception {
-		return themeMapper.allThemes();
-	}
-
-	@Override
-	public List<TagDto> allTags() throws Exception {
-		return themeMapper.allTags();
-	}
-
 }

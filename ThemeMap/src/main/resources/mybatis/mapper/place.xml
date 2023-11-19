@@ -23,15 +23,22 @@
 	<select id="hotPlace" resultMap="place">
 		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
 		where score_count != 0
-		order by (score_sum / score_count) desc limit 10
+		order by (score_sum / score_count) limit 10
 	</select>
 	
 	<select id="placesOfTheme" parameterType="string" resultMap="place">
-		select place_id, place_name, latitude, longitude, score_sum, score_count, address, phone from place
-		where place_id = (
-			select place_id from place_in_theme
-			where theme_id = #{themeId}
-		)
+	SELECT place_id, place_name, latitude, longitude, score_sum, score_count, address, phone 
+		FROM place p
+		WHERE place_id IN (
+	        SELECT pit.place_id 
+	        FROM place_in_theme pit
+	        WHERE pit.theme_id = #{themeId}
+	    )
 	</select>
+	
+	<insert id="linkPlace"  parameterType="linkDto">
+		insert into place_in_theme (theme_id, place_id, editor_id)
+		values (#{themeId}, #{placeId}, #{editorId})
+	</insert>
 
 </mapper>
