@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';
-import { registComment } from '@/api/comment';
+import { registComment, commentsOfPlace } from '@/api/comment';
 
 const editorStore = useEditorStore();
 
@@ -27,13 +27,18 @@ const comment = ref({
 });
 
 const themeInfos = ref([]);
+const commentInfos = ref([]);
 
 onMounted(() => {
-  place.value = props.place;
-  getThemesOfPlace();
-  comment.value.placeId = place.value.placeId;
+  initialize();
 });
 
+function initialize() {
+  place.value = props.place;
+  comment.value.placeId = place.value.placeId;
+  getThemesOfPlace();
+  getCommentsOfPlace();
+}
 const starRating = computed(() => {
   const rating = props.place.scoreCount === 0 ? 0 : (props.place.scoreSum / props.place.scoreCount).toFixed(1);
   const validRating = !isNaN(parseFloat(rating)) && isFinite(rating) ? parseFloat(rating) : 0;
@@ -44,13 +49,28 @@ const starRating = computed(() => {
   return { validRating, fullStars, halfStar, emptyStars };
 });
 
-const getThemesOfPlace= () => {
+const getThemesOfPlace = () => {
   themesOfPlace(
     place.value.placeId,
     ({ data }) => {
       console.log(data);
       for (let i = 0; i < data.length; i++) {
         themeInfos.value.push(data[i]);
+      }
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const getCommentsOfPlace = () => {
+  commentsOfPlace(
+    place.value.placeId,
+    ({ data }) => {
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        commentInfos.value.push(data[i]);
       }
     },
     (error) => {
@@ -85,8 +105,17 @@ const handelComment = () => {
         <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
         <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
       </div>
+      <span style="color: violet;">일단 장소 테마들: </span><br/>
       <template v-for="theme in themeInfos" :key="theme.themeId">
-        <div>{{ theme.themeName }}</div>
+        <div style="background-color: blueviolet;">
+          <div>{{ theme.themeName }}</div>
+        </div>
+      </template>
+      <span style="color: violet;">일단 댓글: </span>
+      <template v-for="comment in commentInfos" :key="comment.commentId">
+        <div style="background-color: aquamarine;">
+          <div>{{ comment.content }}</div><hr/>
+        </div>
       </template>
       <template v-if="isLogin">
         <div style="width: 100%; height: 50%; background-color: black;">
