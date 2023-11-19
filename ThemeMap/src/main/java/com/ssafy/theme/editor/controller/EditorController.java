@@ -57,7 +57,7 @@ public class EditorController extends HttpServlet {
 				
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
-				resultMap.put("editor", editor);
+				
 				status = HttpStatus.CREATED;
 			} else {
 				resultMap.put("message", "아이디 또는 패스워드를 확인해주세요.");

@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.service.PlaceService;
 
@@ -62,16 +62,6 @@ public class PlaceController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(places);
-		} catch (Exception e) {
-			return exceptionHandling(e);
-		}
-	}
-	
-	@PostMapping("/link")
-	public ResponseEntity<?> linkPlace(@RequestBody LinkDto linkDto) {
-		try {
-			placeService.linkPlace(linkDto);
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

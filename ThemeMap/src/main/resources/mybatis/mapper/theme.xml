@@ -27,7 +27,7 @@
 	<select id="hotTheme" resultMap="theme">
 		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
 		where visible = 1
-		order by like_sum desc limit 10
+		order by like_sum desc limit 5
 	</select>
 	
 	<select id="themesOfPlace" parameterType="string" resultMap="theme">
@@ -63,7 +63,7 @@
 	
 	<select id="themesOfTag" parameterType="list" resultMap="theme">
 		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
-		where theme_id = (
+		where visible = 1 and theme_id = (
 			select theme_id from tag_in_theme
 			where tag_id in
 			<foreach collection="tags" item="tag" index="idx" open="(" close=")" separator=",">
@@ -72,6 +72,16 @@
 			group by theme_id
 			having count(distinct tag_id) = ${tags.size}
 		)
+	</select>
+	
+	<select id="allThemes" resultMap="theme">
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		where visible = 1
+		order by like_sum desc
+	</select>
+	
+	<select id="allTags" resultMap="tag">
+		select tag_id, tag_name from tag
 	</select>
 	
 </mapper>

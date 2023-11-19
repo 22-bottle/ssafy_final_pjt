@@ -5,7 +5,6 @@
 <mapper namespace="com.ssafy.theme.editor.mapper.EditorMapper">
 	<!-- resultMap -->
 	<resultMap type="editorDto" id="editor">
-		<result column="editor_id" property="editorId"/>
 		<result column="id" property="id"/>
 		<result column="pw" property="pw"/>
 		<result column="salt" property="salt"/>
@@ -19,7 +18,7 @@
 	
     <!-- login -->
     <select id="login" parameterType="editorDto" resultMap="editor">
-		SELECT editor_id, id, pw, salt, editor_name, token
+		SELECT id, pw, salt, editor_name, token
 		FROM editor
 		WHERE id = #{id}
     </select>
