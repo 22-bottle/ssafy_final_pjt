@@ -60,7 +60,7 @@ function dtoToKakao(dto) {
     x: dto.longitude,
     y: dto.latitude,
     address_name: 'a',
-    category_group_code: 'a',
+    category_group_code: dto.placeId,
     category_group_name: 'a',
     category_name: 'a',
     distance: 'a',

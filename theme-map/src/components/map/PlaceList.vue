@@ -1,25 +1,39 @@
 <script setup>
-import { ref, onMounted, inject, watch } from 'vue';
-import { hotPlace, kakaoToDto, dtoToKakao, createPlace, linkPlace } from '@/api/place';
+import { ref, onMounted, watch, inject } from 'vue';
+import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
-import KeywordItem from './KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
-const hotPlaces = ref([]);
-const markers = ref([]);
+
+const props = defineProps({ selectedPlace: String , hoveredPlace: String});
+const selected = ref('');
+const hovered = ref('');
 
 onMounted(() => {
   getHotPlace();
 });
 
+watch(
+  () => props.selectedPlace,
+  () => {
+    selected.value = props.selectedPlace;
+  },
+  { deep: true }
+);
+
+watch(
+  () => props.hoveredPlace,
+  () => {
+    hovered.value = props.hoveredPlace;
+  },
+  { deep: true }
+);
+
+const hotPlaces = ref([]);
 const getHotPlace = () => {
   hotPlace(
     ({ data }) => {
-      console.log(data[0]);
       hotPlaces.value = data;
-      for (let i = 0; i < hotPlaces.value.length; i++) {
-        markers.value.push(dtoToKakao(data[i]));
-      }
-      markerUpdate(markers);
+      console.log(data);
     },
     (error) => {
       console.log(error);
@@ -28,19 +42,13 @@ const getHotPlace = () => {
 };
 
 /* =============> */
-const props = defineProps({ placeList: Array });
-const emit = defineEmits(['keyword', 'makeInfos', 'clickPlace']);
+// const props = defineProps({ placeList: Array });
+const emit = defineEmits(['clickPlace']);
+const clicked = inject('clicked');
 
-const keywordPlaces = props.placeList;
-const keyword = ref('');
-const keywordPlace = ref(true);
+// const hotPlaces = props.placeList;
 const visibility = ref(false);
 const placeToView = ref(null);
-
-const handleKeywordSearch = async () => {
-  console.log('Enter handleKeywordSearch method');
-  emit('keyword', keyword.value);
-};
 
 const handleDetail = (place) => {
   console.log('Enter handleDetail method');
@@ -50,51 +58,8 @@ const handleDetail = (place) => {
     visibility.value = true;
     placeToView.value = place;
   }
-  emit('clickPlace', false);
+  emit('clickPlace', place);
 };
-const keywordSearch = () => {
-  changeState();
-};
-const handleAdd = (place) => {
-  console.log('Enter handleAdd method');
-  // create place
-  createPlace(
-    kakaoToDto(place),
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // link place
-  linkPlace(
-    {
-      themeId: '1',
-      placeId: place.id,
-      editorId: '1',
-    },
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  changeState();
-};
-
-function changeState() {
-  keywordPlace.value = !keywordPlace.value;
-}
-
-const markerUpdate = () => {
-  console.log('Enter markerUpdate method');
-  emit('updateMarkers', markers.value);
-};
-
-const clicked = inject('clicked');
-
 /* <============= */
 </script>
 
@@ -104,15 +69,19 @@ const clicked = inject('clicked');
     <div class="list">
       <div class="name">내 주변 인기 장소</div>
       <div class="items">
-        <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
         <div class="items scrollbar">
-          <place-item
-            v-for="(place, index) in hotPlaces"
-            :key="place.placeId"
-            :place="place"
-            @detail="handleDetail"
-          ></place-item>
+          <template v-for="(place, index) in hotPlaces" :key="place.placeId">
+            <!-- selected -->
+            <template v-if="hovered == place.placeId">
+              <div style="background-color: yellow;">
+                <place-item :place="place" @detail="handleDetail"></place-item>
+              </div>
+            </template>
+            <template v-else>
+              <place-item :place="place" @detail="handleDetail"></place-item>
+            </template>
+          </template>
         </div>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView"></place-detail>
@@ -168,5 +137,20 @@ const clicked = inject('clicked');
 }
 .scrollbar {
   overflow: auto;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the tracking area */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scroll thumb */
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scroll thumb on hover */
 }
 </style>
