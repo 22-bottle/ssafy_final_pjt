@@ -1,14 +1,14 @@
 <script setup>
 import { ref, onMounted, provide } from 'vue';
-import { hotPlace, dtoToKakao } from '@/api/place';
+import { hotPlace, dtoToKakao, themePlace } from '@/api/place';
 import { useRoute } from 'vue-router';
 import PlaceList from '../components/map/PlaceList.vue';
 import ThemePlaceList from '../components/theme/ThemePlaceList.vue';
 
 var map;
 var selectedMarker = ref(null);
-var hoveredPlace = ref("");
-var selectedPlace = ref("");
+var hoveredPlace = ref('');
+var selectedPlace = ref('');
 const temp = ref([]);
 const positions = ref([]);
 const markers = ref([]);
@@ -31,11 +31,12 @@ onMounted(() => {
     document.head.appendChild(script);
   }
 
-  if (route.name == 'place') {
+  if (route.name === 'place') {
     console.log('hot place');
     getHotPlace();
   } else {
     console.log('theme place');
+    getThemePlace();
   }
 });
 
@@ -75,30 +76,30 @@ const loadMarkers = () => {
     });
 
     // 마커에 mouseover 이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'mouseover', function() {
+    kakao.maps.event.addListener(marker, 'mouseover', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
-        console.log("호버IN",position.title, position.placeId);
+        console.log('호버IN', position.title, position.placeId);
         hoveredPlace.value = position.placeId;
       }
     });
 
     // 마커에 mouseout 이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'mouseout', function() {
+    kakao.maps.event.addListener(marker, 'mouseout', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
-        console.log("호버OUT",position.title, position.placeId);
+        console.log('호버OUT', position.title, position.placeId);
         hoveredPlace.value = '';
       }
     });
 
     // 마커에 click 이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function() {
-    if (!selectedMarker.value || selectedMarker.value !== marker) {
-      console.log("클릭!",position.title, position.placeId);
-      selectedPlace.value = position.placeId;
-    }
+    kakao.maps.event.addListener(marker, 'click', function () {
+      if (!selectedMarker.value || selectedMarker.value !== marker) {
+        console.log('클릭!', position.title, position.placeId);
+        selectedPlace.value = position.placeId;
+      }
 
-    // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
-    selectedMarker.value = marker;
+      // 클릭된 마커를 현재 클릭된 마커 객체로 설정합니다
+      selectedMarker.value = marker;
     });
     markers.value.push(marker);
   });
@@ -151,17 +152,32 @@ function placesSearchCB(data, status) {
 }
 
 /* <============= */
-const hotPlaceList = ref([]);
 const hotPlaces = ref([]);
 
 const getHotPlace = () => {
   hotPlace(
     ({ data }) => {
-      hotPlaceList.value = data;
       for (let i = 0; i < data.length; i++) {
         hotPlaces.value.push(dtoToKakao(data[i]));
       }
       temp.value = hotPlaces.value;
+      loadMarkers();
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const themePlaces = ref([]);
+const getThemePlace = () => {
+  themePlace(
+    route.params.themeId,
+    ({ data }) => {
+      for (let i = 0; i < data.length; i++) {
+        themePlaces.value.push(dtoToKakao(data[i]));
+      }
+      temp.value = themePlaces.value;
       loadMarkers();
     },
     (error) => {
@@ -180,7 +196,7 @@ const clickPlace = (param) => {
   console.log('Enter clickPlace method:');
   // 이동할 위도 경도 위치를 생성합니다 
   var moveLatLon = new kakao.maps.LatLng(param.latitude, param.longitude);
-  
+
   // 지도 중심을 이동 시킵니다
   map.setCenter(moveLatLon);
 
