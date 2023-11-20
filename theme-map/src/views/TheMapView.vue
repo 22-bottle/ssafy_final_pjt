@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted, provide, toRaw } from 'vue';
+import { useRoute } from 'vue-router';
+import PlaceList from '../components/map/PlaceList.vue';
+import ThemePlaceList from '../components/theme/ThemePlaceList.vue';
 
 const mapContainer = ref(null);
 var map;
@@ -10,6 +13,8 @@ const mapLoaded = ref(false);
 const clicked = ref(false);
 provide('mapLoaded', mapLoaded);
 provide('clicked', clicked);
+
+const route = useRoute();
 
 const key = import.meta.env.VITE_KAKAO_MAP_KEY;
 
@@ -186,7 +191,7 @@ function removeMarker() {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
   }
-  markers = [];
+  markers.value = [];
 }
 /* <============= */
 const updateMarkers = (places) => {
@@ -213,13 +218,18 @@ const clickPlace = () => {
     <div id="map" class="map" ref="mapContainer" @mousedown="clickMap" style="width: 100%; height: 100vh"></div>
     <!-- <router-view></router-view> -->
     <!-- =============> -->
-    <router-view
-      @keyword="searchKeyWord"
-      @click="clickPlace"
-      @updateMarkers="updateMarkers"
-      :placeList="placeList"
-      :map-loaded="mapLoaded"
-    ></router-view>
+    <template v-if="route.name === 'place'">
+      <place-list
+        @keyword="searchKeyWord"
+        @click="clickPlace"
+        @updateMarkers="updateMarkers"
+        :placeList="placeList"
+        :map-loaded="mapLoaded"
+      ></place-list>
+    </template>
+    <template v-else>
+      <theme-place-list></theme-place-list>
+    </template>
     <!-- <============= -->
   </div>
 </template>

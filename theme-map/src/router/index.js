@@ -39,14 +39,6 @@ const router = createRouter({
           path: 'detail/:themeId',
           name: 'detail',
           component: TheMapView,
-
-          children: [
-            {
-              path: 'places',
-              name: 'placesOfTheme',
-              component: () => import('@/components/theme/ThemePlaceList.vue'),
-            },
-          ],
         },
         {
           path: 'create',
