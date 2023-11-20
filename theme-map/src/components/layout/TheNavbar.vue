@@ -31,7 +31,7 @@ const handleLogout = async () => {
       <router-link :to="{ name: 'editor' }" id="nav_btn">에디터별로</router-link>
       <router-link :to="{ name: routerName }" class="log_btn">{{ editorStatus }}</router-link>
       <template v-if="cIsLogin">
-        <img src="src\assets\img\logout.png" alt="logout" id="logout" @click="handleLogout" />
+        <img src="@/assets/img/logout.png" alt="logout" id="logout" @click="handleLogout" />
       </template>
     </div>
   </div>

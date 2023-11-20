@@ -63,7 +63,7 @@
 	
 	<select id="themesOfTag" parameterType="list" resultMap="theme">
 		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
-		where visible = 1 and theme_id = (
+		where visible = 1 and theme_id in (
 			select theme_id from tag_in_theme
 			where tag_id in
 			<foreach collection="tags" item="tag" index="idx" open="(" close=")" separator=",">
