@@ -1,16 +1,19 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { hotTheme, allTheme } from '@/api/theme';
+import { ref, onMounted, watch } from 'vue';
+import { hotTheme, allTheme, themesOfTag } from '@/api/theme';
 import ThemeItem from './ThemeItem.vue';
+import { objectToString } from "@vue/shared";
 
-const props = defineProps({ type: String, tags: Array });
+const props = defineProps({ type: String, tags: Object });
 
-// const selectedTags = Object.values(props.tags);
 const themes = ref([]);
 
 onMounted(() => {
   if (props.type === 'all') {
     getAllThemes();
+    watch(props.tags, (newTags, oldTags) => {
+      getThemesofTag(newTags);
+    })
   } else {
     getHotThemes();
   }
@@ -37,6 +40,32 @@ const getAllThemes = () => {
     }
   );
 };
+
+const tagListDto = ref({
+  tags: [],
+})
+
+const getThemesofTag = (tags) => {
+  tagListDto.value.tags = [];
+  Object.values(tags).forEach((tag) => {
+    if (tag.tagId != 0) {
+      tagListDto.value.tags.push(tag);
+    }
+  });
+  if (tagListDto.value.tags.length == 0) {
+    getAllThemes();
+  } else {
+    themesOfTag(
+      tagListDto.value,
+      ({ data }) => {
+        themes.value = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+}
 </script>
 
 <template>

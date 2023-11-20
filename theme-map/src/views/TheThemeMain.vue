@@ -30,7 +30,7 @@ const getTags = () => {
   );
 };
 
-const selectedTags = ref({ 0: {} });
+const selectedTags = ref({ 0: {"tagId": "0", "tagName": "none", "selected": false}, });
 const onTagClick = (event) => {
   const index = event.target.id - 1;
   const tag = tags.value[index];
@@ -40,7 +40,6 @@ const onTagClick = (event) => {
   } else {
     delete selectedTags.value[tag.tagId];
   }
-  console.log(Object.values(selectedTags.value));
 };
 </script>
 
@@ -70,7 +69,7 @@ const onTagClick = (event) => {
           :id="tag.tagId"
         ></tag-item>
       </div>
-      <theme-list type="all" :tags="selectedTags.value"></theme-list>
+      <theme-list type="all" :tags="selectedTags"></theme-list>
     </div>
   </div>
 </template>

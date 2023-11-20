@@ -120,7 +120,7 @@ public class ThemeController {
 	// {
 	// "tags": [{"tagId":"1", "tagName":"tag1"}, {"tagId":"2", "tagName":"tag2"}]
 	// }
-	@GetMapping("/tag")
+	@PostMapping("/tag")
 	public ResponseEntity<?> themesOfTag(@RequestBody TagListDto tagListDto) {
 		try {
 			List<ThemeDto> themes = themeService.themesOfTag(tagListDto.getTags());

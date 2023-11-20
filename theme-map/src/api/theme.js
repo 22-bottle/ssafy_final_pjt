@@ -29,4 +29,8 @@ function curTheme(themeId, success, fail) {
   server.get(`${url}/get/${themeId}`).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme };
+function themesOfTag(tags, success, fail) {
+  server.post(`${url}/tag`, JSON.stringify(tags)).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag };
