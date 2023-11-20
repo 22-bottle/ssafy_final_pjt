@@ -155,6 +155,18 @@ public class ThemeController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@GetMapping("/get/{themeId}")
+	public ResponseEntity<?> getTheme(@PathVariable("themeId") String themeId) {
+		try {
+			ThemeDto theme = themeService.getTheme(themeId);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(theme);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

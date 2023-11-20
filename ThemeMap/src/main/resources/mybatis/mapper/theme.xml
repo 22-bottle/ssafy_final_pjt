@@ -84,4 +84,9 @@
 		select tag_id, tag_name from tag
 	</select>
 	
+	<select id="getTheme" parameterType="string" resultMap="theme">
+		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		where theme_id = #{themeId}
+	</select>
+	
 </mapper>

@@ -24,9 +24,7 @@ const moveToKakao = () => {
 /* ========> */
 const emit = defineEmits(['detail']);
 
-const handlePlace = (
-
-) => {
+const handlePlace = () => {
   console.log('Enter handlePlace method');
   console.log(place);
   emit('detail', place.value);
@@ -37,7 +35,11 @@ const handlePlace = (
 
 <template>
   <div id="container" @click="handlePlace">
-    <div>{{ place.placeName }} | {{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1) }} ({{ place.scoreCount }})</div>
+    <div>
+      {{ place.placeName }} | {{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1) }} ({{
+        place.scoreCount
+      }})
+    </div>
     <div>{{ place.address }}</div>
     <div>{{ place.phone }}</div>
     <a href="" @click="moveToKakao">카카오맵에서 보기</a>

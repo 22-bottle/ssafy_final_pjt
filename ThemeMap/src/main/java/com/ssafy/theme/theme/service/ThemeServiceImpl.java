@@ -69,4 +69,9 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeMapper.allTags();
 	}
 
+	@Override
+	public ThemeDto getTheme(String themeId) throws Exception {
+		return themeMapper.getTheme(themeId);
+	}
+
 }

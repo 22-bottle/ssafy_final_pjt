@@ -27,4 +27,6 @@ public interface ThemeService {
 
 	List<TagDto> allTags() throws Exception;
 
+	ThemeDto getTheme(String themeId) throws Exception;
+
 }

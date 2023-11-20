@@ -188,7 +188,6 @@ const clickPlace = (param) => {
   clicked.value = false;
   console.log(clicked.value);
 };
-
 </script>
 
 <template>

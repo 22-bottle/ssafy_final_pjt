@@ -82,4 +82,8 @@ function linkPlace(linkDto, success, fail) {
   server.post(`${url}/link`, linkDto).then(success).catch(fail);
 }
 
-export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao };
+function keepScore(scoreDto, success, fail) {
+  server.put(`${url}/score`, JSON.stringify(scoreDto)).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore };
