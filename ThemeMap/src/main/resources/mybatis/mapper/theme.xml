@@ -26,7 +26,7 @@
 	
 	<select id="hotTheme" resultMap="theme">
 		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
-		where visible = 1
+		where visible = 1 and like_sum > 0
 		order by like_sum desc limit 5
 	</select>
 	
