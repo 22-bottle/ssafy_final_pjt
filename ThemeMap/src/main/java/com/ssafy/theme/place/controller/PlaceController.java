@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.dto.ScoreDto;
 import com.ssafy.theme.place.service.PlaceService;
@@ -73,6 +74,16 @@ public class PlaceController {
 		try {
 			placeService.keepScore(scoreDto.getPlaceId(), scoreDto.getScore());
 			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PostMapping("/link")
+	public ResponseEntity<?> linkPlace(@RequestBody LinkDto linkDto) {
+		try {
+			placeService.linkPlace(linkDto);
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

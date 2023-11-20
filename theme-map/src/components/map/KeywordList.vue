@@ -2,18 +2,26 @@
 import { ref, onMounted, watch, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { hotPlace } from '@/api/place';
-import { kakaoToDto, createPlace, linkPlace } from '@/api/place';
+import { createPlace, linkPlace } from '@/api/place';
+import { useEditorStore } from '@/stores/editor';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 import PlaceItem from './PlaceItem.vue';
 
-const props = defineProps({ selectedPlace: String , hoveredPlace: String});
+const editorStore = useEditorStore();
+
+const props = defineProps({ selectedPlace: String , hoveredPlace: String, placeList: Array});
+const { cEditorDto } = editorStore;
+
 const route = useRoute();
+const keywordPlaces = props.placeList;
 const selected = ref('');
 const hovered = ref('');
 const keyword = ref('');
+const editorId = ref('');
 
 onMounted(() => {
   getHotPlace();
+  editorId.value = cEditorDto.value.editorId;
 });
 
 watch(
@@ -70,22 +78,23 @@ const handleKeywordSearch = async () => {
 };
 const handleAdd = (place) => {
   console.log('Enter handleAdd method');
-  // create place
+  // 장소를 생성
   createPlace(
-    kakaoToDto(place),
+    place,
     ({ data }) => {
+      
       console.log(data);
     },
     (error) => {
       console.log(error);
     }
   );
-  // link place
+  // 테마와 장소를 연결
   linkPlace(
     {
       themeId: route.params.themeId,
-      placeId: place.id,
-      editorId: '1',
+      placeId: place.placeId,
+      editorId: editorId.value,
     },
     ({ data }) => {
       console.log(data);
@@ -114,12 +123,11 @@ const handleAdd = (place) => {
             />
             <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
         </div>
-        <keyword-item
-        v-for="(place, index) in keywordPlaces"
-        :key="index"
-        :place="place"
-        @add="handleAdd"
-        ></keyword-item>
+        <div class="items scrollbar">
+          <template v-for="(place, index) in keywordPlaces" :key="index">
+            <place-item :place="place" @detail="handleAdd"></place-item>
+          </template>
+        </div>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView"></place-detail>
         </template>
