@@ -178,7 +178,6 @@ const clickMap = () => {
 
 const clickPlace = (param) => {
   console.log('Enter clickPlace method:');
-  console.log("ㅇㅇ",param.latitude, param.longitude);
   // 이동할 위도 경도 위치를 생성합니다 
   var moveLatLon = new kakao.maps.LatLng(param.latitude, param.longitude);
   

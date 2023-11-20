@@ -6,6 +6,7 @@ import { curTheme } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
 import KeywordItem from '@/components/map/KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
+
 const themePlaces = ref([]);
 const theme = ref({
   themeId: '',
