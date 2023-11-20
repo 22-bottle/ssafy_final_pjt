@@ -32,5 +32,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public List<PlaceDto> placesOfTheme(String themeId) throws Exception {
 		return placeMapper.placesOfTheme(themeId);
 	}
+
+	@Override
+	public void keepScore(String placeId, String score) throws Exception {
+		placeMapper.keepScore(placeId, score);
+	}
 	
 }

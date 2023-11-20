@@ -5,7 +5,7 @@ import PlaceList from '../components/map/PlaceList.vue';
 import ThemePlaceList from '../components/theme/ThemePlaceList.vue';
 
 var map;
-const temp = ref([{x: 126.570667, y: 33.450701}]);
+const temp = ref([{ x: 126.570667, y: 33.450701 }]);
 const positions = ref([]);
 const markers = ref([]);
 const clicked = ref(false);
@@ -176,7 +176,6 @@ const clickPlace = () => {
   clicked.value = false;
   console.log(clicked.value);
 };
-
 </script>
 
 <template>

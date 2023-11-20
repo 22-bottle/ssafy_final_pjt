@@ -35,5 +35,10 @@
 			WHERE pit.theme_id = #{themeId}
 		)
 	</select>
+	
+	<update id="keepScore" parameterType="string">
+		update place set score_sum = score_sum + #{score}, score_count = score_count + 1
+		where place_id = #{placeId}
+	</update>
 
 </mapper>

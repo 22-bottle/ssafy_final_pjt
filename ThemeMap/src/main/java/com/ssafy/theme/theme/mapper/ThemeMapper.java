@@ -30,4 +30,6 @@ public interface ThemeMapper {
 
 	List<TagDto> allTags() throws Exception;
 
+	ThemeDto getTheme(String themeId) throws Exception;
+
 }

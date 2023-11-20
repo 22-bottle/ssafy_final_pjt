@@ -12,4 +12,6 @@ public interface PlaceService {
 
 	List<PlaceDto> placesOfTheme(String themeId) throws Exception;
 
+	void keepScore(String placeId, String score) throws Exception;
+
 }

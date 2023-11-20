@@ -1,20 +1,46 @@
 <script setup>
 import { ref, onMounted, inject, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { themePlace, kakaoToDto, dtoToKakao, createPlace, linkPlace } from '@/api/place';
+import { curTheme } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
 import KeywordItem from '@/components/map/KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const themePlaces = ref([]);
+const theme = ref({
+  themeId: '',
+  themeName: '',
+  description: '',
+  editorId: '',
+  type: '',
+  visible: '',
+  likeSum: '',
+});
 const markers = ref([]);
 const markerStatus = ref(false);
 
+const route = useRoute();
+
 onMounted(() => {
+  getTheme();
   getThemePlace();
 });
 
+const getTheme = () => {
+  curTheme(
+    route.params.themeId,
+    ({ data }) => {
+      theme.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
 const getThemePlace = () => {
   themePlace(
-    1,
+    route.params.themeId,
     ({ data }) => {
       console.log(data);
       themePlaces.value = data;
@@ -108,8 +134,9 @@ watch(markerStatus, () => {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">테마 리스트</div>
+      <div class="name">{{ theme.themeName }}</div>
       <div class="items">
+        <div>{{ theme.description }}</div>
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
         <template v-if="keywordPlace">

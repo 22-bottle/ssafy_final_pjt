@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.theme.place.dto.PlaceDto;
+import com.ssafy.theme.place.dto.ScoreDto;
 import com.ssafy.theme.place.service.PlaceService;
 
 @RestController
@@ -61,6 +63,16 @@ public class PlaceController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(places);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PutMapping("/score")
+	public ResponseEntity<?> keepScore(@RequestBody ScoreDto scoreDto) {
+		try {
+			placeService.keepScore(scoreDto.getPlaceId(), scoreDto.getScore());
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
