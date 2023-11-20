@@ -220,7 +220,7 @@ const clickPlace = (param) => {
       ></place-list>
     </template>
     <template v-else>
-      <theme-place-list></theme-place-list>
+      <theme-place-list @clickPlace="clickPlace"></theme-place-list>
     </template>
     <!-- <============= -->
   </div>
