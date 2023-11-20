@@ -1,14 +1,12 @@
 <script setup>
-import { ref, onMounted, provide, toRaw } from 'vue';
+import { ref, onMounted, provide } from 'vue';
 
-const mapContainer = ref(null);
 var map;
-const temp = ref([{ lat: 37.499590490909185, lng: 127.0263723554437 }]);
+const temp = ref([{x: 126.570667, y: 33.450701}]);
 const positions = ref([]);
 const markers = ref([]);
-const mapLoaded = ref(false);
 const clicked = ref(false);
-provide('mapLoaded', mapLoaded);
+
 provide('clicked', clicked);
 
 const key = import.meta.env.VITE_KAKAO_MAP_KEY;
@@ -18,7 +16,7 @@ onMounted(() => {
     initMap();
   } else {
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c1c453654e5d10e503f508c9e7179df7&autoload=false&libraries=services`;
+    script.src = key;
     /* global kakao */
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
@@ -42,7 +40,7 @@ const loadMarkers = () => {
 
   temp.value.forEach((t) => {
     let obj = {};
-    obj.latlng = new kakao.maps.LatLng(t.lat, t.lng);
+    obj.latlng = new kakao.maps.LatLng(t.y, t.x);
     obj.title = 'aasdfasfsf';
 
     positions.value.push(obj);
@@ -77,39 +75,7 @@ const deleteMarkers = () => {
   }
 };
 
-function setMap() {
-  // 카카오 맵 스크립트를 동적으로 로드합니다.
-  var script = document.createElement('script');
-  script.onload = () => initializeMap(); // 스크립트 로드가 완료되면 지도를 초기화합니다.
-  script.src = key;
-  document.head.appendChild(script);
-
-  // 마커가 표시될 위치입니다
-  var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-
-  // 마커를 생성합니다
-  var marker = new kakao.maps.Marker({
-    position: markerPosition,
-  });
-
-  // 마커가 지도 위에 표시되도록 설정합니다
-  marker.setMap(map);
-}
-
-function initializeMap() {
-  // 카카오 맵 API가 로드된 후 호출될 함수입니다.
-  window.kakao.maps.load(() => {
-    const options = {
-      center: new window.kakao.maps.LatLng(36.35483, 127.2978), // 지도의 중심좌표
-      level: 3, // 지도의 확대 레벨
-    };
-    // 지도를 생성합니다.
-    map.value = new window.kakao.maps.Map(mapContainer.value, options);
-  });
-}
-
 /* =============> */
-
 const placeList = ref([]);
 
 const searchKeyWord = (keyword) => {
@@ -176,22 +142,22 @@ function addMarker(position, idx) {
     });
 
   marker.setMap(map.value);
-  markers.push(marker);
+  markers.value.push(marker);
 
   return marker;
 }
 
 // 마커를 삭제하는 함수입니다.
 function removeMarker() {
-  for (var i = 0; i < markers.length; i++) {
+  for (var i = 0; i < markers.value.length; i++) {
     markers[i].setMap(null);
   }
-  markers = [];
+  markers.value = [];
 }
 /* <============= */
 const updateMarkers = (places) => {
   console.log('Enter updateMarkers method:', places);
-  displayPlaces(places);
+  temp.value = places;
 };
 
 const clickMap = () => {
@@ -205,12 +171,13 @@ const clickPlace = () => {
   clicked.value = false;
   console.log(clicked.value);
 };
+
 </script>
 
 <template>
   <div>
     <!-- 카카오 맵 -->
-    <div id="map" class="map" ref="mapContainer" @mousedown="clickMap" style="width: 100%; height: 100vh"></div>
+    <div id="map" class="map" @mousedown="clickMap" style="width: 100%; height: 100vh"></div>
     <!-- <router-view></router-view> -->
     <!-- =============> -->
     <router-view
@@ -218,7 +185,6 @@ const clickPlace = () => {
       @click="clickPlace"
       @updateMarkers="updateMarkers"
       :placeList="placeList"
-      :map-loaded="mapLoaded"
     ></router-view>
     <!-- <============= -->
   </div>

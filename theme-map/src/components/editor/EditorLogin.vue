@@ -16,8 +16,9 @@ const loginEditor = ref({
   setToken: false,
 });
 
-const handleLogin = async () => {
+const handleLogin = async (event) => {
   console.log('Enter handleLogin method');
+  event.preventDefault();
   await editorLogin(loginEditor.value);
 
   if (isLogin.value) {
@@ -38,7 +39,7 @@ const handleSingIn = async () => {
 <template>
   <div class="login">
     <span class="description">로그인</span>
-    <form class="loginform">
+    <form class="loginform" >
       <div class="inputContainer">
         <label for="id" class="logindata">아이디</label>
         <input type="text" id="id" class="input" v-model="loginEditor.id" />

@@ -6,7 +6,6 @@ import KeywordItem from './KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 const hotPlaces = ref([]);
 const markers = ref([]);
-const markerStatus = ref(false);
 
 onMounted(() => {
   getHotPlace();
@@ -29,7 +28,7 @@ const getHotPlace = () => {
 };
 
 /* =============> */
-const props = defineProps({ mapLoaded: Boolean, placeList: Array });
+const props = defineProps({ placeList: Array });
 const emit = defineEmits(['keyword', 'makeInfos', 'clickPlace']);
 
 const keywordPlaces = props.placeList;
@@ -91,18 +90,10 @@ function changeState() {
 
 const markerUpdate = () => {
   console.log('Enter markerUpdate method');
-  markerStatus.value = !markerStatus.value;
+  emit('updateMarkers', markers.value);
 };
 
-const mapLoaded = inject('mapLoaded');
 const clicked = inject('clicked');
-
-watch(markerStatus, () => {
-  console.log('끄아악', mapLoaded);
-  // if (mapLoaded) {
-  //   emit('updateMarkers', markers.value);
-  // }
-});
 
 /* <============= */
 </script>
