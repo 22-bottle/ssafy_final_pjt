@@ -38,7 +38,7 @@ const router = createRouter({
         {
           path: 'detail/:themeId',
           name: 'detail',
-          component: TheMapView,
+          component: () => import('@/views/TheMapView.vue'),
         },
         {
           path: 'create',

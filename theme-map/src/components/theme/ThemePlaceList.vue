@@ -16,7 +16,6 @@ const theme = ref({
   visible: '',
   likeSum: '',
 });
-const markers = ref([]);
 const markerStatus = ref(false);
 
 const route = useRoute();
@@ -117,7 +116,6 @@ const markerUpdate = () => {
   markerStatus.value = !markerStatus.value;
 };
 
-const mapLoaded = inject('mapLoaded');
 const clicked = inject('clicked');
 
 watch(markerStatus, () => {
