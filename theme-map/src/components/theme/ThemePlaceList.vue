@@ -1,26 +1,23 @@
 <script setup>
 import { ref, onMounted, inject, watch } from 'vue';
-import { hotPlace, kakaoToDto, dtoToKakao, createPlace, linkPlace } from '@/api/place';
-import PlaceItem from './PlaceItem.vue';
-import KeywordItem from './KeywordItem.vue';
+import { themePlace, kakaoToDto, dtoToKakao, createPlace, linkPlace } from '@/api/place';
+import PlaceItem from '@/components/map/PlaceItem.vue';
+import KeywordItem from '@/components/map/KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
-const hotPlaces = ref([]);
+const themePlaces = ref([]);
 const markers = ref([]);
 const markerStatus = ref(false);
 
 onMounted(() => {
-  getHotPlace();
+  getThemePlace();
 });
 
-const getHotPlace = () => {
-  hotPlace(
+const getThemePlace = () => {
+  themePlace(
+    1,
     ({ data }) => {
-      console.log(data[0]);
-      hotPlaces.value = data;
-      for (let i = 0; i < hotPlaces.value.length; i++) {
-        markers.value.push(dtoToKakao(data[i]));
-      }
-      markerUpdate(markers);
+      console.log(data);
+      themePlaces.value = data;
     },
     (error) => {
       console.log(error);
@@ -111,20 +108,38 @@ watch(markerStatus, () => {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">내 주변 인기 장소</div>
+      <div class="name">{{}}</div>
       <div class="items">
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
-        <div class="items scrollbar">
-          <place-item
-            v-for="(place, index) in hotPlaces"
-            :key="place.placeId"
+        <template v-if="keywordPlace">
+          <div class="items scrollbar">
+            <place-item v-for="(place, index) in themePlaces" :key="index" :place="place"></place-item>
+          </div>
+          <button
+            type="button"
+            @click="keywordSearch"
+            style="width: 100px; height: 35px; position: absolute; top: 100%"
+          >
+            장소등록
+          </button>
+        </template>
+        <template v-else>
+          <div>
+            <input
+              type="text"
+              v-model="keyword"
+              @keyup.enter="handleKeywordSearch"
+              style="width: 250px; height: 30px"
+            />
+            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
+          </div>
+          <keyword-item
+            v-for="(place, index) in keywordPlaces"
+            :key="index"
             :place="place"
-            @detail="handleDetail"
-          ></place-item>
-        </div>
-        <template v-if="visibility && !clicked">
-          <place-detail :place="placeToView"></place-detail>
+            @add="handleAdd"
+          ></keyword-item>
         </template>
         <!-- <============= -->
       </div>

@@ -36,24 +36,24 @@ const router = createRouter({
           component: TheThemeMain,
         },
         {
-          path: 'detail',
+          path: 'detail/:themeId',
           name: 'detail',
           component: TheMapView,
-          redirect: '/theme/detail/places',
+
           children: [
             {
               path: 'places',
               name: 'placesOfTheme',
-              component: () => import('@/components/map/PlaceList.vue'),
+              component: () => import('@/components/theme/ThemePlaceList.vue'),
             },
-          ]
+          ],
         },
         {
           path: 'create',
           name: 'create',
           component: ThemeCreate,
         },
-      ]
+      ],
     },
     {
       path: '/editor',

@@ -6,8 +6,8 @@ const theme = props.theme;
 
 <template>
   <div id="container">
-    <router-link to="detail">
-      <div>{{ theme.themeName }} </div>
+    <router-link :to="{ name: 'detail', params: { themeId: theme.themeId } }">
+      <div>{{ theme.themeName }}</div>
     </router-link>
   </div>
   <br />
