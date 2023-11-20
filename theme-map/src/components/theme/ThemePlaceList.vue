@@ -108,7 +108,7 @@ watch(markerStatus, () => {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">{{}}</div>
+      <div class="name">테마 리스트</div>
       <div class="items">
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->

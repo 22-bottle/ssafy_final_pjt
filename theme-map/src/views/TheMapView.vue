@@ -1,5 +1,8 @@
 <script setup>
-import { ref, onMounted, provide } from 'vue';
+import { ref, onMounted, provide, toRaw } from 'vue';
+import { useRoute } from 'vue-router';
+import PlaceList from '../components/map/PlaceList.vue';
+import ThemePlaceList from '../components/theme/ThemePlaceList.vue';
 
 var map;
 const temp = ref([{x: 126.570667, y: 33.450701}]);
@@ -8,6 +11,8 @@ const markers = ref([]);
 const clicked = ref(false);
 
 provide('clicked', clicked);
+
+const route = useRoute();
 
 const key = import.meta.env.VITE_KAKAO_MAP_KEY;
 
@@ -180,12 +185,18 @@ const clickPlace = () => {
     <div id="map" class="map" @mousedown="clickMap" style="width: 100%; height: 100vh"></div>
     <!-- <router-view></router-view> -->
     <!-- =============> -->
-    <router-view
-      @keyword="searchKeyWord"
-      @click="clickPlace"
-      @updateMarkers="updateMarkers"
-      :placeList="placeList"
-    ></router-view>
+    <template v-if="route.name === 'place'">
+      <place-list
+        @keyword="searchKeyWord"
+        @click="clickPlace"
+        @updateMarkers="updateMarkers"
+        :placeList="placeList"
+        :map-loaded="mapLoaded"
+      ></place-list>
+    </template>
+    <template v-else>
+      <theme-place-list></theme-place-list>
+    </template>
     <!-- <============= -->
   </div>
 </template>
