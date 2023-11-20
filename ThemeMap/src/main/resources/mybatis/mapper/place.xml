@@ -36,6 +36,11 @@
 		)
 	</select>
 	
+	<insert id="linkPlace"  parameterType="linkDto">
+		insert into place_in_theme (theme_id, place_id, editor_id)
+		values (#{themeId}, #{placeId}, #{editorId})
+	</insert>
+	
 	<update id="keepScore" parameterType="string">
 		update place set score_sum = score_sum + #{score}, score_count = score_count + 1
 		where place_id = #{placeId}

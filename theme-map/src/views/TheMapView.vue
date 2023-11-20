@@ -4,6 +4,7 @@ import { hotPlace, dtoToKakao, themePlace } from '@/api/place';
 import { useRoute } from 'vue-router';
 import PlaceList from '../components/map/PlaceList.vue';
 import ThemePlaceList from '../components/theme/ThemePlaceList.vue';
+import router from '../router';
 
 var map;
 var selectedMarker = ref(null);
@@ -174,6 +175,9 @@ const getThemePlace = () => {
   themePlace(
     route.params.themeId,
     ({ data }) => {
+      if(data.length == 0) {
+        router.replace({ name: 'keyword', params: { themeId: route.params.themeId } });
+      }
       for (let i = 0; i < data.length; i++) {
         themePlaces.value.push(dtoToKakao(data[i]));
       }
