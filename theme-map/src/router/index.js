@@ -45,6 +45,11 @@ const router = createRouter({
           name: 'create',
           component: ThemeCreate,
         },
+        {
+          path: 'keyword/:themeId',
+          name: 'keyword',
+          component: () => import('@/components/map/KeywordPlace.vue'),
+        },
       ],
     },
     {

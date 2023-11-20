@@ -1,10 +1,9 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
-import { themePlace, kakaoToDto, createPlace, linkPlace } from '@/api/place';
+import { themePlace } from '@/api/place';
 import { curTheme } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
-import KeywordItem from '@/components/map/KeywordItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 
 const themePlaces = ref([]);
@@ -51,17 +50,7 @@ const getThemePlace = () => {
 };
 
 /* =============> */
-const props = defineProps({ placeList: Array });
-const emit = defineEmits(['keyword', 'clickPlace']);
-
-const keywordPlaces = props.placeList;
-const keyword = ref('');
-const keywordPlace = ref(true);
-
-const handleKeywordSearch = async () => {
-  console.log('Enter handleKeywordSearch method');
-  emit('keyword', keyword.value);
-};
+const emit = defineEmits(['clickPlace']);
 
 const visibility = ref(false);
 const placeToView = ref(null);
@@ -77,41 +66,6 @@ const handleDetail = (place) => {
   console.log(visibility.value, clicked.value);
   emit('clickPlace', place);
 };
-const keywordSearch = () => {
-  changeState();
-};
-const handleAdd = (place) => {
-  console.log('Enter handleAdd method');
-  // create place
-  createPlace(
-    kakaoToDto(place),
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // link place
-  linkPlace(
-    {
-      themeId: route.params.themeId,
-      placeId: place.id,
-      editorId: theme.value.editorId,
-    },
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  changeState();
-};
-
-function changeState() {
-  keywordPlace.value = !keywordPlace.value;
-}
 
 const clicked = inject('clicked');
 /* <============= */
@@ -126,35 +80,12 @@ const clicked = inject('clicked');
         <div>{{ theme.description }}</div>
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
-        <template v-if="keywordPlace">
-          <div class="items scrollbar">
-            <place-item v-for="(place, index) in themePlaces" :key="index" :place="place" @detail="handleDetail"></place-item>
-          </div>
-          <button
-            type="button"
-            @click="keywordSearch"
-            style="width: 100px; height: 35px; position: absolute; top: 100%"
-          >
-            장소등록
-          </button>
-        </template>
-        <template v-else>
-          <div>
-            <input
-              type="text"
-              v-model="keyword"
-              @keyup.enter="handleKeywordSearch"
-              style="width: 250px; height: 30px"
-            />
-            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
-          </div>
-          <keyword-item
-            v-for="(place, index) in keywordPlaces"
-            :key="index"
-            :place="place"
-            @add="handleAdd"
-          ></keyword-item>
-        </template>
+        <div class="items scrollbar">
+          <place-item v-for="(place, index) in themePlaces" :key="index" :place="place" @detail="handleDetail"></place-item>
+        </div>
+        <button style="width: 100px; height: 35px; position: absolute; top: 100%">
+          <router-link :to="{ name: 'keyword' }">장소등록</router-link>
+        </button>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView"></place-detail>
         </template>
