@@ -1,10 +1,16 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useEditorStore } from '@/stores/editor';
+import { useRoute, useRouter } from 'vue-router';
 import { themePlace } from '@/api/place';
 import { curTheme } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
+
+const editorStore = useEditorStore();
+const { isLogin } = storeToRefs(editorStore);
+const router = useRouter();
 
 const themePlaces = ref([]);
 const theme = ref({
@@ -68,6 +74,10 @@ const handleDetail = (place) => {
 };
 
 const clicked = inject('clicked');
+
+const goBack = () => {
+  router.go(-1);
+}
 /* <============= */
 </script>
 
@@ -75,6 +85,7 @@ const clicked = inject('clicked');
   <div>
     <!-- 리스트 -->
     <div class="list">
+      <button @click="goBack">뒤로가기</button>
       <div class="name">{{ theme.themeName }}</div>
       <div class="items">
         <div>{{ theme.description }}</div>
@@ -83,9 +94,11 @@ const clicked = inject('clicked');
         <div class="items scrollbar">
           <place-item v-for="(place, index) in themePlaces" :key="index" :place="place" @detail="handleDetail"></place-item>
         </div>
-        <button style="width: 100px; height: 35px; position: absolute; top: 100%">
-          <router-link :to="{ name: 'keyword' }">장소등록</router-link>
-        </button>
+        <template v-if="isLogin && theme.type == 1">
+          <button style="width: 100px; height: 35px; position: absolute; top: 100%">
+            <router-link :to="{ name: 'keyword' }">장소등록</router-link>
+          </button>
+        </template>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView"></place-detail>
         </template>
