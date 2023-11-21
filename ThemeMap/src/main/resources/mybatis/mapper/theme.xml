@@ -107,9 +107,39 @@
 		values (#{editorId}, #{themeId})
 	</insert>
 	
+	<update id="increaseThemeLike" parameterType="string">
+		update theme
+		set like_sum = like_sum + 1
+		where theme_id = #{themeId}
+	</update>
+	
+	<update id="increaseEditorLike" parameterType="string">
+		update editor
+		set like_sum = like_sum + 1
+		where editor_id = #{editorId}
+	</update>
+
 	<delete id="disLike" parameterType="string">
 		delete from like_theme
 		where editor_id = #{editorId} and theme_id = #{themeId}
 	</delete>
+	
+	<update id="decreaseThemeLike" parameterType="string">
+		update theme
+		set like_sum = like_sum - 1
+		where theme_id = #{themeId}
+	</update>
+
+	<update id="decreaseEditorLike" parameterType="string">
+		update editor
+		set like_sum = like_sum - 1
+		where editor_id = #{editorId}
+	</update>
+	
+	<select id="findEditor" parameterType="string" resultType="int">
+		select editor_id
+		from theme
+		where theme_id = #{themeId}
+	</select>
 	
 </mapper>

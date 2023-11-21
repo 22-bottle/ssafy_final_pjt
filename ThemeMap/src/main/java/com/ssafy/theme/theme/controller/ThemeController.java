@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -181,21 +182,34 @@ public class ThemeController {
 		}
 	}
 	
+	@Transactional
 	@PostMapping("/postLike")
 	public ResponseEntity<?> postLike(@RequestBody LikeDto likeDto) {
 		System.out.println(likeDto);
 		try {
+			// like_theme에 좋아요 등록
 			themeService.postLike(likeDto.getEditorId(), likeDto.getThemeId());
+			// theme에 like_sum 1 증가
+			themeService.increaseThemeLike(likeDto.getThemeId());
+			// editor에 like_sum 1 증가
+			themeService.increaseEditorLike(themeService.findEditor(likeDto.getThemeId()));
+
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
 	}
 	
+	@Transactional
 	@PostMapping("/disLike")
 	public ResponseEntity<?> disLike(@RequestBody LikeDto likeDto) {
 		try {
+			// like_theme에 좋아요 삭제
 			themeService.disLike(likeDto.getEditorId(), likeDto.getThemeId());
+			// theme에 like_sum 1 감소
+			themeService.decreaseThemeLike(likeDto.getThemeId());
+			// editor에 like_sum 1 감소
+			themeService.decreaseEditorLike(themeService.findEditor(likeDto.getThemeId()));
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);

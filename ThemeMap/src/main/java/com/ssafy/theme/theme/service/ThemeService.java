@@ -32,7 +32,17 @@ public interface ThemeService {
 	int didLike(String editorId, String themeId) throws Exception;
 
 	void postLike(String editorId, String themeId) throws Exception;
+	
+	void increaseThemeLike(String themeId) throws Exception;
+	
+	void increaseEditorLike(String editorId) throws Exception;
 
 	void disLike(String editorId, String themeId) throws Exception;
+	
+	void decreaseThemeLike(String themeId) throws Exception;
+	
+	void decreaseEditorLike(String editorId) throws Exception;
+
+	String findEditor(String themeId) throws Exception;
 
 }

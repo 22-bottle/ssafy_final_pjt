@@ -76,7 +76,7 @@ const loadMarkers = () => {
   });
 
   // 마커를 생성합니다
-  markers.value = [];
+
   positions.value.forEach((position) => {
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
@@ -100,9 +100,7 @@ const loadMarkers = () => {
 };
 
 const deleteMarkers = () => {
-  if (markers.value.length > 0) {
-    markers.value.forEach((marker) => marker.setMap(null));
-  }
+  markers.value.forEach((marker) => marker.setMap(null));
 };
 
 </script>
