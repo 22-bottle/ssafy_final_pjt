@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, computed, defineProps } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';

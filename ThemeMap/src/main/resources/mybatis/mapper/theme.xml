@@ -25,9 +25,12 @@
 	</insert>
 	
 	<select id="hotTheme" resultMap="theme">
-		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		select t.theme_id, t.theme_name, t.description, t.editor_id, t.type, t.visible, t.like_sum from theme t
+		join place_in_theme pt on t.theme_id = pt.theme_id
 		where visible = 1 and like_sum > 0
-		order by like_sum desc limit 5
+		group by t.theme_id
+		having count(pt.place_id) > 0
+		order by like_sum desc limit 10
 	</select>
 	
 	<select id="themesOfPlace" parameterType="string" resultMap="theme">
@@ -62,8 +65,9 @@
 	</delete>
 	
 	<select id="themesOfTag" parameterType="list" resultMap="theme">
-		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
-		where visible = 1 and theme_id in (
+		select t.theme_id, t.theme_name, t.description, t.editor_id, t.type, t.visible, t.like_sum from theme t
+		join place_in_theme pt on t.theme_id = pt.theme_id
+		where visible = 1 and t.theme_id in (
 			select theme_id from tag_in_theme
 			where tag_id in
 			<foreach collection="tags" item="tag" index="idx" open="(" close=")" separator=",">
@@ -72,12 +76,16 @@
 			group by theme_id
 			having count(distinct tag_id) = ${tags.size}
 		)
+		group by t.theme_id
+		having count(pt.place_id) > 0
 	</select>
 	
 	<select id="allThemes" resultMap="theme">
-		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
+		select t.theme_id, t.theme_name, t.description, t.editor_id, t.type, t.visible, t.like_sum from theme t
+		join place_in_theme pt on t.theme_id = pt.theme_id
 		where visible = 1
-		order by like_sum desc
+		group by t.theme_id
+		having count(pt.place_id) > 0
 	</select>
 	
 	<select id="allTags" resultMap="tag">
@@ -88,5 +96,20 @@
 		select theme_id, theme_name, description, editor_id, type, visible, like_sum from theme
 		where theme_id = #{themeId}
 	</select>
+	
+	<select id="didLike" parameterType="string" resultType="int">
+		select count(editor_id) from like_theme
+		where editor_id = #{editorId} and theme_id = #{themeId}
+	</select>
+	
+	<insert id="postLike" parameterType="string">
+		insert into like_theme (editor_id, theme_id)
+		values (#{editorId}, #{themeId})
+	</insert>
+	
+	<delete id="disLike" parameterType="string">
+		delete from like_theme
+		where editor_id = #{editorId} and theme_id = #{themeId}
+	</delete>
 	
 </mapper>

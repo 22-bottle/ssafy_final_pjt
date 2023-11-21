@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.theme.theme.dto.LikeDto;
 import com.ssafy.theme.theme.dto.TagDto;
 import com.ssafy.theme.theme.dto.TagListDto;
 import com.ssafy.theme.theme.dto.ThemeDto;
@@ -163,6 +164,39 @@ public class ThemeController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(theme);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping("/didLike/{editorId}/{themeId}")
+	public ResponseEntity<?> didLike(@PathVariable("editorId") String editorId, @PathVariable("themeId") String themeId) {
+		try {
+			boolean did = themeService.didLike(editorId, themeId) == 1 ? true : false;
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(did);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PostMapping("/postLike")
+	public ResponseEntity<?> postLike(@RequestBody LikeDto likeDto) {
+		System.out.println(likeDto);
+		try {
+			themeService.postLike(likeDto.getEditorId(), likeDto.getThemeId());
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PostMapping("/disLike")
+	public ResponseEntity<?> disLike(@RequestBody LikeDto likeDto) {
+		try {
+			themeService.disLike(likeDto.getEditorId(), likeDto.getThemeId());
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

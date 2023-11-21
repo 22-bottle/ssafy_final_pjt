@@ -33,4 +33,16 @@ function themesOfTag(tags, success, fail) {
   server.post(`${url}/tag`, JSON.stringify(tags)).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag };
+function didLike(editorId, themeId, success, fail) {
+  server.get(`${url}/didLike/${editorId}/${themeId}`).then(success).catch(fail);
+}
+
+function postLike(likeDto, success, fail) {
+  server.post(`${url}/postLike`, JSON.stringify(likeDto)).then(success).catch(fail);
+}
+
+function disLike(likeDto, success, fail) {
+  server.post(`${url}/disLike`, JSON.stringify(likeDto)).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag, didLike, postLike, disLike };

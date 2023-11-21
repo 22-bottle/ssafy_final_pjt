@@ -30,7 +30,7 @@ const getTags = () => {
   );
 };
 
-const selectedTags = ref({ 0: {"tagId": "0", "tagName": "none", "selected": false}, });
+const selectedTags = ref({ 0: { tagId: '0', tagName: 'none', selected: false } });
 const onTagClick = (event) => {
   const index = event.target.id - 1;
   const tag = tags.value[index];
@@ -54,7 +54,7 @@ const onTagClick = (event) => {
       </template>
     </div>
     <div id="hotThemes">
-      <div>인기 테마 Top 5</div>
+      <div>인기 테마 Top 10</div>
       <theme-list type="hot"></theme-list>
     </div>
     <div id="allThemes">

@@ -32,4 +32,10 @@ public interface ThemeMapper {
 
 	ThemeDto getTheme(String themeId) throws Exception;
 
+	int didLike(String editorId, String themeId) throws Exception;
+
+	void postLike(String editorId, String themeId) throws Exception;
+
+	void disLike(String editorId, String themeId) throws Exception;
+
 }
