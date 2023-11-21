@@ -56,15 +56,23 @@ function initialize() {
   comment.value.placeId = place.value.placeId;
   getThemesOfPlace();
   getCommentsOfPlace();
+  raise(0, 0);
 }
-const starRating = computed(() => {
-  const rating = props.place.scoreCount === 0 ? 0 : (props.place.scoreSum / props.place.scoreCount).toFixed(1);
-  const validRating = !isNaN(parseFloat(rating)) && isFinite(rating) ? parseFloat(rating) : 0;
 
-  const fullStars = Math.max(0, Math.min(5, Math.floor(validRating)));
-  const halfStar = validRating % 1 >= 0.5 ? 1 : 0;
-  const emptyStars = 5 - fullStars - halfStar;
-  return { validRating, fullStars, halfStar, emptyStars };
+const raise = (param, count) => {
+  starRating.value.rating = props.place.scoreCount === 0 ? 0 : (((Number(props.place.scoreSum) + Number(param))/ (Number(props.place.scoreCount) + Number(count)))).toFixed(1);
+  starRating.value.validRating = !isNaN(parseFloat(starRating.value.rating)) && isFinite(starRating.value.rating) ? parseFloat(starRating.value.rating) : 0;
+  starRating.value.fullStars = Math.max(0, Math.min(5, Math.floor(starRating.value.validRating)));
+  starRating.value.halfStar = starRating.value.validRating % 1 >= 0.5 ? 1 : 0;
+  starRating.value.emptyStars = 5 - starRating.value.fullStars - starRating.value.halfStar;
+}
+
+const starRating = ref({
+  rating : 0,
+  validRating : 0,
+  fullStars : 0,
+  halfStar : 0,
+  emptyStars : 0
 });
 
 const getThemesOfPlace = () => {
@@ -116,12 +124,21 @@ const scoring = (event) => {
   keepScore(
     scoreDto.value,
     () => {
+      updateScore();
       // router.go(0);
     },
     (error) => {
       console.log(error);
     }
   );
+};
+
+const emit = defineEmits(['updateScore']);
+
+const updateScore = () => {
+  console.log("Enter updateScore method");
+  raise(Number(scoreDto.value.score), 1);
+  emit('updateScore', true);
 };
 
 const evaluated = ref(false);

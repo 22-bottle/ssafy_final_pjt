@@ -57,6 +57,10 @@ function updateTheme(theme, success, fail) {
   server.put(`${url}/update`, JSON.stringify(theme)).then(success).catch(fail);
 }
 
+function visibleThemesOfEditor(editorId, success, fail) {
+  server.get(`${url}/visible/${editorId}`).then(success).catch(fail);
+}
+
 export {
   hotTheme,
   allTheme,
@@ -71,4 +75,5 @@ export {
   themesOfEditor,
   themesOfLike,
   updateTheme,
+  visibleThemesOfEditor,
 };

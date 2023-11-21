@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { kakaoToDto } from '@/api/place';
 import KeywordList from '@/components/map/KeywordList.vue';
 
@@ -9,7 +9,14 @@ const temp = ref([]);
 const positions = ref([]);
 const markers = ref([]);
 const placeList = ref([]);
-
+watch(
+  () => temp.value,
+  () => {
+    temp.value = [];
+    positions.value = [];
+  },
+  { deep: true }
+);
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -51,9 +58,11 @@ function searchPlaces(keyword) {
 function placesSearchCB(data, status) {
   if (status === kakao.maps.services.Status.OK) {
     temp.value = data;
+    placeList.value = [];
     for (let i = 0; i < data.length; i++) {
       placeList.value.push({...kakaoToDto(data[i])});
     }
+    console.log("검색결과:",placeList.value);
     loadMarkers();
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
     window.alert('검색 결과가 존재하지 않습니다.');
@@ -101,6 +110,7 @@ const loadMarkers = () => {
 
 const deleteMarkers = () => {
   markers.value.forEach((marker) => marker.setMap(null));
+  markers.value = [];
 };
 
 </script>
