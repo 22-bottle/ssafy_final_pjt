@@ -65,6 +65,10 @@ function updateTag(themeId, tags, success, fail) {
   server.post(`${url}/updateTag/${themeId}`, JSON.stringify(tags)).then(success).catch(fail);
 }
 
+function visibleThemesOfEditor(editorId, success, fail) {
+  server.get(`${url}/visible/${editorId}`).then(success).catch(fail);
+}
+
 export {
   hotTheme,
   allTheme,
@@ -81,4 +85,5 @@ export {
   updateTheme,
   tagsOfTheme,
   updateTag,
+  visibleThemesOfEditor,
 };

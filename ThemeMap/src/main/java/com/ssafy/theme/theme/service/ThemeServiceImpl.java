@@ -41,6 +41,11 @@ public class ThemeServiceImpl implements ThemeService {
 	}
 
 	@Override
+	public List<ThemeDto> visibleThemesOfEditor(String editorId) throws Exception {
+		return themeMapper.visibleThemesOfEditor(editorId);
+	}
+
+	@Override
 	public List<ThemeDto> themesOfLike(String editorId) throws Exception {
 		return themeMapper.themesOfLike(editorId);
 	}

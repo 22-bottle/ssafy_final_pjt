@@ -86,6 +86,19 @@ public class ThemeController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	// editor가 만든 visible = 1인 theme를 검색
+	@GetMapping("/visible/{editorId}")
+	public ResponseEntity<?> visibleThemesOfEditor(@PathVariable("editorId") String editorId) {
+		try {
+			List<ThemeDto> themes = themeService.visibleThemesOfEditor(editorId);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(themes);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	// editor가 좋아요 누른 theme를 검색
 	@GetMapping("/like/{editorId}")

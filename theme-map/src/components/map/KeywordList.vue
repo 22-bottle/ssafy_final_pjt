@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { hotPlace } from '@/api/place';
 import { createPlace, linkPlace } from '@/api/place';
 import { useEditorStore } from '@/stores/editor';
 import PlaceItem from './PlaceItem.vue';
@@ -13,21 +12,22 @@ const props = defineProps({ selectedPlace: String, hoveredPlace: String, placeLi
 const { cEditorDto } = editorStore;
 
 const route = useRoute();
-const keywordPlaces = props.placeList;
+const keywordPlaces = ref([]);
 const selected = ref('');
 const hovered = ref('');
 const keyword = ref('');
 const editorId = ref('');
 
 onMounted(() => {
-  getHotPlace();
+  // getHotPlace();
   editorId.value = cEditorDto.value.editorId;
+  keywordPlaces.value = props.placeList;
 });
 
 watch(
-  () => props.selectedPlace,
+  () => props.hoveredPlace,
   () => {
-    selected.value = props.selectedPlace;
+    hovered.value = props.hoveredPlace;
   },
   { deep: true }
 );
@@ -40,18 +40,15 @@ watch(
   { deep: true }
 );
 
-const hotPlaces = ref([]);
-const getHotPlace = () => {
-  hotPlace(
-    ({ data }) => {
-      hotPlaces.value = data;
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-};
+watch(
+  () => props.placeList,
+  () => {
+    keywordPlaces.value = [];
+    keywordPlaces.value = {...props.placeList};
+    console.log("바뀌었습니다.",keywordPlaces.value);
+  },
+  { deep: true }
+);
 
 /* =============> */
 const emit = defineEmits(['detail']);
@@ -102,7 +99,7 @@ const goBack = () => {
         <button @click="goBack">뒤로가기</button>
         <!-- =============> -->
         <div>
-          <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 200px; height: 30px" />
+          <input type="text" v-model="keyword" style="width: 200px; height: 30px" />
           <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
         </div>
         <div class="items scrollbar">

@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { themesOfEditor, themesOfLike } from '@/api/theme';
+import { themesOfEditor, themesOfLike, visibleThemesOfEditor } from '@/api/theme';
 import ThemeItem from '@/components/theme/ThemeItem.vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({ editorId: String, type: String });
 const themes = ref([]);
+
+const route = useRoute();
 
 onMounted(() => {
   if (props.type === 'all') {
@@ -15,15 +18,27 @@ onMounted(() => {
 });
 
 const getThemesOfEditor = () => {
-  themesOfEditor(
-    props.editorId,
-    ({ data }) => {
-      themes.value = data;
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+  if (route.name === 'mypage') {
+    themesOfEditor(
+      props.editorId,
+      ({ data }) => {
+        themes.value = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  } else {
+    visibleThemesOfEditor(
+      props.editorId,
+      ({ data }) => {
+        themes.value = data;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 };
 
 const getThemesOfLike = () => {

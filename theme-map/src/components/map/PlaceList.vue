@@ -61,6 +61,11 @@ const handleDetail = (place) => {
   emit('clickPlace', place);
 };
 /* <============= */
+const updateScore = () => {
+  console.log("Enter update method");
+  hotPlaces.value = [];
+  getHotPlace();
+}
 </script>
 
 <template>
@@ -84,7 +89,7 @@ const handleDetail = (place) => {
           </template>
         </div>
         <template v-if="visibility && !clicked">
-          <place-detail :place="placeToView"></place-detail>
+          <place-detail :place="placeToView" @updateScore="updateScore"></place-detail>
         </template>
         <!-- <============= -->
       </div>

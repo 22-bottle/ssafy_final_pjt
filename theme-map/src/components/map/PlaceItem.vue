@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { isThere, isInTheme, whoCreated, deletePlace } from '@/api/place';
 import { useRoute } from 'vue-router';
 import { useEditorStore } from '@/stores/editor';
@@ -19,6 +19,14 @@ const place = ref({
   address: '',
   phone: '',
 });
+
+watch(
+  () => props.place,
+  (newPlace) => {
+    place.value = newPlace;
+  },
+  { deep: true }
+);
 
 onMounted(() => {
   place.value = props.place;

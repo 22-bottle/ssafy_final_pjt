@@ -15,6 +15,8 @@ public interface ThemeService {
 
 	List<ThemeDto> themesOfEditor(String editorId) throws Exception;
 
+	List<ThemeDto> visibleThemesOfEditor(String editorId) throws Exception;
+	
 	List<ThemeDto> themesOfLike(String editorId) throws Exception;
 
 	void updateTheme(ThemeDto themeDto) throws Exception;
