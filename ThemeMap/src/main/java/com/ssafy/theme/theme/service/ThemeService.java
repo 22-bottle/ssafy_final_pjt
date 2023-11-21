@@ -7,7 +7,7 @@ import com.ssafy.theme.theme.dto.ThemeDto;
 
 public interface ThemeService {
 
-	void createTheme(ThemeDto themeDto) throws Exception;
+	String createTheme(ThemeDto themeDto) throws Exception;
 
 	List<ThemeDto> hotTheme() throws Exception;
 

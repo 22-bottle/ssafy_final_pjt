@@ -14,29 +14,24 @@ const theme = ref({
   themeName: '',
   description: '',
   editorId: cEditorDto.value.editorId,
-  type: '',
-  visible: '',
+  type: '1',
+  visible: '1',
 });
 
 const onThemeCreate = (event) => {
   event.preventDefault();
   createTheme(
     theme.value,
-    () => {
-      router.replace({ name: 'detail' });
-      router.replace({ name: 'keyword', params: { themeId: 1 } });
+    ({ data }) => {
+      router.replace({ name: 'keyword', params: { themeId: data } });
     },
     (error) => {
-      console.log(theme.value);
       console.log(error);
     }
   );
-
-  // 그냥 이동 테스트 themeID = 1
-  //  router.replace({ name: 'keyword', params: { themeId: 1 } });
 };
 
-const isPublic = ref(false);
+const isPublic = ref(true);
 
 const checkPublic = () => {
   isPublic.value = true;
@@ -57,12 +52,12 @@ const checkPrivate = () => {
       <label for="description">테마 설명 : </label>
       <input type="text" id="description" name="description" v-model="theme.description" /><br />
       테마 유형 :
-      <input type="radio" id="public" name="type" value="1" v-model="theme.type" @click="checkPublic" />
+      <input type="radio" id="public" name="type" value="1" v-model="theme.type" checked @click="checkPublic" />
       <label for="public">Public</label>
       <input type="radio" id="private" name="type" value="0" v-model="theme.type" @click="checkPrivate" />
       <label for="private">Private</label><br />
       공개 여부 :
-      <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" />
+      <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" checked />
       <label for="visible">공개</label>
       <input type="radio" id="invisible" name="visible" value="0" v-model="theme.visible" :disabled="isPublic" />
       <label for="invisible">비공개</label><br />

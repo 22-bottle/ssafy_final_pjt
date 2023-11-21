@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { themesOfEditor } from '@/api/theme';
 import { power } from '@/api/editor';
 import EditorThemeList from '@/components/editor/EditorThemeList.vue';
 
@@ -12,32 +11,14 @@ onMounted(() => {
 });
 
 const initialize = () => {
-  console.log('Enter initialize method');
   getPowerEditors();
-  // getThemesOfEditor();
 };
 
 const getPowerEditors = () => {
-  console.log('Enter getPowerEditors method');
   power(
     ({ data }) => {
       console.log(data);
       editors.value = data;
-      for (let index = 0; index < data.length; index++) {
-        getThemesOfEditor(editors.value[index].editorId, index);
-      }
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-};
-
-const getThemesOfEditor = (editorId, index) => {
-  themesOfEditor(
-    editorId,
-    ({ data }) => {
-      themes.value[index] = data;
     },
     (error) => {
       console.log(error);
@@ -49,18 +30,16 @@ const getThemesOfEditor = (editorId, index) => {
 <template>
   <div class="power">
     <div class="title">파워 에디터</div>
-    <template v-for="editor in editors" :key="editor.editorId">
+    <template v-for="(editor, index) in editors" :key="editor.editorId">
       <div class="editor">
         <label class="editor-name">{{ editor.editorName }}</label>
         <label class="editor-name"> &#9734;{{ editor.likeSum }}</label>
       </div>
-      <template v-for="(themess, index) in themes" :key="index">
-        <div class="theme-container">
-          <div>
-            <editor-theme-list :themes="themess"></editor-theme-list>
-          </div>
+      <div class="theme-container">
+        <div>
+          <editor-theme-list :editorId="editor.editorId"></editor-theme-list>
         </div>
-      </template>
+      </div>
     </template>
   </div>
 </template>

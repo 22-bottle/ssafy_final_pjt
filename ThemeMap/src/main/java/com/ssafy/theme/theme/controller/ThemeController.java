@@ -40,8 +40,10 @@ public class ThemeController {
 	@PostMapping("/create")
 	public ResponseEntity<?> createTheme(@RequestBody ThemeDto themeDto) {
 		try {
-			themeService.createTheme(themeDto);
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
+			String themeId = themeService.createTheme(themeDto);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(themeId);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

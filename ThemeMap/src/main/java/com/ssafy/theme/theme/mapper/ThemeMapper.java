@@ -48,4 +48,6 @@ public interface ThemeMapper {
 
 	String findEditor(String themeId) throws Exception;
 
+	String returnTheme() throws Exception;
+
 }

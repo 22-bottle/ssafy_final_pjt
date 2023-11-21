@@ -20,8 +20,9 @@ public class ThemeServiceImpl implements ThemeService {
 	}
 
 	@Override
-	public void createTheme(ThemeDto themeDto) throws Exception {
+	public String createTheme(ThemeDto themeDto) throws Exception {
 		themeMapper.createTheme(themeDto);
+		return themeMapper.returnTheme();
 	}
 
 	@Override
@@ -91,7 +92,7 @@ public class ThemeServiceImpl implements ThemeService {
 
 	@Override
 	public void increaseEditorLike(String editorId) throws Exception {
-		themeMapper.increaseThemeLike(editorId);
+		themeMapper.increaseEditorLike(editorId);
 	}
 	
 	@Override
@@ -101,12 +102,12 @@ public class ThemeServiceImpl implements ThemeService {
 
 	@Override
 	public void decreaseThemeLike(String themeId) throws Exception {
-		themeMapper.increaseThemeLike(themeId);
+		themeMapper.decreaseThemeLike(themeId);
 	}
 
 	@Override
 	public void decreaseEditorLike(String editorId) throws Exception {
-		themeMapper.increaseThemeLike(editorId);
+		themeMapper.decreaseEditorLike(editorId);
 	}
 
 	@Override
