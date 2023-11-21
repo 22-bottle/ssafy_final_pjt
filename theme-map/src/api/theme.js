@@ -57,6 +57,14 @@ function updateTheme(theme, success, fail) {
   server.put(`${url}/update`, JSON.stringify(theme)).then(success).catch(fail);
 }
 
+function tagsOfTheme(themeId, success, fail) {
+  server.get(`${url}/tagsOfTheme/${themeId}`).then(success).catch(fail);
+}
+
+function updateTag(themeId, tags, success, fail) {
+  server.post(`${url}/updateTag/${themeId}`, JSON.stringify(tags)).then(success).catch(fail);
+}
+
 export {
   hotTheme,
   allTheme,
@@ -71,4 +79,6 @@ export {
   themesOfEditor,
   themesOfLike,
   updateTheme,
+  tagsOfTheme,
+  updateTag,
 };

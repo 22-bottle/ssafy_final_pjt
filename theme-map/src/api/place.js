@@ -94,4 +94,12 @@ function isInTheme(themeId, placeId, success, fail) {
   server.get(`${url}/isInTheme/${themeId}/${placeId}`).then(success).catch(fail);
 }
 
-export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore, isThere, isInTheme };
+function whoCreated(themeId, placeId, success, fail) {
+  server.get(`${url}/who/${themeId}/${placeId}`).then(success).catch(fail);
+}
+
+function deletePlace(themeId, placeId, success, fail) {
+  server.delete(`${url}/delete/${themeId}/${placeId}`).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore, isThere, isInTheme, whoCreated, deletePlace };

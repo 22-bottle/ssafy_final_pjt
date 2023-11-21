@@ -58,5 +58,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public void deletePlace(String themeId, String placeId) throws Exception {
 		placeMapper.deletePlace(themeId, placeId);
 	}
+
+	@Override
+	public String whoCreated(String themeId, String placeId) throws Exception {
+		return placeMapper.whoCreated(themeId, placeId);
+	}
 	
 }

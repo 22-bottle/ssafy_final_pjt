@@ -47,7 +47,6 @@ const getThemePlace = () => {
   themePlace(
     route.params.themeId,
     ({ data }) => {
-      console.log(data);
       themePlaces.value = data;
     },
     (error) => {
@@ -119,6 +118,11 @@ const clicked = inject('clicked');
 const goBack = () => {
   router.go(-1);
 };
+
+const handleDelete = () => {
+  themePlaces.value = [];
+  getThemePlace();
+}
 /* <============= */
 </script>
 
@@ -143,6 +147,7 @@ const goBack = () => {
             :key="index"
             :place="place"
             @detail="handleDetail"
+            @delete="handleDelete"
           ></place-item>
         </div>
         <template v-if="isLogin && (theme.type == 1 || theme.editorId === cEditorDto.editorId)">

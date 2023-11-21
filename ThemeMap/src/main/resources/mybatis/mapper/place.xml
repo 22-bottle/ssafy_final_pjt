@@ -60,5 +60,10 @@
 		delete from place_in_theme
 		where theme_id = #{themeId} and place_id = #{placeId}
 	</delete>
+	
+	<select id="whoCreated" parameterType="string" resultType="string">
+		select editor_id from place_in_theme
+		where theme_id = #{themeId} and place_id = #{placeId}
+	</select>
 
 </mapper>

@@ -23,4 +23,6 @@ public interface PlaceService {
 
 	void deletePlace(String themeId, String placeId) throws Exception;
 
+	String whoCreated(String themeId, String placeId) throws Exception;
+
 }

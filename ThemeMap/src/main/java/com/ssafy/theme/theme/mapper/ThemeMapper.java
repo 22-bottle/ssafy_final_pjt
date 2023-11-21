@@ -50,4 +50,10 @@ public interface ThemeMapper {
 
 	String returnTheme() throws Exception;
 
+	List<TagDto> tagsOfTheme(String themeId) throws Exception;
+
+	void deleteTags(String themeId) throws Exception;
+
+	void insertTags(String themeId, String tagId) throws Exception;
+
 }

@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { isThere, isInTheme } from '@/api/place';
+import { isThere, isInTheme, whoCreated, deletePlace } from '@/api/place';
 import { useRoute } from 'vue-router';
+import { useEditorStore } from '@/stores/editor';
 
 const props = defineProps({ place: Object });
 const route = useRoute();
+const editorStore = useEditorStore();
+const { cEditorDto } = editorStore;
 
 const place = ref({
   placeId: '',
@@ -20,17 +23,34 @@ const place = ref({
 onMounted(() => {
   place.value = props.place;
   checkIsThere();
+  if (route.name == 'detail') {
+    getWhoCreated();
+  }
 });
 
 const moveToKakao = () => {
   window.open('https://place.map.kakao.com/' + place.value.placeId);
 };
 /* ========> */
-const emit = defineEmits(['detail']);
+const emit = defineEmits(['detail', 'delete']);
 
 const handlePlace = () => {
   emit('detail', place.value);
 };
+
+const editorId = ref('');
+const getWhoCreated = () => {
+  whoCreated(
+    route.params.themeId,
+    props.place.placeId,
+    ({ data }) => {
+      editorId.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  )
+}
 /* <======== */
 
 const thereIs = ref(false); //place table에 있는지
@@ -61,6 +81,19 @@ const checkInThere = () => {
     }
   );
 };
+
+const goDelete = () => {
+  deletePlace(
+    route.params.themeId,
+    props.place.placeId,
+    () => {
+      emit('delete');
+    },
+    (error) => {
+      console.log(error);
+    }
+  )
+}
 </script>
 
 <template>
@@ -90,6 +123,9 @@ const checkInThere = () => {
     </template>
     <template v-else>
       <button @click="handlePlace">상세보기</button>
+    </template>
+    <template v-if="route.name == 'detail' && editorId == cEditorDto.editorId">
+      <button @click="goDelete">삭제</button>
     </template>
   </div>
   <br />

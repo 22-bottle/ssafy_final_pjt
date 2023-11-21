@@ -26,4 +26,6 @@ public interface PlaceMapper {
 
 	void deletePlace(String themeId, String placeId) throws Exception;
 
+	String whoCreated(String themeId, String placeId) throws Exception;
+
 }

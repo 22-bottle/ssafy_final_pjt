@@ -4,8 +4,8 @@ import { storeToRefs } from 'pinia';
 import { allTags } from '@/api/theme';
 import { useEditorStore } from '@/stores/editor';
 
-import ThemeList from '../components/theme/ThemeList.vue';
-import TagItem from '../components/theme/TagItem.vue';
+import ThemeList from '@/components/theme/ThemeList.vue';
+import TagItem from '@/components/theme/TagItem.vue';
 
 const tags = ref([]);
 const editorStore = useEditorStore();

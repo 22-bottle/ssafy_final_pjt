@@ -45,4 +45,10 @@ public interface ThemeService {
 
 	String findEditor(String themeId) throws Exception;
 
+	List<TagDto> tagsOfTheme(String themeId) throws Exception;
+
+	void deleteTags(String themeId) throws Exception;
+
+	void insertTags(String themeId, List<TagDto> tags) throws Exception;
+
 }

@@ -124,6 +124,18 @@ public class PlaceController {
 		}
 	}
 	
+	@GetMapping("/who/{themeId}/{placeId}")
+	public ResponseEntity<?> whoCreated(@PathVariable("themeId") String themeId, @PathVariable("placeId") String placeId) {
+		try {
+			String editorId = placeService.whoCreated(themeId, placeId);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(editorId);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

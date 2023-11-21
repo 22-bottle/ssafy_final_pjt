@@ -217,6 +217,29 @@ public class ThemeController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	@GetMapping("/tagsOfTheme/{themeId}")
+	public ResponseEntity<?> tagsOfTheme(@PathVariable("themeId") String themeId) {
+		try {
+			List<TagDto> tags = themeService.tagsOfTheme(themeId);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(tags);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@PostMapping("/updateTag/{themeId}")
+	public ResponseEntity<?> updateTag(@RequestBody TagListDto tagListDto, @PathVariable("themeId") String themeId) {
+		try {
+			themeService.deleteTags(themeId);
+			themeService.insertTags(themeId, tagListDto.getTags());
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

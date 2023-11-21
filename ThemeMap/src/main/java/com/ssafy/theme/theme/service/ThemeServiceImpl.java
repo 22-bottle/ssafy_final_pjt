@@ -115,4 +115,21 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeMapper.findEditor(themeId);
 	}
 
+	@Override
+	public List<TagDto> tagsOfTheme(String themeId) throws Exception {
+		return themeMapper.tagsOfTheme(themeId);
+	}
+
+	@Override
+	public void deleteTags(String themeId) throws Exception {
+		themeMapper.deleteTags(themeId);
+	}
+
+	@Override
+	public void insertTags(String themeId, List<TagDto> tags) throws Exception {
+		for (TagDto tag : tags) {
+			themeMapper.insertTags(themeId, tag.getTagId());			
+		}
+	}
+
 }
