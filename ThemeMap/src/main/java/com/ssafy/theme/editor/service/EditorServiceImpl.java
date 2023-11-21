@@ -1,6 +1,7 @@
 package com.ssafy.theme.editor.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +82,11 @@ public class EditorServiceImpl implements EditorService {
 	@Override
 	public String getSalt(String id) {
 		return editorMapper.getSalt(id);
+	}
+
+	@Override
+	public List<EditorDto> power() throws Exception {
+		return editorMapper.power();
 	}
 
 }

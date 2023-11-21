@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import { useEditorStore } from '@/stores/editor';
 import { jwtDecode } from 'jwt-decode';
+import router from '../../router';
 
 const editorStore = useEditorStore();
 
@@ -17,6 +18,7 @@ const handleLogout = async () => {
   let id = token === null ? cEditorDto.value.id : jwtDecode(token).id;
 
   await editorLogout(id);
+  router.replace("/");
 };
 </script>
 

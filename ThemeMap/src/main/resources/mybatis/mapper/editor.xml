@@ -79,4 +79,12 @@
         WHERE id = #{id}
     </select>
 
+    <!-- power -->
+    <select id="power" parameterType="editorDto" resultMap="editor">
+		SELECT *
+		FROM editor
+		where like_sum != 0
+		order by like_sum desc limit 10
+    </select>
+
 </mapper>

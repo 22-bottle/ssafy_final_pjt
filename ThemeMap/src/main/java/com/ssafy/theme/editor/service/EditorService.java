@@ -1,5 +1,7 @@
 package com.ssafy.theme.editor.service;
 
+import java.util.List;
+
 import com.ssafy.theme.editor.dto.EditorDto;
 
 public interface EditorService {
@@ -13,5 +15,6 @@ public interface EditorService {
 	int modify(EditorDto editorDto);
 	int resign(String id);
 	String getSalt(String id);
-	
+	List<EditorDto> power() throws Exception;
+
 }

@@ -1,6 +1,7 @@
 package com.ssafy.theme.editor.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -19,5 +20,6 @@ public interface EditorMapper {
 	int modify(EditorDto editorDto);
 	int resign(String id);
 	String getSalt(String id);
+	List<EditorDto> power() throws Exception;
 
 }

@@ -33,4 +33,8 @@ async function resign(id, success, fail) {
   await server.delete(`/editor/resign`, { data: id }).then(success).catch(fail);
 }
 
-export { editorConfirm, findById, tokenRegeneration, regist, logout, modify, resign };
+async function power(success, fail) {
+  await server.get(`/editor/power`).then(success).catch(fail);
+}
+
+export { editorConfirm, findById, tokenRegeneration, regist, logout, modify, resign, power };
