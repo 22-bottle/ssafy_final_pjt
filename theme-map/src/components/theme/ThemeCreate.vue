@@ -20,20 +20,20 @@ const theme = ref({
 
 const onThemeCreate = (event) => {
   event.preventDefault();
-  // createTheme(
-  //   theme.value,
-  //   () => {
-  //     router.replace({ name: 'detail' });
-  // router.replace({ name: 'keyword', params: { themeId: 1 } });
-  //   },
-  //   (error) => {
-  //     console.log(theme.value);
-  //     console.log(error);
-  //   }
-  // );
+  createTheme(
+    theme.value,
+    () => {
+      router.replace({ name: 'detail' });
+  router.replace({ name: 'keyword', params: { themeId: 1 } });
+    },
+    (error) => {
+      console.log(theme.value);
+      console.log(error);
+    }
+  );
 
   // 그냥 이동 테스트 themeID = 1
- router.replace({ name: 'keyword', params: { themeId: 1 } });
+//  router.replace({ name: 'keyword', params: { themeId: 1 } });
 };
 </script>
 

@@ -33,6 +33,7 @@ const initMap = () => {
 
 const searchKeyWord = (keyword) => {
   console.log('Enter searchKeyWord method:', keyword);
+
   searchPlaces(keyword);
 };
 

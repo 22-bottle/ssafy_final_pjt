@@ -93,12 +93,15 @@ const getCommentsOfPlace = () => {
   );
 };
 
-const handelComment = () => {
+const handelComment = (event) => {
   console.log('Enter handelComment method');
+  event.preventDefault();
   registComment(
     comment.value,
     () => {
       console.log('댓글 등록 완료!!');
+      commentInfos.value.push({... comment.value});
+      getCommentsOfPlace();
     },
     (error) => {
       console.log(error);
@@ -112,7 +115,7 @@ const scoring = (event) => {
   keepScore(
     scoreDto.value,
     () => {
-      router.go(0);
+      // router.go(0);
     },
     (error) => {
       console.log(error);
@@ -160,7 +163,7 @@ const scoring = (event) => {
               <label for="content" class="">후기: </label>
               <input type="text" id="content" class="" v-model="comment.content" />
             </div>
-            <button type="submit" class="btn" @click="handelComment">
+            <button class="btn" @click="handelComment">
               <label for="btn" class="btndata">댓글 등록</label>
             </button>
           </form>

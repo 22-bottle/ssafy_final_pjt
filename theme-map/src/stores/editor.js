@@ -141,11 +141,16 @@ export const useEditorStore = defineStore(
   };
 
   const editorModify = async (param) => {
+    console.log(param);
     await modify(
       param,
       (response) => {
         if (response.status === httpStatusCode.OK) {
           console.log('회원정보 수정 완료!!');
+          editorDto.value.id = param.id ;
+          editorDto.value.emailId = param.emailId ;
+          editorDto.value.emailDomain = param.emailDomain;
+          editorDto.value.editorName = param.editorName;
         } else {
           console.error('회원정보 수정 실패..');
         }

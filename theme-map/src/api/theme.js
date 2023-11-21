@@ -33,4 +33,12 @@ function themesOfTag(tags, success, fail) {
   server.post(`${url}/tag`, JSON.stringify(tags)).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag };
+function themesOfEditor(editorId, success, fail) {
+  server.get(`${url}/editor/${editorId}`).then(success).catch(fail);
+}
+
+function themesOfLike(editorId, success, fail) {
+  server.get(`${url}/like/${editorId}`).then(success).catch(fail);
+}
+
+export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag, themesOfEditor, themesOfLike };
