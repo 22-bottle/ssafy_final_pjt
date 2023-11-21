@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, computed, defineProps } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';
@@ -135,13 +135,15 @@ const scoring = (event) => {
         <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
         <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
       </div>
-      <div>
-        <span class="star empty" id="1" @click="scoring">&#9734;</span>
-        <span class="star empty" id="2" @click="scoring">&#9734;</span>
-        <span class="star empty" id="3" @click="scoring">&#9734;</span>
-        <span class="star empty" id="4" @click="scoring">&#9734;</span>
-        <span class="star empty" id="5" @click="scoring">&#9734;</span>
-      </div>
+      <template v-if="isLogin">
+        <div>
+          <span class="star empty" id="1" @click="scoring">&#9734;</span>
+          <span class="star empty" id="2" @click="scoring">&#9734;</span>
+          <span class="star empty" id="3" @click="scoring">&#9734;</span>
+          <span class="star empty" id="4" @click="scoring">&#9734;</span>
+          <span class="star empty" id="5" @click="scoring">&#9734;</span>
+        </div>
+      </template>
       <span style="color: violet">일단 장소 테마들: </span><br />
       <template v-for="theme in themeInfos" :key="theme.themeId">
         <div style="background-color: blueviolet">

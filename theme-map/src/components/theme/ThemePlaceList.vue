@@ -1,10 +1,17 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useEditorStore } from '@/stores/editor';
+import { useRoute, useRouter } from 'vue-router';
 import { themePlace } from '@/api/place';
-import { curTheme } from '@/api/theme';
+import { curTheme, didLike, postLike, disLike } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
+
+const editorStore = useEditorStore();
+const { isLogin } = storeToRefs(editorStore);
+const { cEditorDto } = editorStore;
+const router = useRouter();
 
 const themePlaces = ref([]);
 const theme = ref({
@@ -22,6 +29,7 @@ const route = useRoute();
 onMounted(() => {
   getTheme();
   getThemePlace();
+  getDidLike();
 });
 
 const getTheme = () => {
@@ -49,6 +57,46 @@ const getThemePlace = () => {
   );
 };
 
+const didILiked = ref(false);
+const getDidLike = () => {
+  didLike(
+    cEditorDto.value.editorId,
+    route.params.themeId,
+    ({ data }) => {
+      didILiked.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const likeDto = ref({
+  editorId: cEditorDto.value.editorId,
+  themeId: route.params.themeId,
+});
+const like = () => {
+  postLike(
+    likeDto.value,
+    () => {
+      didILiked.value = true;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+const dislike = () => {
+  disLike(
+    likeDto.value,
+    () => {
+      didILiked.value = false;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 /* =============> */
 const emit = defineEmits(['clickPlace']);
 
@@ -68,6 +116,10 @@ const handleDetail = (place) => {
 };
 
 const clicked = inject('clicked');
+
+const goBack = () => {
+  router.go(-1);
+};
 /* <============= */
 </script>
 
@@ -75,17 +127,27 @@ const clicked = inject('clicked');
   <div>
     <!-- 리스트 -->
     <div class="list">
+      <button @click="goBack">뒤로가기</button>
+      <button v-if="didILiked" @click="dislike">누른 좋아요</button>
+      <button v-else @click="like">안 누른 좋아요</button>
       <div class="name">{{ theme.themeName }}</div>
       <div class="items">
         <div>{{ theme.description }}</div>
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
         <!-- =============> -->
         <div class="items scrollbar">
-          <place-item v-for="(place, index) in themePlaces" :key="index" :place="place" @detail="handleDetail"></place-item>
+          <place-item
+            v-for="(place, index) in themePlaces"
+            :key="index"
+            :place="place"
+            @detail="handleDetail"
+          ></place-item>
         </div>
-        <button style="width: 100px; height: 35px; position: absolute; top: 100%">
-          <router-link :to="{ name: 'keyword' }">장소등록</router-link>
-        </button>
+        <template v-if="isLogin && theme.type == 1">
+          <button style="width: 100px; height: 35px; position: absolute; top: 100%">
+            <router-link :to="{ name: 'keyword' }">장소등록</router-link>
+          </button>
+        </template>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView"></place-detail>
         </template>

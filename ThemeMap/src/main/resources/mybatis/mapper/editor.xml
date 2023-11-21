@@ -19,7 +19,7 @@
 	
     <!-- login -->
     <select id="login" parameterType="editorDto" resultMap="editor">
-		SELECT editor_id, id, pw, salt, editor_name, token
+		SELECT *
 		FROM editor
 		WHERE id = #{id}
     </select>

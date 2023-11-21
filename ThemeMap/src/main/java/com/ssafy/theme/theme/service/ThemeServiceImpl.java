@@ -74,4 +74,19 @@ public class ThemeServiceImpl implements ThemeService {
 		return themeMapper.getTheme(themeId);
 	}
 
+	@Override
+	public int didLike(String editorId, String themeId) throws Exception {
+		return themeMapper.didLike(editorId, themeId);
+	}
+
+	@Override
+	public void postLike(String editorId, String themeId) throws Exception {
+		themeMapper.postLike(editorId, themeId);
+	}
+
+	@Override
+	public void disLike(String editorId, String themeId) throws Exception {
+		themeMapper.disLike(editorId, themeId);
+	}
+
 }
