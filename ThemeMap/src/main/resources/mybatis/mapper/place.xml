@@ -45,5 +45,15 @@
 		update place set score_sum = score_sum + #{score}, score_count = score_count + 1
 		where place_id = #{placeId}
 	</update>
+	
+	<select id="isThere" parameterType="string" resultType="int">
+		select count(place_id) from place
+		where place_id = #{placeId}
+	</select>
+	
+	<select id="isInTheme" parameterType="string" resultType="int">
+		select count(place_id) from place_in_theme
+		where theme_id = #{themeId} and place_id = #{placeId}
+	</select>
 
 </mapper>

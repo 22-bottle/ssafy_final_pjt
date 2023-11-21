@@ -89,6 +89,30 @@ public class PlaceController {
 		}
 	}
 	
+	@GetMapping("/isThere/{placeId}")
+	public ResponseEntity<?> isThere(@PathVariable("placeId") String placeId) {
+		try {
+			boolean there = placeService.isThere(placeId) == 1 ? true : false;
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(there);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@GetMapping("/isInTheme/{themeId}/{placeId}")
+	public ResponseEntity<?> isInTheme(@PathVariable("themeId") String themeId, @PathVariable("placeId") String placeId) {
+		try {
+			boolean there = placeService.isInTheme(themeId, placeId) == 1 ? true : false;
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(there);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

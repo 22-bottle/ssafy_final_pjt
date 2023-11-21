@@ -43,5 +43,15 @@ public class PlaceServiceImpl implements PlaceService {
 	public void keepScore(String placeId, String score) throws Exception {
 		placeMapper.keepScore(placeId, score);
 	}
+
+	@Override
+	public int isThere(String placeId) throws Exception {
+		return placeMapper.isThere(placeId);
+	}
+
+	@Override
+	public int isInTheme(String themeId, String placeId) throws Exception {
+		return placeMapper.isInTheme(themeId, placeId);
+	}
 	
 }

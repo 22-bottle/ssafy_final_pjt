@@ -6,10 +6,11 @@ import { createPlace, linkPlace } from '@/api/place';
 import { useEditorStore } from '@/stores/editor';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 import PlaceItem from './PlaceItem.vue';
+import router from '../../router';
 
 const editorStore = useEditorStore();
 
-const props = defineProps({ selectedPlace: String , hoveredPlace: String, placeList: Array});
+const props = defineProps({ selectedPlace: String, hoveredPlace: String, placeList: Array });
 const { cEditorDto } = editorStore;
 
 const route = useRoute();
@@ -77,12 +78,10 @@ const handleKeywordSearch = async () => {
   emit('keyword', keyword.value);
 };
 const handleAdd = (place) => {
-  console.log('Enter handleAdd method');
   // 장소를 생성
   createPlace(
     place,
     ({ data }) => {
-      
       console.log(data);
     },
     (error) => {
@@ -105,6 +104,10 @@ const handleAdd = (place) => {
   );
 };
 /* <============= */
+
+const goBack = () => {
+  router.go(-1);
+};
 </script>
 
 <template>
@@ -113,24 +116,17 @@ const handleAdd = (place) => {
     <div class="list">
       <div class="name">키워드 검색 테스트</div>
       <div class="items">
+        <button @click="goBack">뒤로가기</button>
         <!-- =============> -->
         <div>
-            <input
-                type="text"
-                v-model="keyword"
-                @keyup.enter="handleKeywordSearch"
-                style="width: 200px; height: 30px"
-            />
-            <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
+          <input type="text" v-model="keyword" @keyup.enter="handleKeywordSearch" style="width: 200px; height: 30px" />
+          <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
         </div>
         <div class="items scrollbar">
           <template v-for="(place, index) in keywordPlaces" :key="index">
             <place-item :place="place" @detail="handleAdd"></place-item>
           </template>
         </div>
-        <template v-if="visibility && !clicked">
-          <place-detail :place="placeToView"></place-detail>
-        </template>
         <!-- <============= -->
       </div>
     </div>

@@ -17,4 +17,8 @@ public interface PlaceService {
 	
 	void keepScore(String placeId, String score) throws Exception;
 
+	int isThere(String placeId) throws Exception;
+
+	int isInTheme(String themeId, String placeId) throws Exception;
+
 }

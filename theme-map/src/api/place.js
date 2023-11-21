@@ -86,4 +86,12 @@ function keepScore(scoreDto, success, fail) {
   server.put(`${url}/score`, JSON.stringify(scoreDto)).then(success).catch(fail);
 }
 
-export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore };
+function isThere(placeId, success, fail) {
+  server.get(`${url}/isThere/${placeId}`).then(success).catch(fail);
+}
+
+function isInTheme(themeId, placeId, success, fail) {
+  server.get(`${url}/isInTheme/${themeId}/${placeId}`).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore, isThere, isInTheme };

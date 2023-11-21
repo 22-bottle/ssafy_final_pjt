@@ -100,7 +100,7 @@ const handelComment = (event) => {
     comment.value,
     () => {
       console.log('댓글 등록 완료!!');
-      commentInfos.value.push({... comment.value});
+      commentInfos.value.push({ ...comment.value });
       getCommentsOfPlace();
     },
     (error) => {
@@ -110,6 +110,7 @@ const handelComment = (event) => {
 };
 
 const scoring = (event) => {
+  evaluated.value = true;
   scoreDto.value.placeId = place.value.placeId;
   scoreDto.value.score = event.target.id;
   keepScore(
@@ -122,6 +123,8 @@ const scoring = (event) => {
     }
   );
 };
+
+const evaluated = ref(false);
 </script>
 
 <template>
@@ -136,13 +139,21 @@ const scoring = (event) => {
         <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
       </div>
       <template v-if="isLogin">
-        <div>
-          <span class="star empty" id="1" @click="scoring">&#9734;</span>
-          <span class="star empty" id="2" @click="scoring">&#9734;</span>
-          <span class="star empty" id="3" @click="scoring">&#9734;</span>
-          <span class="star empty" id="4" @click="scoring">&#9734;</span>
-          <span class="star empty" id="5" @click="scoring">&#9734;</span>
-        </div>
+        <template v-if="!evaluated">
+          <div>
+            <span class="star empty" id="1" @click="scoring">&#9734;</span>
+            <span class="star empty" id="2" @click="scoring">&#9734;</span>
+            <span class="star empty" id="3" @click="scoring">&#9734;</span>
+            <span class="star empty" id="4" @click="scoring">&#9734;</span>
+            <span class="star empty" id="5" @click="scoring">&#9734;</span>
+          </div>
+        </template>
+        <template v-else>
+          <div>
+            <span v-for="n in Number(scoreDto.score)" :key="n" class="star full">&#9733;</span>
+            <span v-for="n in 5 - Number(scoreDto.score)" :key="n" class="star empty">&#9734;</span>
+          </div>
+        </template>
       </template>
       <span style="color: violet">일단 장소 테마들: </span><br />
       <template v-for="theme in themeInfos" :key="theme.themeId">
