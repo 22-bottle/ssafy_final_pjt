@@ -37,7 +37,7 @@ const getPowerEditors = () => {
       </div>
       <div class="theme-container">
         <div>
-          <editor-theme-list :editorId="editor.editorId"></editor-theme-list>
+          <editor-theme-list :editorId="editor.editorId" type="all"></editor-theme-list>
         </div>
       </div>
     </template>

@@ -53,4 +53,22 @@ function themesOfLike(editorId, success, fail) {
   server.get(`${url}/like/${editorId}`).then(success).catch(fail);
 }
 
-export { hotTheme, allTheme, allTags, createTheme, themesOfPlace, curTheme, themesOfTag, didLike, postLike, disLike, themesOfEditor, themesOfLike };
+function updateTheme(theme, success, fail) {
+  server.put(`${url}/update`, JSON.stringify(theme)).then(success).catch(fail);
+}
+
+export {
+  hotTheme,
+  allTheme,
+  allTags,
+  createTheme,
+  themesOfPlace,
+  curTheme,
+  themesOfTag,
+  didLike,
+  postLike,
+  disLike,
+  themesOfEditor,
+  themesOfLike,
+  updateTheme,
+};

@@ -12,10 +12,11 @@ const editorStore = useEditorStore();
 const { isLogin } = storeToRefs(editorStore);
 const { cEditorDto } = editorStore;
 const router = useRouter();
+const route = useRoute();
 
 const themePlaces = ref([]);
 const theme = ref({
-  themeId: '',
+  themeId: route.params.themeId,
   themeName: '',
   description: '',
   editorId: '',
@@ -23,8 +24,6 @@ const theme = ref({
   visible: '',
   likeSum: '',
 });
-
-const route = useRoute();
 
 onMounted(() => {
   getTheme();
@@ -131,6 +130,9 @@ const goBack = () => {
       <button v-if="didILiked" @click="dislike">누른 좋아요</button>
       <button v-else @click="like">안 누른 좋아요</button>
       <div class="name">{{ theme.themeName }}</div>
+      <template v-if="theme.editorId == cEditorDto.editorId">
+        <router-link :to="{ name: 'themeModify' }" :theme="theme">테마 수정</router-link>
+      </template>
       <div class="items">
         <div>{{ theme.description }}</div>
         <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
@@ -143,9 +145,9 @@ const goBack = () => {
             @detail="handleDetail"
           ></place-item>
         </div>
-        <template v-if="isLogin && theme.type == 1">
+        <template v-if="isLogin && (theme.type == 1 || theme.editorId === cEditorDto.editorId)">
           <button style="width: 100px; height: 35px; position: absolute; top: 100%">
-            <router-link :to="{ name: 'keyword' }">장소등록</router-link>
+            <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }">장소등록</router-link>
           </button>
         </template>
         <template v-if="visibility && !clicked">

@@ -57,7 +57,7 @@ const checkPrivate = () => {
       <input type="radio" id="private" name="type" value="0" v-model="theme.type" @click="checkPrivate" />
       <label for="private">Private</label><br />
       공개 여부 :
-      <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" checked />
+      <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" :checked="isPublic" />
       <label for="visible">공개</label>
       <input type="radio" id="invisible" name="visible" value="0" v-model="theme.visible" :disabled="isPublic" />
       <label for="invisible">비공개</label><br />

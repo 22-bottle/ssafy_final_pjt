@@ -1,59 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { themesOfEditor, themesOfLike } from '@/api/theme';
-import { useEditorStore } from "@/stores/editor";
+import { useEditorStore } from '@/stores/editor';
 import EditorThemeList from '@/components/editor/EditorThemeList.vue';
 
 const editorStore = useEditorStore();
 const { cEditorDto } = editorStore;
-
-const themes = ref([]);
-const likeThemes = ref([]);
-
-const editor = ref({
-  editorId: "",
-  id: "",
-  editorName: ""
-});
-
-onMounted(()=> {
-  initialize();
-});
-
-function initialize() {
-  console.log("Enter initialize method");
-  editor.value = cEditorDto.value;
-
-  themesOfEditor(
-        cEditorDto.value.editorId,
-        ({ data }) => {
-        themes.value = data;
-        console.log(themes.value);
-        },
-        (error) => {
-        console.log(error);
-        }
-    );
-    themesOfLike(
-        cEditorDto.value.editorId,
-        ({ data }) => {
-        likeThemes.value = data;
-        console.log(likeThemes.value);
-        },
-        (error) => {
-        console.log(error);
-        }
-    );
-
-}
-
 </script>
 
 <template>
   <div class="mypage">
     <div class="editor">
-      <label class="editor-name">{{ editor.editorName }}</label>
-      <label class="editor-name"> &#9734;{{ editor.likeSum }}</label>
+      <label class="editor-name">{{ cEditorDto.editorName }}</label>
+      <label class="editor-name"> &#9734;{{ cEditorDto.likeSum }}</label>
       <div>
         <router-link :to="{ name: 'modify' }" class="btn">내 정보 수정</router-link>
       </div>
@@ -61,13 +18,13 @@ function initialize() {
     <div class="theme-container">
       <span class="theme-section">내가 만든 테마</span>
       <div>
-        <editor-theme-list :themes="themes"></editor-theme-list>
+        <editor-theme-list :editorId="cEditorDto.editorId" type="all"></editor-theme-list>
       </div>
     </div>
     <div class="theme-container">
       <span class="theme-section">내가 저장한 테마</span>
       <div>
-        <editor-theme-list :themes="likeThemes"></editor-theme-list>
+        <editor-theme-list :editorId="cEditorDto.editorId" type="like"></editor-theme-list>
       </div>
     </div>
   </div>
@@ -98,7 +55,7 @@ function initialize() {
   text-align: center;
   text-decoration: none;
   line-height: 45px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #016ef5;
   font-size: 30px;
   border-style: solid;
@@ -109,14 +66,15 @@ function initialize() {
 }
 
 .btn:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #016ef5;
   box-shadow: none;
 }
 
 .theme-container {
   margin-top: 3%;
-  width: 72%; height: 30%;
+  width: 72%;
+  height: 30%;
   background-color: tan;
 }
 
@@ -125,5 +83,4 @@ function initialize() {
   color: #016ef5;
   font-size: 30px;
 }
-
 </style>

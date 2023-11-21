@@ -1,17 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { themesOfEditor } from '@/api/theme';
+import { themesOfEditor, themesOfLike } from '@/api/theme';
 import ThemeItem from '@/components/theme/ThemeItem.vue';
 
-const props = defineProps({ editorId: String });
+const props = defineProps({ editorId: String, type: String });
 const themes = ref([]);
 
 onMounted(() => {
-  getThemesOfEditor();
+  if (props.type === 'all') {
+    getThemesOfEditor();
+  } else {
+    getThemesOfLike();
+  }
 });
 
 const getThemesOfEditor = () => {
   themesOfEditor(
+    props.editorId,
+    ({ data }) => {
+      themes.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
+
+const getThemesOfLike = () => {
+  themesOfLike(
     props.editorId,
     ({ data }) => {
       themes.value = data;

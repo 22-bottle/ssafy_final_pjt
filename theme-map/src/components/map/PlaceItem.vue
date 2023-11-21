@@ -29,8 +29,6 @@ const moveToKakao = () => {
 const emit = defineEmits(['detail']);
 
 const handlePlace = () => {
-  console.log('Enter handlePlace method');
-  console.log(place);
   emit('detail', place.value);
 };
 /* <======== */
@@ -66,7 +64,7 @@ const checkInThere = () => {
 </script>
 
 <template>
-  <div id="container" @click="handlePlace">
+  <div id="container">
     <div>
       {{ place.placeName }} | {{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1) }} ({{
         place.scoreCount
@@ -75,18 +73,23 @@ const checkInThere = () => {
     <div>{{ place.address }}</div>
     <div>{{ place.phone }}</div>
     <a href="" @click="moveToKakao">카카오맵에서 보기</a>
-    <template v-if="!thereIs">
-      <button>등록11</button>
-    </template>
-    <template v-else>
-      <template v-if="!thereIn">
-        <button>등록22</button>
+    <template v-if="route.name == 'keyword'">
+      <template v-if="!thereIs">
+        <button @click="handlePlace">등록11</button>
       </template>
       <template v-else>
-        <template v-if="route.name != 'detail'">
-          <button>이미 등록됨</button>
+        <template v-if="!thereIn">
+          <button @click="handlePlace">등록22</button>
+        </template>
+        <template v-else>
+          <template v-if="route.name != 'detail'">
+            <button>이미 등록됨</button>
+          </template>
         </template>
       </template>
+    </template>
+    <template v-else>
+      <button @click="handlePlace">상세보기</button>
     </template>
   </div>
   <br />

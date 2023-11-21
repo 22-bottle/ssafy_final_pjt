@@ -1,10 +1,9 @@
 <script setup>
-import { ref, onMounted, watch, inject } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { hotPlace } from '@/api/place';
 import { createPlace, linkPlace } from '@/api/place';
 import { useEditorStore } from '@/stores/editor';
-import PlaceDetail from '@/components/map/PlaceDetail.vue';
 import PlaceItem from './PlaceItem.vue';
 import router from '../../router';
 
@@ -55,24 +54,8 @@ const getHotPlace = () => {
 };
 
 /* =============> */
-// const props = defineProps({ placeList: Array });
-const emit = defineEmits(['clickPlace']);
-const clicked = inject('clicked');
+const emit = defineEmits(['detail']);
 
-// const hotPlaces = props.placeList;
-const visibility = ref(false);
-const placeToView = ref(null);
-
-const handleDetail = (place) => {
-  console.log('Enter handleDetail method');
-  if (placeToView.value === place) {
-    visibility.value = !visibility.value;
-  } else {
-    visibility.value = true;
-    placeToView.value = place;
-  }
-  emit('clickPlace', place);
-};
 const handleKeywordSearch = async () => {
   console.log('Enter handleKeywordSearch method');
   emit('keyword', keyword.value);
