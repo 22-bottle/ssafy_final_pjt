@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -108,6 +109,16 @@ public class PlaceController {
 			HttpHeaders header = new HttpHeaders();
 			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 			return ResponseEntity.ok().headers(header).body(there);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+	
+	@DeleteMapping("/delete/{themeId}/{placeId}")
+	public ResponseEntity<?> deletePlace(@PathVariable("themeId") String themeId, @PathVariable("placeId") String placeId) {
+		try {
+			placeService.deletePlace(themeId, placeId);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}

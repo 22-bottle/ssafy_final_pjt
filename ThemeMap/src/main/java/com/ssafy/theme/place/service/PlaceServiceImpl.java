@@ -53,5 +53,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public int isInTheme(String themeId, String placeId) throws Exception {
 		return placeMapper.isInTheme(themeId, placeId);
 	}
+
+	@Override
+	public void deletePlace(String themeId, String placeId) throws Exception {
+		placeMapper.deletePlace(themeId, placeId);
+	}
 	
 }

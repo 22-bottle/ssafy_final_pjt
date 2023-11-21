@@ -55,5 +55,10 @@
 		select count(place_id) from place_in_theme
 		where theme_id = #{themeId} and place_id = #{placeId}
 	</select>
+	
+	<delete id="deletePlace" parameterType="string">
+		delete from place_in_theme
+		where theme_id = #{themeId} and place_id = #{placeId}
+	</delete>
 
 </mapper>
