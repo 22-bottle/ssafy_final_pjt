@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
+import com.ssafy.theme.theme.dto.ThemeDto;
 
 public interface PlaceService {
 
@@ -24,5 +25,7 @@ public interface PlaceService {
 	void deletePlace(String themeId, String placeId) throws Exception;
 
 	String whoCreated(String themeId, String placeId) throws Exception;
+
+	int getSpareNum(String themeId, String editorId) throws Exception;
 
 }

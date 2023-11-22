@@ -130,7 +130,7 @@ const starRating = ref({
 <template>
   <div id="item">
     <div id="placeName">{{ place.placeName }}</div>
-    <span class="mr3" style="color: red">{{ (place.scoreSum / place.scoreCount).toFixed(1) }}</span>
+    <span class="mr3" style="color: red">{{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1)}}</span>
     <span class="star-rating mr3">
       <span v-for="n in Math.max(0, starRating.fullStars)" :key="n" class="star full">&#9733;</span>
       <span v-if="starRating.halfStar" class="star empty">&#9734;</span>

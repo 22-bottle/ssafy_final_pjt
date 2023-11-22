@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.mapper.PlaceMapper;
+import com.ssafy.theme.theme.dto.ThemeDto;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {
@@ -63,5 +64,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public String whoCreated(String themeId, String placeId) throws Exception {
 		return placeMapper.whoCreated(themeId, placeId);
 	}
-	
+
+	@Override
+	public int getSpareNum(String themeId, String editorId) throws Exception {
+		return placeMapper.getSpareNum(themeId, editorId);
+	}
+
 }
