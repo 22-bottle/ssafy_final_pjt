@@ -71,6 +71,8 @@ function placesSearchCB(data, status) {
   }
 }
 
+var selectedMarker = ref(null);
+var hoveredPlace = ref('');
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers();
@@ -95,9 +97,50 @@ const loadMarkers = () => {
       // image: markerImage, // 마커의 이미지
     });
 
+    // 커스텀 오버레이 내용
+    var overlayContent = 
+    `<div class="custom-overlay"
+          style=
+          "
+          color: black;
+          background-color: #FFFFFF;
+          padding: 3px;
+          border: 1px solid #016ef5;
+          border-radius: 5px
+          ";
+    >${position.title}</div>`;
+
+    // 커스텀 오버레이 생성
+    var customOverlay = new kakao.maps.CustomOverlay({
+      content: overlayContent,
+      position: position.latlng,
+      xAnchor: .5,
+      yAnchor: 3.0,
+      /* customize */
+
+    });
+
+    // 마커에 mouseover 이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'mouseover', function () {
+      if (!selectedMarker.value || selectedMarker.value !== marker) {
+        console.log('호버IN', position.title, position.placeId);
+        hoveredPlace.value = position.placeId;
+        customOverlay.setMap(map);
+      }
+    });
+
+    // 마커에 mouseout 이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, 'mouseout', function () {
+      if (!selectedMarker.value || selectedMarker.value !== marker) {
+        console.log('호버OUT', position.title, position.placeId);
+        hoveredPlace.value = '';
+        customOverlay.setMap(null);
+      }
+    });
+
     markers.value.push(marker);
   });
-
+  
   // 4. 지도를 이동시켜주기
   // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
   const bounds = positions.value.reduce(

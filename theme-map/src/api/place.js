@@ -52,7 +52,7 @@ function dtoToKakao(dto) {
     category_group_code: dto.placeId,
     category_group_name: 'a',
     category_name: 'a',
-    distance: 'a',
+    distance: Number(dto.scoreCount) == 0 ? 0 : (Number(dto.scoreSum) / Number(dto.scoreCount)).toFixed(1),
   };
 }
 function hotPlace(success, fail) {

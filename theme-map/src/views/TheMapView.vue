@@ -61,6 +61,7 @@ const loadMarkers = () => {
     obj.latlng = new kakao.maps.LatLng(t.y, t.x);
     obj.title = t.place_name;
     obj.placeId = t.category_group_code;
+    obj.score = t.distance;
 
     positions.value.push(obj);
   });
@@ -73,23 +74,38 @@ const loadMarkers = () => {
       position: position.latlng, // 마커를 표시할 위치
       title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨.
       clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-      // image: markerImage, // 마커의 이미지
+      score: position.distance
     });
 
-    // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
-    var iwContent = `<div style="padding:5px;">${position.title}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+  // 커스텀 오버레이 내용
+  var overlayContent = 
+  `<div class="custom-overlay"
+        style=
+        "
+        color: black;
+        background-color: #FFFFFF;
+        padding: 3px;
+        border: 1px solid #016ef5;
+        border-radius: 5px
+        ";
+  >${position.title} <span style="color: red">(⭐${position.score})</span></div>`;
 
-    // 인포윈도우를 생성합니다
-    var infowindow = new kakao.maps.InfoWindow({
-        content : iwContent
-    });
+  // 커스텀 오버레이 생성
+  var customOverlay = new kakao.maps.CustomOverlay({
+    content: overlayContent,
+    position: position.latlng,
+    xAnchor: .5,
+    yAnchor: 3.0,
+    /* customize */
+
+  });
 
     // 마커에 mouseover 이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'mouseover', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
         console.log('호버IN', position.title, position.placeId);
         hoveredPlace.value = position.placeId;
-        infowindow.open(map, marker);
+        customOverlay.setMap(map);
       }
     });
 
@@ -98,7 +114,7 @@ const loadMarkers = () => {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
         console.log('호버OUT', position.title, position.placeId);
         hoveredPlace.value = '';
-        infowindow.close();
+        customOverlay.setMap(null);
       }
     });
 
@@ -240,4 +256,6 @@ const clickPlace = (param) => {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
