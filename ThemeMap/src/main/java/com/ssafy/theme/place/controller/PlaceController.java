@@ -138,7 +138,6 @@ public class PlaceController {
 		}
 	}
 
-	@Transactional
 	@GetMapping("/spare/{themeId}/{editorId}")
 	public ResponseEntity<?> getSpareNum(@PathVariable("themeId") String themeId, @PathVariable("editorId") String editorId) {
 		try {

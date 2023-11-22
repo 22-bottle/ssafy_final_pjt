@@ -39,7 +39,7 @@ const getTheme = () => {
       theme.value = data;
       getSpareNum(
         theme.value.themeId,
-        cEditorDto.editorId,
+        cEditorDto.value.editorId,
         ({ data }) => {
           spareNum.value = Number(data);
         }, 
@@ -141,19 +141,17 @@ const updateScore = () => {
 
 const canAdd = ref(false);
 const checkCanAdd = () => {
-  console.log(theme.value)
-  if (theme.value.type == 0 && theme.value.editorId == cEditorDto.editorId) {
+  if (theme.value.type == 0 && theme.value.editorId == cEditorDto.value.editorId) {
     canAdd.value = true;
-  } else if (theme.value.type == 1 && theme.value.editorId == cEditorDto.editorId) {
+  } else if (theme.value.type == 1 && theme.value.editorId == cEditorDto.value.editorId) {
     if (spareNum.value < 10) {
       canAdd.value = true;
     }
-  } else if (theme.value.type == 1 && theme.value.editorId != cEditorDto.editorId) {
+  } else if (theme.value.type == 1 && theme.value.editorId != cEditorDto.value.editorId) {
     if (spareNum < 1) {
       canAdd.value = true;
     }
   }
-  console.log(canAdd.value)
 }
 /* <============= */
 </script>
