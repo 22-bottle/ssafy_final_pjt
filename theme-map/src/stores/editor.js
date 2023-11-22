@@ -13,8 +13,30 @@ export const useEditorStore = defineStore(
 
   const isLogin = ref(false);
   const isLoginError = ref(false);
-  const editorInfo = ref(null);
-  const editorDto = ref(null);
+  const editorInfo = ref({
+    editorId: "0",
+    id: "0",
+    pw: "0",
+    salt: "0",
+    emailId: "0",
+    emailDomain: "0",
+    editorName: "0",
+    likeSum: "0",
+    joinDate: "",
+    token: "0"
+  });
+  const editorDto = ref({
+    editorId: "0",
+    id: "0",
+    pw: "0",
+    salt: "0",
+    emailId: "0",
+    emailDomain: "0",
+    editorName: "0",
+    likeSum: "0",
+    joinDate: "",
+    token: "0"
+  });
   const isValidToken = ref(false);
 
   const cEditorInfo = computed(() => editorInfo);
