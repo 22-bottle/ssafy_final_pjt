@@ -96,7 +96,23 @@ public class EditorController extends HttpServlet {
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
+	@GetMapping("/name/{id}")
+	public ResponseEntity<Map<String, Object>> getEditorName(@PathVariable("id") String id, HttpServletRequest request) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			EditorDto editorDto = service.editorName(id);
+			resultMap.put("name", editorDto);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			log.error("정보조회 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
     @PostMapping("/regist")
     public ResponseEntity<?> regist(@RequestBody EditorDto editorDto) throws IOException {
     	Map<String, Object> resultMap = new HashMap<>();

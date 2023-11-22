@@ -30,7 +30,14 @@
         FROM editor
         WHERE id = #{id}
     </select>
-    
+
+    <!-- editorInfo -->
+    <select id="editorName" parameterType="string" resultMap="editor">
+        SELECT editor_name
+        FROM editor
+        WHERE editor_id = #{editorId}
+    </select>
+
     <!-- regist -->
     <insert id="regist" parameterType="editorDto">
         INSERT INTO editor (id, pw, salt, email_id, email_domain, editor_name)

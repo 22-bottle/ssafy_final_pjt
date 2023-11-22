@@ -1,5 +1,6 @@
 package com.ssafy.theme.editor.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,12 @@ public class EditorServiceImpl implements EditorService {
 	public EditorDto editorInfo(String id) throws Exception {
 		return editorMapper.editorInfo(id);
 	}
-	
+
+	@Override
+	public EditorDto editorName(String id) throws SQLException {
+		return editorMapper.editorName(id);
+	}
+
 	@Override
 	public int regist(EditorDto editorDto) {
 		String salt = encrypt.getSalt();
