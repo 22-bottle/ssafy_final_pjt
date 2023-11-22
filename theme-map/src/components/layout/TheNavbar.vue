@@ -18,7 +18,7 @@ const handleLogout = async () => {
   let id = token === null ? cEditorDto.value.id : jwtDecode(token).id;
 
   await editorLogout(id);
-  router.replace("/");
+  router.replace('/');
 };
 </script>
 
@@ -33,7 +33,7 @@ const handleLogout = async () => {
       <router-link :to="{ name: 'editor' }" id="nav_btn">에디터별로</router-link>
       <router-link :to="{ name: routerName }" class="log_btn">{{ editorStatus }}</router-link>
       <template v-if="cIsLogin">
-        <img src="@/assets/img/logout.png" alt="logout" id="logout" @click="handleLogout" />
+        <input type="button" id="logout" @click="handleLogout" />
       </template>
     </div>
   </div>
@@ -45,9 +45,6 @@ html {
   width: 100%;
   height: 100%;
 }
-a {
-  text-decoration: none;
-}
 .flex {
   display: flex;
 }
@@ -58,21 +55,22 @@ a {
   top: 0;
   left: 0;
   width: 96%;
-  height: 6%;
+  height: 5%;
   flex-direction: row;
   justify-content: space-between;
   padding: 2%;
+  padding-left: 4%;
   box-shadow: 0 0 28px rgba(0, 0, 0, 0.25);
   background-color: white;
   z-index: 11;
 }
 #logo {
-  font-size: 40px;
+  font-size: 50px;
 }
 #nav_btns {
   width: 60%;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .router-link-active#nav_btn {
   background-color: white;
@@ -95,7 +93,7 @@ a {
   justify-content: center;
   align-items: center;
 }
-.nav_btn:hover {
+#nav_btn:hover {
   color: #016ef5;
   border-bottom: 5px solid;
 }
@@ -112,8 +110,15 @@ a {
 }
 #logout {
   height: 45px;
+  width: 37px;
   position: fixed;
   top: 4%;
   right: 2%;
+  background-image: url('../../assets/img/logout.png');
+  background-color: transparent;
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
 }
 </style>

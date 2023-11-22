@@ -34,6 +34,7 @@ onMounted(() => {
   if (route.name == 'detail') {
     getWhoCreated();
   }
+  raise(0, 0);
 });
 
 const moveToKakao = () => {
@@ -57,8 +58,8 @@ const getWhoCreated = () => {
     (error) => {
       console.log(error);
     }
-  )
-}
+  );
+};
 /* <======== */
 
 const thereIs = ref(false); //place table에 있는지
@@ -100,18 +101,43 @@ const goDelete = () => {
     (error) => {
       console.log(error);
     }
-  )
-}
+  );
+};
+
+const raise = (param, count) => {
+  starRating.value.rating =
+    props.place.scoreCount === 0
+      ? 0
+      : ((Number(props.place.scoreSum) + Number(param)) / (Number(props.place.scoreCount) + Number(count))).toFixed(1);
+  starRating.value.validRating =
+    !isNaN(parseFloat(starRating.value.rating)) && isFinite(starRating.value.rating)
+      ? parseFloat(starRating.value.rating)
+      : 0;
+  starRating.value.fullStars = Math.max(0, Math.min(5, Math.floor(starRating.value.validRating)));
+  starRating.value.halfStar = starRating.value.validRating % 1 >= 0.5 ? 1 : 0;
+  starRating.value.emptyStars = 5 - starRating.value.fullStars - starRating.value.halfStar;
+};
+
+const starRating = ref({
+  rating: 0,
+  validRating: 0,
+  fullStars: 0,
+  halfStar: 0,
+  emptyStars: 0,
+});
 </script>
 
 <template>
-  <div id="container">
-    <div>
-      {{ place.placeName }} | {{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1) }} ({{
-        place.scoreCount
-      }})
-    </div>
-    <div>{{ place.address }}</div>
+  <div id="item">
+    <div id="placeName">{{ place.placeName }}</div>
+    <span class="mr3" style="color: red">{{ (place.scoreSum / place.scoreCount).toFixed(1) }}</span>
+    <span class="star-rating mr3">
+      <span v-for="n in Math.max(0, starRating.fullStars)" :key="n" class="star full">&#9733;</span>
+      <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
+      <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
+    </span>
+    <span style="color: black">({{ place.scoreCount }}건)</span>
+    <div class="mt5">{{ place.address }}</div>
     <div>{{ place.phone }}</div>
     <a href="" @click="moveToKakao">카카오맵에서 보기</a>
     <template v-if="route.name == 'keyword'">
@@ -130,7 +156,7 @@ const goDelete = () => {
       </template>
     </template>
     <template v-else>
-      <button @click="handlePlace">상세보기</button>
+      <button class="detailBtn" @click="handlePlace">자세히 보기</button>
     </template>
     <template v-if="route.name == 'detail' && editorId == cEditorDto.editorId">
       <button @click="goDelete">삭제</button>
@@ -143,12 +169,37 @@ const goDelete = () => {
 * {
   background-color: white;
 }
-#container {
-  width: 87%;
+#item {
+  width: 90%;
   padding: 10px;
+}
+#item div {
+  color: black;
+  margin-bottom: 5px;
+}
+.mt5 {
+  margin-top: 5px;
+}
+.mr3 {
+  margin-right: 3px;
+}
+#placeName {
   font-size: 25px;
 }
-#container div {
-  color: black;
+.star-rating {
+  width: 100px;
+  height: 20px;
+}
+.star {
+  color: red;
+}
+.detailBtn {
+  position: absolute;
+  right: 5%;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: #016ef5;
+  cursor: pointer;
 }
 </style>

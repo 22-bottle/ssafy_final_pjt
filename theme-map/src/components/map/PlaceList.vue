@@ -4,7 +4,7 @@ import { hotPlace } from '@/api/place';
 import PlaceItem from './PlaceItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
 
-const props = defineProps({ selectedPlace: String , hoveredPlace: String});
+const props = defineProps({ selectedPlace: String, hoveredPlace: String });
 const selected = ref('');
 const hovered = ref('');
 
@@ -62,26 +62,24 @@ const handleDetail = (place) => {
 };
 /* <============= */
 const updateScore = () => {
-  console.log("Enter update method");
+  console.log('Enter update method');
   hotPlaces.value = [];
   getHotPlace();
-}
+};
 </script>
 
 <template>
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">내 주변 인기 장소</div>
+      <div class="name">🔥 요즘 뜨는 인기 장소</div>
       <div class="items">
         <!-- =============> -->
         <div class="items scrollbar">
           <template v-for="(place, index) in hotPlaces" :key="place.placeId">
             <!-- selected -->
             <template v-if="hovered == place.placeId">
-              <div style="background-color: yellow;">
-                <place-item :place="place" @detail="handleDetail"></place-item>
-              </div>
+              <place-item :place="place" @detail="handleDetail"></place-item>
             </template>
             <template v-else>
               <place-item :place="place" @detail="handleDetail"></place-item>
@@ -98,6 +96,9 @@ const updateScore = () => {
 </template>
 
 <style scoped>
+.hr {
+  height: 7px;
+}
 .list {
   position: absolute;
   top: 20%;
@@ -127,7 +128,6 @@ const updateScore = () => {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-
 .items {
   position: relative;
   width: 90%;

@@ -1,11 +1,10 @@
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { themesOfPlace } from '@/api/theme';
 import { registComment, commentsOfPlace } from '@/api/comment';
 import { keepScore } from '@/api/place';
-import router from '../../router';
 
 const editorStore = useEditorStore();
 
@@ -60,19 +59,25 @@ function initialize() {
 }
 
 const raise = (param, count) => {
-  starRating.value.rating = props.place.scoreCount === 0 ? 0 : (((Number(props.place.scoreSum) + Number(param))/ (Number(props.place.scoreCount) + Number(count)))).toFixed(1);
-  starRating.value.validRating = !isNaN(parseFloat(starRating.value.rating)) && isFinite(starRating.value.rating) ? parseFloat(starRating.value.rating) : 0;
+  starRating.value.rating =
+    props.place.scoreCount === 0
+      ? 0
+      : ((Number(props.place.scoreSum) + Number(param)) / (Number(props.place.scoreCount) + Number(count))).toFixed(1);
+  starRating.value.validRating =
+    !isNaN(parseFloat(starRating.value.rating)) && isFinite(starRating.value.rating)
+      ? parseFloat(starRating.value.rating)
+      : 0;
   starRating.value.fullStars = Math.max(0, Math.min(5, Math.floor(starRating.value.validRating)));
   starRating.value.halfStar = starRating.value.validRating % 1 >= 0.5 ? 1 : 0;
   starRating.value.emptyStars = 5 - starRating.value.fullStars - starRating.value.halfStar;
-}
+};
 
 const starRating = ref({
-  rating : 0,
-  validRating : 0,
-  fullStars : 0,
-  halfStar : 0,
-  emptyStars : 0
+  rating: 0,
+  validRating: 0,
+  fullStars: 0,
+  halfStar: 0,
+  emptyStars: 0,
 });
 
 const getThemesOfPlace = () => {
@@ -136,7 +141,7 @@ const scoring = (event) => {
 const emit = defineEmits(['updateScore']);
 
 const updateScore = () => {
-  console.log("Enter updateScore method");
+  console.log('Enter updateScore method');
   raise(Number(scoreDto.value.score), 1);
   emit('updateScore', true);
 };
@@ -146,58 +151,58 @@ const evaluated = ref(false);
 
 <template>
   <div id="detail">
-    <div id="placeInfo">
-      <div>{{ place.placeName }}</div>
-      <div>{{ place.address }}</div>
-      <div style="color: aliceblue">{{ starRating.validRating }} 점</div>
-      <div class="star-rating">
-        <span v-for="n in Math.max(0, starRating.fullStars)" :key="n" class="star full">&#9733;</span>
-        <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
-        <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
+    <div class="name pl20">
+      <div>
+        {{ place.placeName }}
+        <span style="font-size: 18px">
+          <span style="color: aliceblue">(</span>
+          <span class="star full">&#9733;</span>
+          <span style="color: aliceblue">{{ starRating.validRating.toFixed(1) }})</span>
+        </span>
       </div>
+    </div>
+    <div class="scrollbar pl20" id="placeInfo">
+      <div class="mb3">🚩 {{ place.address }}</div>
+      <div class="mb3">📞 {{ place.phone }}</div>
       <template v-if="isLogin">
-        <template v-if="!evaluated">
-          <div>
-            <span class="star empty" id="1" @click="scoring">&#9734;</span>
-            <span class="star empty" id="2" @click="scoring">&#9734;</span>
-            <span class="star empty" id="3" @click="scoring">&#9734;</span>
-            <span class="star empty" id="4" @click="scoring">&#9734;</span>
-            <span class="star empty" id="5" @click="scoring">&#9734;</span>
-          </div>
-        </template>
-        <template v-else>
-          <div>
-            <span v-for="n in Number(scoreDto.score)" :key="n" class="star full">&#9733;</span>
-            <span v-for="n in 5 - Number(scoreDto.score)" :key="n" class="star empty">&#9734;</span>
-          </div>
-        </template>
-      </template>
-      <span style="color: violet">일단 장소 테마들: </span><br />
-      <template v-for="theme in themeInfos" :key="theme.themeId">
-        <div style="background-color: blueviolet">
-          <div>{{ theme.themeName }}</div>
-        </div>
-      </template>
-      <span style="color: violet">일단 댓글: </span>
-      <template v-for="comment in commentInfos" :key="comment.commentId">
-        <div style="background-color: aquamarine">
-          <div>{{ comment.content }}</div>
-          <hr />
-        </div>
-      </template>
-      <template v-if="isLogin">
-        <div style="width: 100%; height: 50%; background-color: black">
-          <span>평가/댓글</span>
-          <form>
-            <div class="baseContainer mt-3">
-              <label for="content" class="">후기: </label>
-              <input type="text" id="content" class="" v-model="comment.content" />
+        <div class="score">
+          <template v-if="!evaluated">
+            <span style="color: white">후기를 남겨주세요!</span>
+            <span>
+              <span class="star empty" id="1" @click="scoring">&#9734;</span>
+              <span class="star empty" id="2" @click="scoring">&#9734;</span>
+              <span class="star empty" id="3" @click="scoring">&#9734;</span>
+              <span class="star empty" id="4" @click="scoring">&#9734;</span>
+              <span class="star empty" id="5" @click="scoring">&#9734;</span>
+            </span>
+          </template>
+          <template v-else>
+            <div>
+              <span style="color: white">후기를 남겨주세요!</span>
+              <span v-for="n in Number(scoreDto.score)" :key="n" class="star full">&#9733;</span>
+              <span v-for="n in 5 - Number(scoreDto.score)" :key="n" class="star empty">&#9734;</span>
             </div>
-            <button class="btn" @click="handelComment">
-              <label for="btn" class="btndata">댓글 등록</label>
-            </button>
-          </form>
+          </template>
         </div>
+      </template>
+      <span style="color: white">여기는 이런 곳이에요!</span><br />
+      <div class="themes">
+        <template v-for="theme in themeInfos" :key="theme.themeId">
+          <router-link :to="{ name: 'detail', params: { themeId: theme.themeId } }">{{ theme.themeName }}</router-link>
+        </template>
+      </div>
+      <span style="color: white">이런 후기들이 있어요!</span><br />
+      <div class="comments">
+        <template v-for="comment in commentInfos" :key="comment.commentId">
+          <div class="comment">↳ {{ comment.content }}</div>
+        </template>
+      </div>
+      <span style="color: white">의견을 남겨주세요!</span><br />
+      <template v-if="isLogin">
+        <form>
+          <textarea name="" id="content" cols="42" rows="5" v-model="comment.content"></textarea>
+          <button id="comment-btn" @click="handelComment">저장하기</button>
+        </form>
       </template>
     </div>
   </div>
@@ -224,15 +229,97 @@ const evaluated = ref(false);
   align-items: center;
   z-index: 9;
   border-radius: 5px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
 }
 #placeInfo {
   position: relative;
-  width: 90%;
-  height: 94%;
+  width: 80%;
+  height: 80%;
   background-color: #016ef5;
-  border-radius: 5px;
+  position: relative;
+  background-color: #016ef5;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-top: 0;
 }
 #placeInfo div {
   color: white;
+}
+.name {
+  position: relative;
+  width: 80%;
+  height: 5%;
+  background-color: #016ef5;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.pl20 {
+  padding: 20px;
+}
+.name div {
+  color: white;
+}
+.scrollbar {
+  overflow: auto;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 10px; /* width of the entire scrollbar */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the tracking area */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scroll thumb */
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scroll thumb on hover */
+}
+.mb3 {
+  margin-bottom: 3px;
+}
+.score {
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.themes {
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.themes a {
+  padding: 5px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: solid 1px black;
+}
+.comments {
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
+textarea {
+  resize: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+#comment-btn {
+  width: 98%;
+  font-size: 15px;
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 </style>
