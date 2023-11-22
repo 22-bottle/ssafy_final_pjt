@@ -106,7 +106,7 @@ const updateScore = () => {
   z-index: 10;
   width: 21%;
   height: 73%;
-  background-color: #f5fffa;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,23 +139,5 @@ const updateScore = () => {
   align-items: center;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-.scrollbar {
-  overflow: auto;
-}
-.scrollbar::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
-}
-
-.scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1; /* color of the tracking area */
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: #888; /* color of the scroll thumb */
-}
-
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #555; /* color of the scroll thumb on hover */
 }
 </style>

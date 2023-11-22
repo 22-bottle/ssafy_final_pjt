@@ -159,7 +159,7 @@ const starRating = ref({
       <button class="detailBtn" @click="handlePlace">자세히 보기</button>
     </template>
     <template v-if="route.name == 'detail' && editorId == cEditorDto.editorId">
-      <button @click="goDelete">삭제</button>
+      <button class="deleteBtn" @click="goDelete">삭제</button>
     </template>
   </div>
   <br />
@@ -200,6 +200,15 @@ const starRating = ref({
   border-radius: 4px;
   color: white;
   background-color: #016ef5;
+  cursor: pointer;
+}
+.deleteBtn {
+  position: absolute;
+  right: 30%;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: red;
   cursor: pointer;
 }
 </style>
