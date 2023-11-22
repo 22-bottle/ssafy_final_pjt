@@ -121,11 +121,11 @@ const goBack = () => {
 const handleDelete = () => {
   themePlaces.value = [];
   getThemePlace();
-}
+};
 const updateScore = () => {
   themePlaces.value = [];
   getThemePlace();
-}
+};
 /* <============= */
 </script>
 
@@ -133,15 +133,35 @@ const updateScore = () => {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <button @click="goBack">뒤로가기</button>
-      <button v-if="didILiked" @click="dislike">누른 좋아요</button>
-      <button v-else @click="like">안 누른 좋아요</button>
+      <button id="goBackBtn" @click="goBack"></button>
+      <button
+        id="fullHeart"
+        v-if="didILiked"
+        @click="dislike"
+        :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
+      ></button>
+      <button
+        id="emptyHeart"
+        v-else
+        @click="like"
+        :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
+      ></button>
+      <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }">
+        <button
+          id="addBtn"
+          :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
+        ></button>
+      </router-link>
+      <router-link :to="{ name: 'themeModify' }" :theme="theme">
+        <button
+          id="editBtn"
+          v-if="theme.editorId == cEditorDto.editorId"
+          :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
+        ></button>
+      </router-link>
       <div class="name">{{ theme.themeName }}</div>
-      <template v-if="theme.editorId == cEditorDto.editorId">
-        <router-link :to="{ name: 'themeModify' }" :theme="theme">테마 수정</router-link>
-      </template>
       <div class="items">
-        <div>{{ theme.description }}</div>
+        <div style="color: white" class="mb15">{{ theme.description }}</div>
         <div class="items scrollbar">
           <place-item
             v-for="(place, index) in themePlaces"
@@ -151,11 +171,7 @@ const updateScore = () => {
             @delete="handleDelete"
           ></place-item>
         </div>
-        <template v-if="isLogin && (theme.type == 1 || theme.editorId === cEditorDto.editorId)">
-          <button style="width: 100px; height: 35px; position: absolute; top: 100%">
-            <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }">장소등록</router-link>
-          </button>
-        </template>
+        <template v-if="isLogin && (theme.type == 1 || theme.editorId === cEditorDto.editorId)"> </template>
         <template v-if="visibility && !clicked">
           <place-detail :place="placeToView" @updateScore="updateScore"></place-detail>
         </template>
@@ -172,7 +188,7 @@ const updateScore = () => {
   z-index: 10;
   width: 21%;
   height: 73%;
-  background-color: #f5fffa;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -209,5 +225,81 @@ const updateScore = () => {
 }
 .scrollbar {
   overflow: auto;
+}
+.beforeMoving {
+  left: 23.3%;
+}
+.afterMoving {
+  left: 43.3%;
+  z-index: 20;
+}
+#goBackBtn {
+  position: fixed;
+  top: 14%;
+  left: 2%;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  background-image: url(../../assets/img/goback.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
+}
+#fullHeart {
+  position: fixed;
+  top: 23%;
+  width: 60px;
+  height: 55px;
+  background-color: white;
+  background-image: url(../../assets/img/fullHeart.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+#emptyHeart {
+  position: fixed;
+  top: 23%;
+  width: 60px;
+  height: 55px;
+  background-color: white;
+  background-image: url(../../assets/img/emptyHeart.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+#editBtn {
+  position: fixed;
+  top: 37%;
+  width: 60px;
+  height: 55px;
+  background-color: white;
+  background-image: url(../../assets/img/pencil.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+#addBtn {
+  position: fixed;
+  top: 30%;
+  width: 60px;
+  height: 55px;
+  background-color: white;
+  background-image: url(../../assets/img/add.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 </style>
