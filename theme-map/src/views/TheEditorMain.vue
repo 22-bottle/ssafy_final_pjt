@@ -37,7 +37,7 @@ const getPowerEditors = () => {
         <span> ⭐{{ editor.likeSum }}</span>
       </div>
       <div class="theme-container">
-        <div>
+        <div id="themeItem">
           <editor-theme-list :editorId="editor.editorId" type="all"></editor-theme-list>
         </div>
       </div>
@@ -58,6 +58,7 @@ const getPowerEditors = () => {
   margin-bottom: 20px;
 }
 #wrapper {
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -72,9 +73,8 @@ const getPowerEditors = () => {
 }
 .theme-container {
   margin-top: 2%;
-  width: 20%;
+  width: 100%;
   height: 30%;
-  background-color: tan;
 }
 #crown {
   width: 45px;
@@ -82,5 +82,8 @@ const getPowerEditors = () => {
   background-color: transparent;
   border: none;
   background-image: url(../assets/img/crown.png);
+}
+#themeItem {
+  width: 40%;
 }
 </style>

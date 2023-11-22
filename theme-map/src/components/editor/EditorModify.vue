@@ -72,7 +72,6 @@ const handleUpdate = async (event) => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #f5fffa;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -85,8 +84,8 @@ const handleUpdate = async (event) => {
 }
 
 .form-container {
-  width: 28%;
-  height: 43%;
+  width: 40%;
+  height: 50%;
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -94,6 +93,9 @@ const handleUpdate = async (event) => {
   align-items: center;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+.form-container div {
+  margin-bottom: 15px;
 }
 
 .input-container {

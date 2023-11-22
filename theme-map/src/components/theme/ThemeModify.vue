@@ -172,10 +172,17 @@ const onUpdateTag = (tags) => {
   padding: 8%;
 }
 #header {
-  font-size: 40px;
+  font-size: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 2%;
+}
+form, input, label {
+  font-size: 30px;
+}
+input {
+  margin-bottom: 2%;
 }
 #tags {
   display: flex;
