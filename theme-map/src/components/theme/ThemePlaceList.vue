@@ -152,6 +152,7 @@ const checkCanAdd = () => {
       canAdd.value = true;
     }
   }
+  console.log(canAdd.value)
 }
 /* <============= */
 </script>
@@ -163,17 +164,17 @@ const checkCanAdd = () => {
       <button id="goBackBtn" @click="goBack"></button>
       <button
         id="fullHeart"
-        v-if="didILiked"
+        v-if="didILiked && isLogin"
         @click="dislike"
         :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
       ></button>
       <button
         id="emptyHeart"
-        v-else
+        v-if="!didILiked && isLogin"
         @click="like"
         :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
       ></button>
-      <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }">
+      <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }" v-if="canAdd">
         <button
           id="addBtn"
           :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
