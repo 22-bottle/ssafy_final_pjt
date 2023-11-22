@@ -102,7 +102,6 @@ const visibility = ref(false);
 const placeToView = ref(null);
 
 const handleDetail = (place) => {
-  console.log('Enter handleDetail method');
   if (placeToView.value === place) {
     visibility.value = !visibility.value;
   } else {
@@ -123,6 +122,10 @@ const handleDelete = () => {
   themePlaces.value = [];
   getThemePlace();
 }
+const updateScore = () => {
+  themePlaces.value = [];
+  getThemePlace();
+}
 /* <============= */
 </script>
 
@@ -139,8 +142,6 @@ const handleDelete = () => {
       </template>
       <div class="items">
         <div>{{ theme.description }}</div>
-        <!-- <place-item v-for="(place, index) in hotPlaces" :key="place.placeId" :place="place"></place-item> -->
-        <!-- =============> -->
         <div class="items scrollbar">
           <place-item
             v-for="(place, index) in themePlaces"
@@ -156,9 +157,8 @@ const handleDelete = () => {
           </button>
         </template>
         <template v-if="visibility && !clicked">
-          <place-detail :place="placeToView"></place-detail>
+          <place-detail :place="placeToView" @updateScore="updateScore"></place-detail>
         </template>
-        <!-- <============= -->
       </div>
     </div>
   </div>

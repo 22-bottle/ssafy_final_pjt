@@ -70,13 +70,25 @@ const getThemesofTag = (tags) => {
 
 <template>
   <div id="list">
-    <theme-item v-for="(theme, index) in themes" :key="theme.themeId" :theme="theme"></theme-item>
+    <template v-for="(theme, index) in themes" :key="theme.themeId" >
+      <div class="theme">
+        <theme-item :theme="theme"></theme-item>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped>
 #list {
+  height: 100%;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.theme {
+  width: 20%; height: 100%;
+  margin-top: 5%;
 }
 </style>
