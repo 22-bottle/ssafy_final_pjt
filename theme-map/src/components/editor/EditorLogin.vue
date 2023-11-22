@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useEditorStore } from '@/stores/editor';
@@ -8,7 +8,17 @@ const router = useRouter();
 const editorStore = useEditorStore();
 
 const { isLogin } = storeToRefs(editorStore);
-const { editorLogin } = editorStore;
+const { editorLogin, cCurEditorDto } = editorStore;
+const setEditor = ref(null);
+
+onMounted(() =>{
+    initialize();
+});
+
+const initialize = () => {
+  setEditor.value = cCurEditorDto.value;
+  console.log(setEditor.value);
+}
 
 const loginEditor = ref({
   id: '',
@@ -42,7 +52,7 @@ const handleSingIn = async () => {
     <form class="loginform" >
       <div class="inputContainer">
         <label for="id" class="logindata">아이디</label>
-        <input type="text" id="id" class="input" v-model="loginEditor.id" />
+        <input type="text" id="id" class="input" v-model="loginEditor.id"/>
       </div>
       <div class="inputContainer mt-3">
         <label for="pw" class="logindata">비밀번호</label>

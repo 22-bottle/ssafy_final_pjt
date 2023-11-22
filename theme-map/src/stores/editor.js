@@ -37,10 +37,23 @@ export const useEditorStore = defineStore(
     joinDate: "",
     token: "0"
   });
+  const sEditorDto = ref({
+    editorId: "0",
+    id: "0",
+    pw: "0",
+    salt: "0",
+    emailId: "0",
+    emailDomain: "0",
+    editorName: "0",
+    likeSum: "0",
+    joinDate: "",
+    token: "0"
+  });
   const isValidToken = ref(false);
 
   const cEditorInfo = computed(() => editorInfo);
   const cEditorDto = computed(() => editorDto);
+  const cCurEditorDto = computed(() => sEditorDto);
   const cIsLogin = computed(() => isLogin);
 
   const editorLogin = async (loginEditor) => {
@@ -55,6 +68,7 @@ export const useEditorStore = defineStore(
 
           if (loginEditor.setToken) {
             isValidToken.value = true;
+            sEditorDto.value = response.data.editor;
 
             let { data } = response;
             let accessToken = data['access-token'];
@@ -210,6 +224,7 @@ export const useEditorStore = defineStore(
     isValidToken,
     cEditorInfo,
     cEditorDto,
+    cCurEditorDto,
     cIsLogin,
     editorLogin,
     getEditorInfo,
