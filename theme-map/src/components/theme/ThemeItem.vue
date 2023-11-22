@@ -38,7 +38,7 @@ const theme = props.theme;
 <template>
   <div id="container">
     <router-link class="theme mt-3" :to="{ name: 'detail', params: { themeId: theme.themeId } }">
-      <div class="router">
+      <div>
           <label class="theme-name">{{ theme.themeName }}</label><br/>
           <label class="theme-detail">{{ name }}  {{ placeNum }}개의 장소</label><br/>
           <div class="theme-likes">
@@ -64,6 +64,7 @@ const theme = props.theme;
   margin-top: 3%;
 }
 .theme{
+  position: relative;
   width: 90%;
   height: 100%;
   background-color: #ffffff;
@@ -72,26 +73,23 @@ const theme = props.theme;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: 15px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.25);
 }
-.router {
-  width: 100%; height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 .theme-name{
+  position: relative;
   color: black;
   font-size: 25px;
 }
 .theme-detail{
+  position: relative;
   color: black;
 }
 .theme-likes {
-  width: 63%; 
-  margin-top: 50%;
+  position: relative;
+  top: 10%;
+  width: 100%; 
   text-align: end;
 }
 .like {

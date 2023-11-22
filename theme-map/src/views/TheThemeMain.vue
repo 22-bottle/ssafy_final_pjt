@@ -66,7 +66,7 @@ const onAllTag = () => {
         <theme-list type="hot"></theme-list>
       </div>
     </div>
-    <div id="allThemes" class="mt-10">
+    <div id="allThemes" class="mt-5">
       <div class="theme-section">🌏 전체 테마</div>
       <div id="tags">
         <button id="all" @click="onAllTag">전체</button>
@@ -163,7 +163,7 @@ const onAllTag = () => {
   font-size: 60px;
 }
 .theme-section {
-  font-size: 30px;
+  font-size: 45px;
   color: black;
 }
 .btn {
@@ -183,8 +183,5 @@ const onAllTag = () => {
 }
 .mt-5 {
   margin-top: 5%;
-}
-.mt-10 {
-  margin-top: 10%;
 }
 </style>
