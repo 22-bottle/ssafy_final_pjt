@@ -3,7 +3,7 @@ import { ref, onMounted, inject } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '@/stores/editor';
 import { useRoute, useRouter } from 'vue-router';
-import { themePlace } from '@/api/place';
+import { themePlace, getSpareNum } from '@/api/place';
 import { curTheme, didLike, postLike, disLike } from '@/api/theme';
 import PlaceItem from '@/components/map/PlaceItem.vue';
 import PlaceDetail from '@/components/map/PlaceDetail.vue';
@@ -31,11 +31,23 @@ onMounted(() => {
   getDidLike();
 });
 
+const spareNum = ref(0);
 const getTheme = () => {
   curTheme(
     route.params.themeId,
     ({ data }) => {
       theme.value = data;
+      getSpareNum(
+        theme.value.themeId,
+        cEditorDto.editorId,
+        ({ data }) => {
+          spareNum.value = Number(data);
+        }, 
+        (error) => {
+          console.log(error)
+        }
+      )
+      checkCanAdd();
     },
     (error) => {
       console.log(error);
@@ -126,6 +138,23 @@ const updateScore = () => {
   themePlaces.value = [];
   getThemePlace();
 };
+
+const canAdd = ref(false);
+const checkCanAdd = () => {
+  console.log(theme.value)
+  if (theme.value.type == 0 && theme.value.editorId == cEditorDto.editorId) {
+    canAdd.value = true;
+  } else if (theme.value.type == 1 && theme.value.editorId == cEditorDto.editorId) {
+    if (spareNum.value < 10) {
+      canAdd.value = true;
+    }
+  } else if (theme.value.type == 1 && theme.value.editorId != cEditorDto.editorId) {
+    if (spareNum < 1) {
+      canAdd.value = true;
+    }
+  }
+  console.log(canAdd.value)
+}
 /* <============= */
 </script>
 
@@ -156,7 +185,7 @@ const updateScore = () => {
         <button
           id="editBtn"
           v-if="theme.editorId == cEditorDto.editorId"
-          :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
+          :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked, canAdd: canAdd, cantAdd: !canAdd }"
         ></button>
       </router-link>
       <div class="name">{{ theme.themeName }}</div>
@@ -274,9 +303,14 @@ const updateScore = () => {
   border-radius: 8px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
+.canAdd {
+  top: 37%;
+}
+.cantAdd {
+  top: 30%;
+}
 #editBtn {
   position: fixed;
-  top: 37%;
   width: 60px;
   height: 55px;
   background-color: white;

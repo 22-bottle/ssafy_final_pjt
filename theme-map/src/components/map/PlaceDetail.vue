@@ -163,7 +163,7 @@ const evaluated = ref(false);
     </div>
     <div class="scrollbar pl20" id="placeInfo">
       <div class="mb3">🚩 {{ place.address }}</div>
-      <div class="mb3">📞 {{ place.phone }}</div>
+      <div class="mb3 phone">📞 {{ place.phone }}</div>
       <template v-if="isLogin">
         <div class="score">
           <template v-if="!evaluated">
@@ -265,9 +265,11 @@ const evaluated = ref(false);
 .mb3 {
   margin-bottom: 3px;
 }
+.phone {
+  margin-bottom: 30px;
+}
 .score {
   font-size: 20px;
-  margin-top: 30px;
   margin-bottom: 30px;
   display: flex;
   flex-direction: row;

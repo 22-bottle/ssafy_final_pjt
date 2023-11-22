@@ -30,6 +30,7 @@ const getTags = () => {
   );
 };
 
+const cnt = ref(0);
 const selectedTags = ref({ 0: { tagId: '0', tagName: 'none', selected: false } });
 const onTagClick = (event) => {
   const index = event.target.id - 1;
@@ -38,47 +39,52 @@ const onTagClick = (event) => {
   tag.selected = !tag.selected;
   if (tag.selected) {
     selectedTags.value[tag.tagId] = tag;
+    allShow.value = false;
+    cnt.value = cnt.value + 1;
   } else {
     delete selectedTags.value[tag.tagId];
+    cnt.value = cnt.value - 1;
+    if (cnt.value == 0) {
+      allShow.value = true;
+    }
   }
 };
+const allShow = ref(true);
 const onAllTag = () => {
   tags.value.forEach((tag) => {
     tag.selected = false;
     delete selectedTags.value[tag.tagId];
   });
+  allShow.value = true;
 };
 </script>
 
 <template>
   <div id="container">
     <div id="header">
-      <div class="title">테마로 보는 대전</div>
+      <div class="title">테마 지도 찾아보기</div>
       <template v-if="isLogin">
         <button class="btn mt-1">
           <router-link class="btn-data" :to="{ name: 'create' }">+ 새 테마 등록하기</router-link>
         </button>
       </template>
     </div>
-    <div id="hotThemes" class="mt-5">
+    <div id="hotThemes" class="mt-3">
       <div class="theme-section">🔥 인기 테마 Top 10</div>
       <div class="list">
         <theme-list type="hot"></theme-list>
       </div>
     </div>
-    <div id="allThemes" class="mt-5">
+    <div id="allThemes" class="mt-3">
       <div class="theme-section">🌏 전체 테마</div>
       <div id="tags">
-        <button id="all" @click="onAllTag">전체</button>
-        <div id="tag" v-for="(tag, index) in tags" :key="tag.tagId">
-          <tag-item
-            :tag="tag"
-            :class="{ selected: tag.selected }"
-            @click="onTagClick"
-            :id="tag.tagId"
-          ></tag-item>
-        </div>
-        <button id="etc">더보기</button>
+        <button @click="onAllTag" :class="{ unselected: !allShow, selected: allShow }">전체</button>
+        <tag-item v-for="(tag, index) in tags" :key="tag.tagId"
+          :tag="tag"
+          :class="{ unselected: !tag.selected, selected: tag.selected }"
+          @click="onTagClick"
+          :id="tag.tagId"
+        ></tag-item>
       </div>
       <div class="list">
         <theme-list type="all" :tags="selectedTags"></theme-list>
@@ -89,26 +95,23 @@ const onAllTag = () => {
 
 <style scoped>
 #container {
-  position: absolute;
-  width: 100%; height: 100%;
-  background-color: #f5fffa;
   margin-top: 3%;
   padding: 8%;
 }
 #header {
-  width: 80%;
+  width: 100%;
   font-size: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 #tags {
-  margin-top: 1%;
-  margin-left: 0.5%;
+  margin-top: 2%;
+  margin-left: 2%;
   display: flex;
   flex-direction: row;
 }
-#tag {
+.unselected {
   margin-right: 1%;
   width: 8%;
   font-size: 30px;
@@ -121,7 +124,7 @@ const onAllTag = () => {
   border: 3px solid #016ef5;
   border-radius: 30px;
 }
-#all {
+.selected {
   margin-right: 1%;
   width: 8%;
   font-size: 30px;
@@ -148,16 +151,11 @@ const onAllTag = () => {
   border-radius: 30px;
 }
 #hotThemes {
-  width: 80%; height: 50%;
 }
 #allThemes {
-  width: 80%; height: 50%;
 }
 .list {
-  width: 100%; height: 40vh;
-}
-.selected {
-  color: red;
+  width: 100%;
 }
 .title {
   font-size: 60px;
@@ -180,6 +178,9 @@ const onAllTag = () => {
 }
 .mt-1 {
   margin-top: 1%;
+}
+.mt-3 {
+  margin-top: 3%;
 }
 .mt-5 {
   margin-top: 5%;

@@ -89,6 +89,6 @@ const getThemesofTag = (tags) => {
 
 .theme {
   width: 20%; height: 100%;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 </style>

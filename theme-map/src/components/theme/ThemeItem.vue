@@ -36,32 +36,30 @@ const theme = props.theme;
 </script>
 
 <template>
-  <div id="container">
-    <router-link class="theme mt-3" :to="{ name: 'detail', params: { themeId: theme.themeId } }">
+  <div id="themeItem">
+    <router-link class="theme" :to="{ name: 'detail', params: { themeId: theme.themeId } }">
       <div>
-          <label class="theme-name">{{ theme.themeName }}</label><br/>
-          <label class="theme-detail">{{ name }}  {{ placeNum }}개의 장소</label><br/>
-          <div class="theme-likes">
-            <label>{{ theme.likeSum }}</label>
-            <span class="like">⭐</span>
-          </div>
+        <div class="theme-name">{{ theme.themeName }}</div>
+        <div class="theme-detail">{{ name }}  {{ placeNum }}개의 장소</div>
+        <div class="theme-likes">
+          <span>{{ theme.likeSum }}</span>
+          <span class="like">⭐</span>
         </div>
+      </div>
     </router-link>
-    <br>
   </div>
   <br />
 </template>
 
 <style scoped>
-#container {
+#themeItem {
   width: 100%;
-  height: 40%;
-  background-color: #f5fffa;
+  height: 120px;
+  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-top: 3%;
 }
 .theme{
   position: relative;
@@ -81,6 +79,7 @@ const theme = props.theme;
   position: relative;
   color: black;
   font-size: 25px;
+  margin-bottom: 3%;
 }
 .theme-detail{
   position: relative;
