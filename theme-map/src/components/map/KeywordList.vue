@@ -57,31 +57,47 @@ const handleKeywordSearch = async () => {
   console.log('Enter handleKeywordSearch method');
   emit('keyword', keyword.value);
 };
-const handleAdd = (place) => {
-  // 장소를 생성
-  createPlace(
-    place,
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
-  // 테마와 장소를 연결
-  linkPlace(
-    {
-      themeId: route.params.themeId,
-      placeId: place.placeId,
-      editorId: editorId.value,
-    },
-    ({ data }) => {
-      console.log(data);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+const handleAdd = (place, id) => {
+  if (id == '1') {
+    // 장소를 생성
+    createPlace(
+      place,
+      () => {
+        linkPlace(
+          {
+            themeId: route.params.themeId,
+            placeId: place.placeId,
+            editorId: editorId.value,
+          },
+          () => {
+            router.push({ name: 'detail', params: { themeId: route.params.themeId } });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  else {
+    // 테마와 장소를 연결
+    linkPlace(
+      {
+        themeId: route.params.themeId,
+        placeId: place.placeId,
+        editorId: editorId.value,
+      },
+      () => {
+        router.push({ name: 'detail', params: { themeId: route.params.themeId } });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 };
 /* <============= */
 
@@ -94,15 +110,13 @@ const goBack = () => {
   <div>
     <!-- 리스트 -->
     <div class="list">
-      <div class="name">키워드 검색 테스트</div>
+      <div class="name">등록할 장소 찾아보기</div>
+      <button id="goBackBtn" @click="goBack"></button>
       <div class="items">
-        <button @click="goBack">뒤로가기</button>
         <!-- =============> -->
-        <div>
-          <input type="text" v-model="keyword" style="width: 200px; height: 30px" />
-          <button type="button" @click="handleKeywordSearch" style="width: 50px; height: 35px">검색</button>
-        </div>
-        <div class="items scrollbar">
+        <input type="text" v-model="keyword" id="searchBox"/>
+        <button type="button" @click="handleKeywordSearch" id="searchBtn">검색</button>
+        <div class="items2 scrollbar">
           <template v-for="(place, index) in keywordPlaces" :key="index">
             <place-item :place="place" @detail="handleAdd"></place-item>
           </template>
@@ -151,27 +165,49 @@ const goBack = () => {
   background-color: #016ef5;
   color: #ffffff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.scrollbar {
-  overflow: auto;
+.items2 {
+  position: relative;
+  width: 90%;
+  height: 84%;
+  background-color: #016ef5;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
-.scrollbar::-webkit-scrollbar {
-  width: 10px; /* width of the entire scrollbar */
+#goBackBtn {
+  position: fixed;
+  top: 14%;
+  left: 2%;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  background-image: url(../../assets/img/goback.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  border: none;
 }
-
-.scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1; /* color of the tracking area */
+#searchBox {
+  display: inline-block;
+  width: 70%; height: 30px;
+  font-size: 18px;
+  color: black;
 }
-
-.scrollbar::-webkit-scrollbar-thumb {
-  background: #888; /* color of the scroll thumb */
-}
-
-.scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #555; /* color of the scroll thumb on hover */
+#searchBtn {
+  display: inline-block;
+  width: 18%; height: 35px;
+  margin-left: 1%;
+  font-size: 18px;
+  background-color: white;
+  border: none;
 }
 </style>

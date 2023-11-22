@@ -30,46 +30,57 @@ const getPowerEditors = () => {
 <template>
   <div class="power">
     <div class="title">파워 에디터</div>
-    <template v-for="(editor, index) in editors" :key="editor.editorId">
+    <div id="wrapper" v-for="(editor, index) in editors" :key="editor.editorId">
       <div class="editor">
-        <label class="editor-name">{{ editor.editorName }}</label>
-        <label class="editor-name"> &#9734;{{ editor.likeSum }}</label>
+        <button id="crown" v-if="index < 3"></button>
+        <span>&nbsp;{{ editor.editorName }}</span>
+        <span> ⭐{{ editor.likeSum }}</span>
       </div>
       <div class="theme-container">
         <div>
           <editor-theme-list :editorId="editor.editorId" type="all"></editor-theme-list>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .power {
-  position: absolute;
-  top: 20%;
-  left: 15%;
-  width: 100%;
+  margin-top: 3%;
+  padding: 8%;
   height: 100%;
-  background-color: #f5fffa;
+  background-color: white;
 }
 
 .title {
-  font-size: 70px;
+  font-size: 60px;
   margin-bottom: 20px;
 }
-
+#wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
 .editor {
-  position: relative;
+  font-size: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-
-.editor-name {
-}
-
 .theme-container {
-  margin-bottom: 3%;
-  width: 72%;
+  margin-top: 2%;
+  width: 20%;
   height: 30%;
   background-color: tan;
+}
+#crown {
+  width: 45px;
+  height: 45px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../assets/img/crown.png);
 }
 </style>

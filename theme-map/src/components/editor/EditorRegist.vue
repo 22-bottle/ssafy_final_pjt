@@ -74,11 +74,12 @@ const handelRegist = () => {
 
 .description {
   font-size: 70px;
+  margin-top: 125px;
   margin-bottom: 20px;
 }
 
 .registform {
-  width: 50%; height: 60%;
+  width: 40%; height: 60%;
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;

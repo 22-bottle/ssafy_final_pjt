@@ -43,8 +43,8 @@ const moveToKakao = () => {
 /* ========> */
 const emit = defineEmits(['detail', 'delete']);
 
-const handlePlace = () => {
-  emit('detail', place.value);
+const handlePlace = (event) => {
+  emit('detail', place.value, event.target.id);
 };
 
 const editorId = ref('');
@@ -136,21 +136,21 @@ const starRating = ref({
       <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
       <span v-for="n in starRating.emptyStars" :key="n" class="star empty">&#9734;</span>
     </span>
-    <span style="color: black">({{ place.scoreCount }}건)</span>
+    <span style="color: black">({{ place.scoreCount == 0 ? 0 : place.scoreCount }}건)</span>
     <div class="mt5">{{ place.address }}</div>
     <div>{{ place.phone }}</div>
     <a href="" @click="moveToKakao">카카오맵에서 보기</a>
     <template v-if="route.name == 'keyword'">
       <template v-if="!thereIs">
-        <button @click="handlePlace">등록11</button>
+        <button id="1" @click="handlePlace" class="addBtn">등록하기</button>
       </template>
       <template v-else>
         <template v-if="!thereIn">
-          <button @click="handlePlace">등록22</button>
+          <button id="2" @click="handlePlace" class="addBtn">등록하기</button>
         </template>
         <template v-else>
           <template v-if="route.name != 'detail'">
-            <button>이미 등록됨</button>
+            <button class="addBtn">등록된 장소</button>
           </template>
         </template>
       </template>
@@ -209,6 +209,15 @@ const starRating = ref({
   border-radius: 4px;
   color: white;
   background-color: red;
+  cursor: pointer;
+}
+.addBtn {
+  position: absolute;
+  right: 6%;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  background-color: green;
   cursor: pointer;
 }
 </style>

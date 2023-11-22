@@ -48,14 +48,14 @@ const handleSingIn = async () => {
         <label for="pw" class="logindata">비밀번호</label>
         <input type="password" id="pw" class="input" v-model="loginEditor.pw" />
       </div>
-      <div class="baseContainer mt-1">
+      <!-- <div class="baseContainer mt-1">
         <label for="find" class="find">비밀번호 찾기</label>
-      </div>
+      </div> -->
       <div class="baseContainer mt-3">
         <input type="checkbox" id="setToken" class="checkbox" v-model="loginEditor.setToken" />
         <label for="find" class="checkboxdata">로그인 유지하기</label>
       </div>
-      <div class="inputContainer">
+      <div class="inputContainer mt-1">
         <button type="submit" class="btn" @click="handleLogin">
           <label for="btn" class="btndata">로그인 ></label>
         </button>
@@ -85,7 +85,8 @@ const handleSingIn = async () => {
 }
 
 .loginform {
-  width: 28%;
+  padding-top: 30px;
+  width:40%;
   height: 43%;
   background-color: #ffffff;
   display: flex;
@@ -160,6 +161,7 @@ const handleSingIn = async () => {
 .btndata {
   color: #ffffff;
   font-size: 23px;
+  cursor: pointer;
 }
 
 .registdata {
@@ -170,6 +172,7 @@ const handleSingIn = async () => {
   width: 100%;
   height: 100%;
   font-size: 23px;
+  cursor: pointer;
 }
 
 .mt-1 {
