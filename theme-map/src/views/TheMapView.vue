@@ -76,11 +76,20 @@ const loadMarkers = () => {
       // image: markerImage, // 마커의 이미지
     });
 
+    // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
+    var iwContent = `<div style="padding:5px;">${position.title}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+    // 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content : iwContent
+    });
+
     // 마커에 mouseover 이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'mouseover', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
         console.log('호버IN', position.title, position.placeId);
         hoveredPlace.value = position.placeId;
+        infowindow.open(map, marker);
       }
     });
 
@@ -89,6 +98,7 @@ const loadMarkers = () => {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
         console.log('호버OUT', position.title, position.placeId);
         hoveredPlace.value = '';
+        infowindow.close();
       }
     });
 
