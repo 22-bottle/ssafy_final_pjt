@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.dto.ScoreDto;
 import com.ssafy.theme.place.service.PlaceService;
+import com.ssafy.theme.theme.dto.ThemeDto;
 
 @RestController
 @CrossOrigin("*")
@@ -135,7 +137,20 @@ public class PlaceController {
 			return exceptionHandling(e);
 		}
 	}
-	
+
+	@Transactional
+	@GetMapping("/spare/{themeId}/{editorId}")
+	public ResponseEntity<?> getSpareNum(@PathVariable("themeId") String themeId, @PathVariable("editorId") String editorId) {
+		try {
+			int result = placeService.getSpareNum(themeId, editorId);
+			HttpHeaders header = new HttpHeaders();
+			header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
+			return ResponseEntity.ok().headers(header).body(result);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+	}
+
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();
 		return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

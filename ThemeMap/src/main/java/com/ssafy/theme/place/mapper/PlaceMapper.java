@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
+import com.ssafy.theme.theme.dto.ThemeDto;
 
 @Mapper
 public interface PlaceMapper {
@@ -27,5 +28,7 @@ public interface PlaceMapper {
 	void deletePlace(String themeId, String placeId) throws Exception;
 
 	String whoCreated(String themeId, String placeId) throws Exception;
+
+	int getSpareNum(String themeId, String editorId) throws Exception;
 
 }

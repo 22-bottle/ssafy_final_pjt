@@ -66,4 +66,10 @@
 		where theme_id = #{themeId} and place_id = #{placeId}
 	</select>
 
+    <select id="getSpareNum" parameterType="string" resultType="int">
+        select count(*)
+        from place_in_theme
+        where theme_id = #{themeId} and editor_id = #{editorId}
+    </select>
+
 </mapper>

@@ -38,18 +38,7 @@ function kakaoToDto(kakao) {
   placeDto.phone = kakao.phone;
   return placeDto;
 }
-/*
-function dtoToKakao(dto) {
-  kakaoPlace.id = dto.placeId;
-  kakaoPlace.phone = dto.phone;
-  kakaoPlace.place_name = dto.placeName;
-  kakaoPlace.place_url = 'https://place.map.kakao.com/' + dto.placeId;
-  kakaoPlace.road_address_name = dto.address;
-  kakaoPlace.x = dto.longitude;
-  kakaoPlace.y = dto.latitude;
-  return kakaoPlace;
-}
-*/
+
 function dtoToKakao(dto) {
   return {
     id: dto.placeId,
@@ -102,4 +91,8 @@ function deletePlace(themeId, placeId, success, fail) {
   server.delete(`${url}/delete/${themeId}/${placeId}`).then(success).catch(fail);
 }
 
-export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore, isThere, isInTheme, whoCreated, deletePlace };
+function getSpareNum(themeId, editorId, success, fail) {
+  server.get(`${url}/spare/${themeId}/${editorId}`).then(success).catch(fail);
+}
+
+export { hotPlace, themePlace, createPlace, linkPlace, kakaoToDto, dtoToKakao, keepScore, isThere, isInTheme, whoCreated, getSpareNum, deletePlace };
