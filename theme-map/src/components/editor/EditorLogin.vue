@@ -11,14 +11,14 @@ const { isLogin } = storeToRefs(editorStore);
 const { editorLogin, cCurEditorDto } = editorStore;
 const setEditor = ref(null);
 
-onMounted(() =>{
-    initialize();
+onMounted(() => {
+  initialize();
 });
 
 const initialize = () => {
   setEditor.value = cCurEditorDto.value;
   console.log(setEditor.value);
-}
+};
 
 const loginEditor = ref({
   id: '',
@@ -48,11 +48,11 @@ const handleSingIn = async () => {
 
 <template>
   <div class="login">
-    <span class="description">로그인</span>
-    <form class="loginform" >
+    <span class="description title">로그인</span>
+    <form class="loginform">
       <div class="inputContainer">
         <label for="id" class="logindata">아이디</label>
-        <input type="text" id="id" class="input" v-model="loginEditor.id"/>
+        <input type="text" id="id" class="input" v-model="loginEditor.id" />
       </div>
       <div class="inputContainer mt-3">
         <label for="pw" class="logindata">비밀번호</label>
@@ -82,7 +82,6 @@ const handleSingIn = async () => {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #f5fffa;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,7 +95,7 @@ const handleSingIn = async () => {
 
 .loginform {
   padding-top: 30px;
-  width:40%;
+  width: 40%;
   height: 43%;
   background-color: #ffffff;
   display: flex;
@@ -172,6 +171,7 @@ const handleSingIn = async () => {
   color: #ffffff;
   font-size: 23px;
   cursor: pointer;
+  height: 54px;
 }
 
 .registdata {

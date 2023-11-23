@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.ssafy.theme.place.dto.LinkDto;
 import com.ssafy.theme.place.dto.PlaceDto;
 import com.ssafy.theme.place.mapper.PlaceMapper;
-import com.ssafy.theme.theme.dto.ThemeDto;
 
 @Service
 public class PlaceServiceImpl implements PlaceService {
