@@ -44,8 +44,8 @@ watch(
   () => props.placeList,
   () => {
     keywordPlaces.value = [];
-    keywordPlaces.value = {...props.placeList};
-    console.log("바뀌었습니다.",keywordPlaces.value);
+    keywordPlaces.value = { ...props.placeList };
+    console.log('바뀌었습니다.', keywordPlaces.value);
   },
   { deep: true }
 );
@@ -81,8 +81,7 @@ const handleAdd = (place, id) => {
         console.log(error);
       }
     );
-  }
-  else {
+  } else {
     // 테마와 장소를 연결
     linkPlace(
       {
@@ -104,6 +103,12 @@ const handleAdd = (place, id) => {
 const goBack = () => {
   router.go(-1);
 };
+
+const onKeyDown = (event) => {
+  if (event.keyCode == 13) {
+    handleKeywordSearch();
+  }
+};
 </script>
 
 <template>
@@ -114,8 +119,8 @@ const goBack = () => {
       <button id="goBackBtn" @click="goBack"></button>
       <div class="items">
         <!-- =============> -->
-        <input type="text" v-model="keyword" id="searchBox"/>
-        <button type="button" @click="handleKeywordSearch" id="searchBtn">검색</button>
+        <input type="text" v-model="keyword" id="searchBox" @keydown="onKeyDown" />
+        <button @click="handleKeywordSearch" id="searchBtn">검색</button>
         <div class="items2 scrollbar">
           <template v-for="(place, index) in keywordPlaces" :key="index">
             <place-item :place="place" @detail="handleAdd"></place-item>
@@ -198,13 +203,15 @@ const goBack = () => {
 }
 #searchBox {
   display: inline-block;
-  width: 70%; height: 30px;
+  width: 70%;
+  height: 30px;
   font-size: 18px;
   color: black;
 }
 #searchBtn {
   display: inline-block;
-  width: 18%; height: 35px;
+  width: 18%;
+  height: 35px;
   margin-left: 1%;
   font-size: 18px;
   background-color: white;

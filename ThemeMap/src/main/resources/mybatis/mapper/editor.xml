@@ -91,7 +91,7 @@
 		SELECT *
 		FROM editor
 		where like_sum != 0
-		order by like_sum desc limit 10
+		order by like_sum desc limit 5
     </select>
 
 </mapper>

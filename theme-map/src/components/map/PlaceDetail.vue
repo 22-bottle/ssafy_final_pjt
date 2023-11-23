@@ -112,6 +112,7 @@ const handelComment = (event) => {
   registComment(
     comment.value,
     () => {
+      comment.value.content = '';
       console.log('댓글 등록 완료!!');
       commentInfos.value.push({ ...comment.value });
       getCommentsOfPlace();
@@ -147,6 +148,12 @@ const updateScore = () => {
 };
 
 const evaluated = ref(false);
+
+const onKeyDown = (event) => {
+  if (event.keyCode == 13) {
+    handelComment(event);
+  }
+};
 </script>
 
 <template>
@@ -200,7 +207,7 @@ const evaluated = ref(false);
       <span style="color: white">의견을 남겨주세요!</span><br />
       <template v-if="isLogin">
         <form>
-          <textarea name="" id="content" cols="42" rows="5" v-model="comment.content"></textarea>
+          <textarea name="" id="content" cols="42" rows="5" v-model="comment.content" @keydown="onKeyDown"></textarea>
           <button id="comment-btn" @click="handelComment">저장하기</button>
         </form>
       </template>
@@ -305,5 +312,6 @@ textarea {
   border: none;
   border-radius: 5px;
   margin-top: 10px;
+  cursor: pointer;
 }
 </style>
