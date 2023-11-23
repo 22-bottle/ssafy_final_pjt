@@ -79,7 +79,9 @@ const onAllTag = () => {
       <div class="theme-section">🌏 전체 테마</div>
       <div id="tags">
         <button @click="onAllTag" :class="{ unselected: !allShow, selected: allShow }">전체</button>
-        <tag-item v-for="(tag, index) in tags" :key="tag.tagId"
+        <tag-item
+          v-for="(tag, index) in tags"
+          :key="tag.tagId"
           :tag="tag"
           :class="{ unselected: !tag.selected, selected: tag.selected }"
           @click="onTagClick"
@@ -114,21 +116,21 @@ const onAllTag = () => {
 .unselected {
   margin-right: 1%;
   width: 8%;
-  font-size: 30px;
+  font-size: 20px;
   color: #016ef5;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border: 3px solid #016ef5;
   border-radius: 30px;
 }
 .selected {
   margin-right: 1%;
   width: 8%;
-  font-size: 30px;
-  color: #FFFFFF; 
+  font-size: 20px;
+  color: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,10 +151,6 @@ const onAllTag = () => {
   background-color: #80b5f7;
   border: 1px;
   border-radius: 30px;
-}
-#hotThemes {
-}
-#allThemes {
 }
 .list {
   width: 100%;

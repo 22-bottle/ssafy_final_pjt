@@ -55,7 +55,6 @@ const getPowerEditors = () => {
 
 .title {
   font-size: 60px;
-  margin-bottom: 20px;
 }
 #wrapper {
   width: 100%;
@@ -70,6 +69,7 @@ const getPowerEditors = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 3%;
 }
 .theme-container {
   margin-top: 2%;
@@ -84,6 +84,6 @@ const getPowerEditors = () => {
   background-image: url(../assets/img/crown.png);
 }
 #themeItem {
-  width: 40%;
+  width: 20%;
 }
 </style>

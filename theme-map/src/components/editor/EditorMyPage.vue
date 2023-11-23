@@ -9,42 +9,36 @@ const { cEditorDto } = editorStore;
 <template>
   <div class="mypage">
     <div class="editor">
-      <label class="editor-name">{{ cEditorDto.editorName }}</label>
-      <label class="editor-name"> &#9734;{{ cEditorDto.likeSum }}</label>
-      <div>
-        <router-link :to="{ name: 'modify' }" class="btn">내 정보 수정</router-link>
-      </div>
+      <span>
+        <span class="editor-name title">{{ cEditorDto.editorName }}</span>
+        <span class="editor-name title"> ⭐{{ cEditorDto.likeSum }}</span>
+      </span>
+      <router-link :to="{ name: 'modify' }" class="btn btn-data">내 정보 수정</router-link>
     </div>
     <div class="theme-container">
-      <span class="theme-section">내가 만든 테마</span>
-      <div>
-        <editor-theme-list :editorId="cEditorDto.editorId" type="all"></editor-theme-list>
-      </div>
+      <div class="theme-section">⭐ 내가 만든 테마</div>
+      <editor-theme-list :editorId="cEditorDto.editorId" type="all" class="themeItem"></editor-theme-list>
     </div>
     <div class="theme-container">
-      <span class="theme-section">내가 저장한 테마</span>
-      <div>
-        <editor-theme-list :editorId="cEditorDto.editorId" type="like"></editor-theme-list>
-      </div>
+      <div class="theme-section">💘 내가 저장한 테마</div>
+      <editor-theme-list :editorId="cEditorDto.editorId" type="like" class="themeItem"></editor-theme-list>
     </div>
   </div>
 </template>
 <style scoped>
 .mypage {
-  position: absolute;
-  top: 20%;
-  left: 15%;
-  width: 100%;
-  height: 100%;
-  background-color: #f5fffa;
+  padding: 8%;
+  margin-top: 3%;
 }
 
 .editor {
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .editor-name {
-  font-size: 70px;
+  font-size: 60px;
   margin-bottom: 20px;
 }
 
@@ -73,14 +67,20 @@ const { cEditorDto } = editorStore;
 
 .theme-container {
   margin-top: 3%;
-  width: 72%;
   height: 30%;
-  background-color: tan;
 }
 
 .theme-section {
   position: relative;
-  color: #016ef5;
+  color: black;
   font-size: 30px;
+  margin-bottom: 3%;
+}
+.btn-data {
+  font-size: 23px;
+  text-decoration-line: none;
+}
+.themeItem {
+  width: 20%;
 }
 </style>
