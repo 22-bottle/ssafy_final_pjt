@@ -88,7 +88,7 @@ const loadMarkers = () => {
         border: 1px solid #016ef5;
         border-radius: 5px
         ";
-  >${position.title} <span style="color: red">(⭐${position.score})</span></div>`;
+  >${position.title} <span style="color: black">(<span style="color: red">★</span>${position.score})</span></div>`;
 
   // 커스텀 오버레이 생성
   var customOverlay = new kakao.maps.CustomOverlay({

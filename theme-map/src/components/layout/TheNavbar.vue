@@ -6,7 +6,7 @@ import router from '../../router';
 
 const editorStore = useEditorStore();
 
-const { cIsLogin, cEditorDto, editorLogout } = editorStore;
+const { cIsLogin, cEditorDto, cCurEditorDto, editorLogout } = editorStore;
 
 const editorStatus = computed(() => (cIsLogin.value ? '마이페이지' : '로그인'));
 
@@ -17,7 +17,7 @@ const handleLogout = async () => {
   let token = sessionStorage.getItem('accessToken');
   let id = token === null ? cEditorDto.value.id : jwtDecode(token).id;
 
-  await editorLogout(id);
+  await editorLogout(id, cCurEditorDto.value.token);
   router.replace('/');
 };
 </script>

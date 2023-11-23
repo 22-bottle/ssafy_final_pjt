@@ -47,7 +47,7 @@ export const useEditorStore = defineStore(
     editorName: "0",
     likeSum: "0",
     joinDate: "",
-    token: "0"
+    token: true
   });
   const isValidToken = ref(false);
 
@@ -69,6 +69,7 @@ export const useEditorStore = defineStore(
           if (loginEditor.setToken) {
             isValidToken.value = true;
             sEditorDto.value = response.data.editor;
+            sEditorDto.value.token = true;
 
             let { data } = response;
             let accessToken = data['access-token'];
@@ -79,6 +80,8 @@ export const useEditorStore = defineStore(
             sessionStorage.setItem('refreshToken', refreshToken);
 
             console.log('sessiontStorage에 담았다', isLogin.value);
+          } else {
+            sEditorDto.value.token = false;
           }
         } else {
           console.log('로그인 실패했다');
@@ -157,13 +160,17 @@ export const useEditorStore = defineStore(
     );
   };
 
-  const editorLogout = async (id) => {
+  const editorLogout = async (id, token) => {
     await logout(
       id,
       (response) => {
         if (response.status === httpStatusCode.OK) {
           isLogin.value = false;
           editorInfo.value = null;
+          console.log("token",token);
+          if (!token) {
+            sEditorDto.value = null;
+          }
           isValidToken.value = false;
           console.log('로그아웃 완료!!');
         } else {
@@ -221,6 +228,7 @@ export const useEditorStore = defineStore(
     isLoginError,
     editorInfo,
     editorDto,
+    sEditorDto,
     isValidToken,
     cEditorInfo,
     cEditorDto,
