@@ -95,17 +95,17 @@ const checkTags = () => {
         const curTag = tags.value[index];
         curTag.selected = true;
         selectedTags.value[tag.tagId] = tag;
-      })
+      });
     },
     (error) => {
       console.log(error);
     }
-  )
+  );
 };
 
 const tagListDto = ref({
   tags: [],
-})
+});
 const onUpdateTag = (tags) => {
   tagListDto.value.tags = [];
   Object.values(tags).forEach((tag) => {
@@ -123,53 +123,76 @@ const onUpdateTag = (tags) => {
       (error) => {
         console.log(error);
       }
-    )
+    );
   } else {
     router.replace({ name: 'detail', parmas: { themeId: theme.value.themeId } });
   }
-}
+};
 </script>
 
 <template>
   <div id="container">
-    <div id="header">
-      <div class="title">테마 수정하기</div>
-    </div>
-    <form action="">
-      <label for="themeName">테마 이름 : </label>
-      <input type="text" id="themeName" name="themeName" v-model="theme.themeName" /><br />
-      <label for="description">테마 설명 : </label>
-      <input type="text" id="description" name="description" v-model="theme.description" /><br />
-      테마 유형 :
-      <input type="radio" id="public" name="type" value="1" v-model="theme.type" checked @click="checkPublic" />
-      <label for="public">Public</label>
-      <input type="radio" id="private" name="type" value="0" v-model="theme.type" @click="checkPrivate" />
-      <label for="private">Private</label><br />
-      공개 여부 :
-      <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" :checked="isPublic" />
-      <label for="visible">공개</label>
-      <input type="radio" id="invisible" name="visible" value="0" v-model="theme.visible" :disabled="isPublic" />
-      <label for="invisible">비공개</label><br />
-
-      <div id="tags">
+    <div class="title" id="header">테마 수정하기</div>
+    <form class="inputform mt-1">
+      <div class="inputContainer mt-3">
+        <label for="themeName" class="section">테마 이름</label>
+        <input type="text" id="themeName" name="themeName" class="input" v-model="theme.themeName" /><br />
+      </div>
+      <div class="inputContainer mt-3">
+        <label for="description" class="section">테마 설명</label>
+        <input type="text" id="description" name="description" class="input" v-model="theme.description" /><br />
+      </div>
+      <div class="inputContainer mt-3">
+        <span class="section">테마 유형</span>
+        <div class="radios">
+          <div>
+            <input type="radio" id="public" name="type" value="1" v-model="theme.type" checked @click="checkPublic" />
+            <label for="public">Public</label>
+          </div>
+          <div>
+            <input type="radio" id="private" name="type" value="0" v-model="theme.type" @click="checkPrivate" />
+            <label for="private">Private</label><br />
+          </div>
+        </div>
+      </div>
+      <div class="inputContainer mt-3">
+        <span class="section">공개 여부</span>
+        <div class="radios">
+          <div>
+            <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" :checked="isPublic" />
+            <label for="visible">공개</label>
+          </div>
+          <div>
+            <input type="radio" id="invisible" name="visible" value="0" v-model="theme.visible" :disabled="isPublic" />
+            <label for="invisible">비공개</label><br />
+          </div>
+        </div>
+      </div>
+      <div class="inputContainer mt-3" id="tags">
+        <span class="section">태그 목록</span>
         <tag-item
           v-for="(tag, index) in tags"
           :key="tag.tagId"
           :tag="tag"
-          :class="{ selected: tag.selected }"
+          :class="{ unselected: !tag.selected, selected: tag.selected }"
           @click="onTagClick"
           :id="tag.tagId"
+          class="tagItem mt-3"
         ></tag-item>
       </div>
-      <button @click="onThemeModify">수정하기</button>
+      <button class="btn mt-3" @click="onThemeModify">수정하기</button>
     </form>
   </div>
 </template>
 
 <style scoped>
 #container {
-  margin-top: 3%;
-  padding: 8%;
+  width: 100%;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 #header {
   font-size: 60px;
@@ -178,17 +201,107 @@ const onUpdateTag = (tags) => {
   justify-content: space-between;
   margin-bottom: 2%;
 }
-form, input, label {
-  font-size: 30px;
+.title {
+  font-size: 60px;
+  margin-bottom: 20px;
 }
-input {
-  margin-bottom: 2%;
+.inputform {
+  width: 40%;
+  height: 60%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+.inputContainer {
+  width: 43%;
+  height: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.section {
+  width: 100%;
+  height: 30%;
+  text-align: start;
+  color: #808080;
+  font-size: 20px;
+  margin-bottom: 1px;
+}
+.input {
+  width: 100%;
+  height: 30%;
+  font-size: 20px;
+  border: 1px solid #808080;
+  border-radius: 10px;
+}
+.btn {
+  width: 43%;
+  height: 50%;
+  background-color: #016ef5;
+  border: 0px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  font-size: 23px;
+  margin-bottom: 5%;
+}
+.radios label {
+  color: #808080;
+}
+.radios {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 18px;
+  margin-top: 5%;
+}
+.mt-1 {
+  margin-top: 1%;
+}
+.mt-3 {
+  margin-top: 3%;
 }
 #tags {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 18px;
+}
+.unselected {
+  margin-right: 1%;
+  width: 8%;
+  font-size: 20px;
+  color: #016ef5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border: 3px solid #016ef5;
+  border-radius: 30px;
 }
 .selected {
-  color: red;
+  margin-right: 1%;
+  width: 8%;
+  font-size: 20px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #016ef5;
+  border: 0px;
+  border-radius: 30px;
+}
+.tagItem {
+  font-size: 18px;
+  width: 80px;
 }
 </style>

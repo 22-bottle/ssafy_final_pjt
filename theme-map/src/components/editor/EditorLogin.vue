@@ -9,14 +9,12 @@ const editorStore = useEditorStore();
 
 const { isLogin } = storeToRefs(editorStore);
 const { editorLogin, cCurEditorDto } = editorStore;
-<<<<<<< HEAD
+
 const setEditor = ref({
   id: '',
   pw: '',
   setToken: false,
 });
-=======
-const setEditor = ref(null);
 
 onMounted(() => {
   initialize();
@@ -27,17 +25,16 @@ const initialize = () => {
   console.log(setEditor.value);
 };
 
->>>>>>> 0875784d7235f8d5bb61f3dbe9ff9313c6b8b8bf
 const loginEditor = ref({
   id: '',
   pw: '',
   setToken: false,
 });
 
-onMounted(() =>{
+onMounted(() => {
   console.log(cCurEditorDto.value);
   console.log(cCurEditorDto.value == null, cCurEditorDto.value != null);
-  if(cCurEditorDto.value != null) {
+  if (cCurEditorDto.value != null) {
     setInfo();
   }
 });
@@ -45,7 +42,7 @@ onMounted(() =>{
 const setInfo = () => {
   loginEditor.value.id = cCurEditorDto.value.id;
   loginEditor.value.setToken = true;
-}
+};
 
 const handleLogin = async (event) => {
   console.log('Enter handleLogin method');

@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { themePlace } from '@/api/place';
 import { editorName } from '@/api/editor';
 
-const props = defineProps({ theme: Object });
+const props = defineProps({ theme: Object, ff: Boolean });
 const placeNum = ref(null);
 const name = ref(null);
 
@@ -36,11 +36,11 @@ const theme = props.theme;
 </script>
 
 <template>
-  <div id="themeItem">
+  <div id="themeItem" :class="{ ff: ff }">
     <router-link class="theme" :to="{ name: 'detail', params: { themeId: theme.themeId } }">
       <div>
         <div class="theme-name">{{ theme.themeName }}</div>
-        <div class="theme-detail">{{ name }}  {{ placeNum }}개의 장소</div>
+        <div class="theme-detail">{{ name }} {{ placeNum }}개의 장소</div>
         <div class="theme-likes">
           <span>{{ theme.likeSum }}</span>
           <span class="like">⭐</span>
@@ -61,7 +61,10 @@ const theme = props.theme;
   justify-content: center;
   align-items: center;
 }
-.theme{
+.ff {
+  width: 20% !important;
+}
+.theme {
   position: relative;
   width: 90%;
   height: 100%;
@@ -75,20 +78,20 @@ const theme = props.theme;
   border-radius: 15px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.25);
 }
-.theme-name{
+.theme-name {
   position: relative;
   color: black;
   font-size: 25px;
   margin-bottom: 3%;
 }
-.theme-detail{
+.theme-detail {
   position: relative;
   color: black;
 }
 .theme-likes {
   position: relative;
   top: 10%;
-  width: 100%; 
+  width: 100%;
   text-align: end;
 }
 .like {

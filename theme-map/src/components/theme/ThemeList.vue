@@ -2,7 +2,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { hotTheme, allTheme, themesOfTag } from '@/api/theme';
 import ThemeItem from './ThemeItem.vue';
-import { objectToString } from "@vue/shared";
+import { objectToString } from '@vue/shared';
 
 const props = defineProps({ type: String, tags: Object });
 
@@ -13,7 +13,7 @@ onMounted(() => {
     getAllThemes();
     watch(props.tags, (newTags, oldTags) => {
       getThemesofTag(newTags);
-    })
+    });
   } else {
     getHotThemes();
   }
@@ -43,7 +43,7 @@ const getAllThemes = () => {
 
 const tagListDto = ref({
   tags: [],
-})
+});
 
 const getThemesofTag = (tags) => {
   tagListDto.value.tags = [];
@@ -63,16 +63,16 @@ const getThemesofTag = (tags) => {
       (error) => {
         console.log(error);
       }
-    )
+    );
   }
-}
+};
 </script>
 
 <template>
   <div id="list">
-    <template v-for="(theme, index) in themes" :key="theme.themeId" >
+    <template v-for="(theme, index) in themes" :key="theme.themeId">
       <div class="theme">
-        <theme-item :theme="theme"></theme-item>
+        <theme-item :theme="theme" class="theme"></theme-item>
       </div>
     </template>
   </div>
@@ -88,7 +88,8 @@ const getThemesofTag = (tags) => {
 }
 
 .theme {
-  width: 20%; height: 100%;
+  width: 20%;
+  height: 100%;
   margin-top: 3%;
 }
 </style>

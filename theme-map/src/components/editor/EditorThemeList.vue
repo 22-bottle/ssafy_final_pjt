@@ -8,7 +8,7 @@ const props = defineProps({ editorId: String, type: String });
 const themes = ref([]);
 
 const route = useRoute();
-
+const ff = ref(true);
 onMounted(() => {
   if (props.type === 'all') {
     getThemesOfEditor();
@@ -56,14 +56,17 @@ const getThemesOfLike = () => {
 
 <template>
   <div id="list">
-    <theme-item v-for="(theme, index) in themes" :key="theme.themeId" :theme="theme"></theme-item>
+    <theme-item v-for="(theme, index) in themes" :key="theme.themeId" :theme="theme" :ff="ff"></theme-item>
   </div>
 </template>
 
 <style scoped>
 #list {
+  width: 100%;
   display: flex;
   flex-direction: row;
   text-decoration-line: none;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 </style>

@@ -17,11 +17,11 @@ const { cEditorDto } = editorStore;
     </div>
     <div class="theme-container">
       <div class="theme-section">⭐ 내가 만든 테마</div>
-      <editor-theme-list :editorId="cEditorDto.editorId" type="all" class="themeItem"></editor-theme-list>
+      <editor-theme-list :editorId="cEditorDto.editorId" type="all"></editor-theme-list>
     </div>
     <div class="theme-container">
       <div class="theme-section">💘 내가 저장한 테마</div>
-      <editor-theme-list :editorId="cEditorDto.editorId" type="like" class="themeItem"></editor-theme-list>
+      <editor-theme-list :editorId="cEditorDto.editorId" type="like"></editor-theme-list>
     </div>
   </div>
 </template>

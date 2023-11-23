@@ -139,19 +139,6 @@ const onAllTag = () => {
   border: 0px;
   border-radius: 30px;
 }
-#etc {
-  margin-right: 1%;
-  width: 6.5%;
-  font-size: 25px;
-  color: #016ef5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #80b5f7;
-  border: 1px;
-  border-radius: 30px;
-}
 .list {
   width: 100%;
 }
