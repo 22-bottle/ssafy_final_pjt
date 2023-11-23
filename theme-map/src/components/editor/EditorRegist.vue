@@ -11,8 +11,9 @@ const loginEditor = ref({
   editorName: '',
 });
 
-const handelRegist = () => {
+const handelRegist = (evnet) => {
   console.log('Enter handelRegist method');
+  evnet.preventDefault();
   regist(
     loginEditor.value,
     () => {
@@ -52,7 +53,7 @@ const handelRegist = () => {
         </div>
       </div>
       <div class="inputContainer">
-        <button type="submit" class="btn" @click="handelRegist">
+        <button class="btn" @click="handelRegist">
           <label for="btn" class="btndata">가입하기</label>
         </button>
       </div>
