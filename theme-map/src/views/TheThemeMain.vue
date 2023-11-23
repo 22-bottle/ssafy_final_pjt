@@ -125,6 +125,7 @@ const onAllTag = () => {
   background-color: #ffffff;
   border: 3px solid #016ef5;
   border-radius: 30px;
+  cursor: pointer;
 }
 .selected {
   margin-right: 1%;
@@ -138,6 +139,7 @@ const onAllTag = () => {
   background-color: #016ef5;
   border: 0px;
   border-radius: 30px;
+  cursor: pointer;
 }
 .list {
   width: 100%;

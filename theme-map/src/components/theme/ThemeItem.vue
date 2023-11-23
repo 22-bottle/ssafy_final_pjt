@@ -60,6 +60,7 @@ const theme = props.theme;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3%;
 }
 .ff {
   width: 20% !important;

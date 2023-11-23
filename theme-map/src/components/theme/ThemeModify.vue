@@ -249,6 +249,7 @@ const onUpdateTag = (tags) => {
   color: #ffffff;
   font-size: 23px;
   margin-bottom: 5%;
+  cursor: pointer;
 }
 .radios label {
   color: #808080;
@@ -286,6 +287,7 @@ const onUpdateTag = (tags) => {
   background-color: #ffffff;
   border: 3px solid #016ef5;
   border-radius: 30px;
+  cursor: pointer;
 }
 .selected {
   margin-right: 1%;
@@ -299,6 +301,7 @@ const onUpdateTag = (tags) => {
   background-color: #016ef5;
   border: 0px;
   border-radius: 30px;
+  cursor: pointer;
 }
 .tagItem {
   font-size: 18px;

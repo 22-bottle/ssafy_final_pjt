@@ -32,7 +32,7 @@ const getThemesOfEditor = () => {
     visibleThemesOfEditor(
       props.editorId,
       ({ data }) => {
-        themes.value = data;
+        themes.value = data.slice(0, 5);
       },
       (error) => {
         console.log(error);
