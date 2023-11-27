@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { isThere, isInTheme, whoCreated, deletePlace } from '@/api/place';
+import { curTheme } from '@/api/theme';
 import { useRoute } from 'vue-router';
 import { useEditorStore } from '@/stores/editor';
 
@@ -20,6 +21,11 @@ const place = ref({
   phone: '',
 });
 
+const theme = ref({
+  themeId: route.params.themeId,
+  editorId: '',
+});
+
 watch(
   () => props.place,
   (newPlace) => {
@@ -33,9 +39,22 @@ onMounted(() => {
   checkIsThere();
   if (route.name == 'detail') {
     getWhoCreated();
+    getTheme();
   }
   raise(0, 0);
 });
+
+const getTheme = () => {
+  curTheme(
+    route.params.themeId,
+    ({ data }) => {
+      theme.value = data;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+};
 
 const moveToKakao = () => {
   window.open('https://place.map.kakao.com/' + place.value.placeId);
@@ -130,7 +149,9 @@ const starRating = ref({
 <template>
   <div id="item">
     <div id="placeName">{{ place.placeName }}</div>
-    <span class="mr3" style="color: red">{{ place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1)}}</span>
+    <span class="mr3" style="color: red">{{
+      place.scoreCount == 0 ? 0 : (place.scoreSum / place.scoreCount).toFixed(1)
+    }}</span>
     <span class="star-rating mr3">
       <span v-for="n in Math.max(0, starRating.fullStars)" :key="n" class="star full">&#9733;</span>
       <span v-if="starRating.halfStar" class="star empty">&#9734;</span>
@@ -158,7 +179,11 @@ const starRating = ref({
     <template v-else>
       <button class="detailBtn" @click="handlePlace">자세히 보기</button>
     </template>
-    <template v-if="route.name == 'detail' && editorId == cEditorDto.editorId">
+    <template
+      v-if="
+        isLogin && route.name == 'detail' && (editorId == cEditorDto.editorId || theme.editorId == cEditorDto.editorId)
+      "
+    >
       <button class="deleteBtn" @click="goDelete">삭제</button>
     </template>
   </div>

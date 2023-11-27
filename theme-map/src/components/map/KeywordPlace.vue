@@ -60,9 +60,9 @@ function placesSearchCB(data, status) {
     temp.value = data;
     placeList.value = [];
     for (let i = 0; i < data.length; i++) {
-      placeList.value.push({...kakaoToDto(data[i])});
+      placeList.value.push({ ...kakaoToDto(data[i]) });
     }
-    console.log("검색결과:",placeList.value);
+    console.log('검색결과:', placeList.value);
     loadMarkers();
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
     window.alert('검색 결과가 존재하지 않습니다.');
@@ -98,8 +98,7 @@ const loadMarkers = () => {
     });
 
     // 커스텀 오버레이 내용
-    var overlayContent = 
-    `<div class="custom-overlay"
+    var overlayContent = `<div class="custom-overlay"
           style=
           "
           color: black;
@@ -114,10 +113,9 @@ const loadMarkers = () => {
     var customOverlay = new kakao.maps.CustomOverlay({
       content: overlayContent,
       position: position.latlng,
-      xAnchor: .5,
+      xAnchor: 0.5,
       yAnchor: 3.0,
       /* customize */
-
     });
 
     // 마커에 mouseover 이벤트를 등록합니다
@@ -140,7 +138,7 @@ const loadMarkers = () => {
 
     markers.value.push(marker);
   });
-  
+
   // 4. 지도를 이동시켜주기
   // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
   const bounds = positions.value.reduce(
@@ -155,17 +153,14 @@ const deleteMarkers = () => {
   markers.value.forEach((marker) => marker.setMap(null));
   markers.value = [];
 };
-
 </script>
 
 <template>
-    <div>
-        <!-- 카카오 맵 -->
-        <div id="map" class="map" style="width: 100%; height: 100vh"></div>
-        <keyword-list @keyword="searchKeyWord" @clickPlace="clickPlace" :placeList="placeList"></keyword-list>
-    </div>
+  <div>
+    <!-- 카카오 맵 -->
+    <div id="map" class="map" style="width: 100%; height: 100vh"></div>
+    <keyword-list @keyword="searchKeyWord" @clickPlace="clickPlace" :placeList="placeList"></keyword-list>
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

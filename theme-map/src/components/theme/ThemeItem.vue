@@ -38,13 +38,11 @@ const theme = props.theme;
 <template>
   <div id="themeItem" :class="{ ff: ff }">
     <router-link class="theme" :to="{ name: 'detail', params: { themeId: theme.themeId } }">
-      <div>
-        <div class="theme-name">{{ theme.themeName }}</div>
-        <div class="theme-detail">{{ name }} {{ placeNum }}개의 장소</div>
-        <div class="theme-likes">
-          <span>{{ theme.likeSum }}</span>
-          <span class="like">⭐</span>
-        </div>
+      <div class="theme-name">{{ theme.themeName }}</div>
+      <div class="theme-detail">{{ name }} {{ placeNum }}개의 장소</div>
+      <div class="theme-likes">
+        <span>{{ theme.likeSum }}</span>
+        <span class="like">⭐</span>
       </div>
     </router-link>
   </div>
@@ -92,11 +90,11 @@ const theme = props.theme;
 .theme-likes {
   position: relative;
   top: 10%;
-  width: 100%;
+  width: 90%;
   text-align: end;
 }
 .like {
-  margin-left: 5%;
+  margin-left: 2%;
 }
 .mt-3 {
   margin-top: 3%;

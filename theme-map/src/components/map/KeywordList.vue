@@ -45,7 +45,6 @@ watch(
   () => {
     keywordPlaces.value = [];
     keywordPlaces.value = { ...props.placeList };
-    console.log('바뀌었습니다.', keywordPlaces.value);
   },
   { deep: true }
 );
@@ -54,7 +53,6 @@ watch(
 const emit = defineEmits(['detail']);
 
 const handleKeywordSearch = async () => {
-  console.log('Enter handleKeywordSearch method');
   emit('keyword', keyword.value);
 };
 const handleAdd = (place, id) => {

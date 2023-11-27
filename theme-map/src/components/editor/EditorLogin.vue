@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 import { useEditorStore } from '@/stores/editor';
@@ -8,41 +8,13 @@ const router = useRouter();
 const editorStore = useEditorStore();
 
 const { isLogin } = storeToRefs(editorStore);
-const { editorLogin, cCurEditorDto } = editorStore;
-
-const setEditor = ref({
-  id: '',
-  pw: '',
-  setToken: false,
-});
-
-onMounted(() => {
-  initialize();
-});
-
-const initialize = () => {
-  setEditor.value = cCurEditorDto.value;
-  console.log(setEditor.value);
-};
+const { editorLogin } = editorStore;
 
 const loginEditor = ref({
   id: '',
   pw: '',
   setToken: false,
 });
-
-onMounted(() => {
-  console.log(cCurEditorDto.value);
-  console.log(cCurEditorDto.value == null, cCurEditorDto.value != null);
-  if (cCurEditorDto.value != null) {
-    setInfo();
-  }
-});
-
-const setInfo = () => {
-  loginEditor.value.id = cCurEditorDto.value.id;
-  loginEditor.value.setToken = true;
-};
 
 const handleLogin = async (event) => {
   console.log('Enter handleLogin method');

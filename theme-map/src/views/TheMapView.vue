@@ -33,10 +33,8 @@ onMounted(() => {
   }
 
   if (route.name === 'place') {
-    console.log('hot place');
     getHotPlace();
   } else {
-    console.log('theme place');
     getThemePlace();
   }
 });
@@ -74,12 +72,11 @@ const loadMarkers = () => {
       position: position.latlng, // 마커를 표시할 위치
       title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨.
       clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
-      score: position.distance
+      score: position.distance,
     });
 
-  // 커스텀 오버레이 내용
-  var overlayContent = 
-  `<div class="custom-overlay"
+    // 커스텀 오버레이 내용
+    var overlayContent = `<div class="custom-overlay"
         style=
         "
         color: black;
@@ -90,20 +87,18 @@ const loadMarkers = () => {
         ";
   >${position.title} <span style="color: black">(<span style="color: red">★</span>${position.score})</span></div>`;
 
-  // 커스텀 오버레이 생성
-  var customOverlay = new kakao.maps.CustomOverlay({
-    content: overlayContent,
-    position: position.latlng,
-    xAnchor: .5,
-    yAnchor: 3.0,
-    /* customize */
-
-  });
+    // 커스텀 오버레이 생성
+    var customOverlay = new kakao.maps.CustomOverlay({
+      content: overlayContent,
+      position: position.latlng,
+      xAnchor: 0.5,
+      yAnchor: 3.0,
+      /* customize */
+    });
 
     // 마커에 mouseover 이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'mouseover', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
-        console.log('호버IN', position.title, position.placeId);
         hoveredPlace.value = position.placeId;
         customOverlay.setMap(map);
       }
@@ -112,7 +107,6 @@ const loadMarkers = () => {
     // 마커에 mouseout 이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'mouseout', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
-        console.log('호버OUT', position.title, position.placeId);
         hoveredPlace.value = '';
         customOverlay.setMap(null);
       }
@@ -121,7 +115,6 @@ const loadMarkers = () => {
     // 마커에 click 이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
       if (!selectedMarker.value || selectedMarker.value !== marker) {
-        console.log('클릭!', position.title, position.placeId);
         selectedPlace.value = position.placeId;
       }
 
@@ -151,7 +144,6 @@ const deleteMarkers = () => {
 const placeList = ref([]);
 
 const searchKeyWord = (keyword) => {
-  console.log('Enter searchKeyWord method:', keyword);
   searchPlaces(keyword);
 };
 
@@ -168,7 +160,6 @@ function searchPlaces(keyword) {
 
 function placesSearchCB(data, status) {
   if (status === kakao.maps.services.Status.OK) {
-    console.log(data);
     placeList.value = data;
     loadMarkers(data);
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
@@ -201,7 +192,7 @@ const getThemePlace = () => {
   themePlace(
     route.params.themeId,
     ({ data }) => {
-      if(data.length == 0) {
+      if (data.length == 0) {
         router.replace({ name: 'keyword', params: { themeId: route.params.themeId } });
       }
       for (let i = 0; i < data.length; i++) {
@@ -217,21 +208,18 @@ const getThemePlace = () => {
 };
 
 const clickMap = () => {
-  console.log('Enter clickMap method:');
   clicked.value = true;
-  console.log(clicked.value);
 };
 
 const clickPlace = (param) => {
-  console.log('Enter clickPlace method:');
-  // 이동할 위도 경도 위치를 생성합니다 
+  // 이동할 위도 경도 위치를 생성합니다
   var moveLatLon = new kakao.maps.LatLng(param.latitude, param.longitude);
 
   // 지도 중심을 이동 시킵니다
   map.setCenter(moveLatLon);
+  map.setLevel(3);
 
   clicked.value = false;
-  console.log(clicked.value);
 };
 </script>
 
@@ -256,6 +244,4 @@ const clickPlace = (param) => {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

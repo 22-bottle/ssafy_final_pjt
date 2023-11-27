@@ -13,59 +13,61 @@ const editorUpdate = ref({
   pw: '',
   emailId: '',
   emailDomain: '',
-  editorName: ''
+  editorName: '',
 });
 
-onMounted(() =>{
-    initialize();
+onMounted(() => {
+  initialize();
 });
 
 const initialize = () => {
-    editorUpdate.value.id = cEditorDto.value.id;
-    editorUpdate.value.emailId = cEditorDto.value.emailId;
-    editorUpdate.value.emailDomain = cEditorDto.value.emailDomain;
-    editorUpdate.value.editorName = cEditorDto.value.editorName;
-}
+  editorUpdate.value.id = cEditorDto.value.id;
+  editorUpdate.value.emailId = cEditorDto.value.emailId;
+  editorUpdate.value.emailDomain = cEditorDto.value.emailDomain;
+  editorUpdate.value.editorName = cEditorDto.value.editorName;
+};
 
 const handleUpdate = async (event) => {
   event.preventDefault();
-  console.log('Update Editor Info:', editorUpdate.value);
-  event.preventDefault();
-  await editorModify(editorUpdate.value);
+  if (editorUpdate.value.pw.replace(/^\s+|\s+$/gm, '') === '') {
+    window.alert('비밀번호를 입력해주세요!');
+  } else {
+    await editorModify(editorUpdate.value);
 
-  window.alert('정보가 업데이트되었습니다.');
-  router.push('/mypage');
+    window.alert('정보가 업데이트되었습니다.');
+    router.push('/mypage');
+  }
 };
 </script>
 
 <template>
-    <div class="update-form">
-      <span class="description">회원 정보 수정</span>
-      <form class="form-container">
-        <div class="input-container">
-          <label for="editorName" class="label">이름</label>
-          <input type="text" id="editorName" class="input" v-model="editorUpdate.editorName" />
-        </div>
-        <div class="input-container">
-          <label for="emailId" class="label">이메일 ID</label>
-          <input type="text" id="emailId" class="input" v-model="editorUpdate.emailId" />
-        </div>
-        <div class="input-container">
-          <label for="emailDomain" class="label">이메일 도메인</label>
-          <input type="text" id="emailDomain" class="input" v-model="editorUpdate.emailDomain" />
-        </div>
-        <div class="input-container">
-          <label for="pw" class="label">비밀번호</label>
-          <input type="password" id="pw" class="input" v-model="editorUpdate.pw" />
-        </div>
-        <div class="input-container">
-          <button type="submit" class="btn" @click="handleUpdate">
-            <span class="btn-text">수정하기</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </template>  
+  <div class="update-form">
+    <span class="description">회원 정보 수정</span>
+    <form class="form-container">
+      <div class="input-container">
+        <label for="editorName" class="label">이름</label>
+        <input type="text" id="editorName" class="input" v-model="editorUpdate.editorName" />
+      </div>
+      <div class="input-container">
+        <label for="emailId" class="label">이메일 ID</label>
+        <input type="text" id="emailId" class="input" v-model="editorUpdate.emailId" />
+      </div>
+      <div class="input-container">
+        <label for="emailDomain" class="label">이메일 도메인</label>
+        <input type="text" id="emailDomain" class="input" v-model="editorUpdate.emailDomain" />
+      </div>
+      <div class="input-container">
+        <label for="pw" class="label">비밀번호</label>
+        <input type="password" id="pw" class="input" v-model="editorUpdate.pw" />
+      </div>
+      <div class="input-container">
+        <button type="submit" class="btn" @click="handleUpdate">
+          <span class="btn-text">수정하기</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
 
 <style scoped>
 .update-form {

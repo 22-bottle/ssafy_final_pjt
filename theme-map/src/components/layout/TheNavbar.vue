@@ -17,7 +17,7 @@ const handleLogout = async () => {
   let token = sessionStorage.getItem('accessToken');
   let id = token === null ? cEditorDto.value.id : jwtDecode(token).id;
 
-  await editorLogout(id, cCurEditorDto.value.token);
+  await editorLogout(id);
   router.replace('/');
 };
 </script>

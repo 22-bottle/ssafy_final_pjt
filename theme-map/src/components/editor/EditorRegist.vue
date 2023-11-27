@@ -14,18 +14,24 @@ const loginEditor = ref({
 const handelRegist = (evnet) => {
   console.log('Enter handelRegist method');
   evnet.preventDefault();
-  regist(
-    loginEditor.value,
-    () => {
-      window.alert('회원가입 성공!!');
-      router.replace('/login');
-    },
-    (error) => {
-      console.log(error);
-      window.alert('회원가입 실패..');
-      router.go(0);
-    }
-  );
+  if (loginEditor.value.id.replace(/^\s+|\s+$/gm, '') === '') {
+    window.alert('id를 입력해주세요!');
+  } else if (loginEditor.value.pw.replace(/^\s+|\s+$/gm, '') === '') {
+    window.alert('비밀번호를 입력해주세요!');
+  } else {
+    regist(
+      loginEditor.value,
+      () => {
+        window.alert('회원가입 성공!!');
+        router.replace('/login');
+      },
+      (error) => {
+        console.log(error);
+        window.alert('회원가입 실패..');
+        router.go(0);
+      }
+    );
+  }
 };
 </script>
 

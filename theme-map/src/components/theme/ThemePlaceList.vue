@@ -42,12 +42,12 @@ const getTheme = () => {
         cEditorDto.value.editorId,
         ({ data }) => {
           spareNum.value = Number(data);
-        }, 
+          checkCanAdd();
+        },
         (error) => {
-          console.log(error)
+          console.log(error);
         }
-      )
-      checkCanAdd();
+      );
     },
     (error) => {
       console.log(error);
@@ -120,7 +120,6 @@ const handleDetail = (place) => {
     visibility.value = true;
     placeToView.value = place;
   }
-  console.log(visibility.value, clicked.value);
   emit('clickPlace', place);
 };
 
@@ -131,8 +130,7 @@ const goBack = () => {
 };
 
 const handleDelete = () => {
-  themePlaces.value = [];
-  getThemePlace();
+  router.go(0);
 };
 const updateScore = () => {
   themePlaces.value = [];
@@ -148,12 +146,13 @@ const checkCanAdd = () => {
       canAdd.value = true;
     }
   } else if (theme.value.type == 1 && theme.value.editorId != cEditorDto.value.editorId) {
-    if (spareNum < 1) {
+    if (spareNum.value < 1) {
       canAdd.value = true;
     }
   }
-  console.log(canAdd.value)
-}
+  console.log(spareNum.value);
+  console.log(canAdd.value);
+};
 /* <============= */
 </script>
 
@@ -174,7 +173,7 @@ const checkCanAdd = () => {
         @click="like"
         :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
       ></button>
-      <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }" v-if="canAdd">
+      <router-link :to="{ name: 'keyword', params: { themeId: theme.themeId } }" v-if="isLogin && canAdd">
         <button
           id="addBtn"
           :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked }"
@@ -183,8 +182,13 @@ const checkCanAdd = () => {
       <router-link :to="{ name: 'themeModify' }" :theme="theme">
         <button
           id="editBtn"
-          v-if="theme.editorId == cEditorDto.editorId"
-          :class="{ beforeMoving: !visibility || clicked, afterMoving: visibility && !clicked, canAdd: canAdd, cantAdd: !canAdd }"
+          v-if="isLogin && theme.editorId == cEditorDto.editorId"
+          :class="{
+            beforeMoving: !visibility || clicked,
+            afterMoving: visibility && !clicked,
+            canAdd: canAdd,
+            cantAdd: !canAdd,
+          }"
         ></button>
       </router-link>
       <div class="name">{{ theme.themeName }}</div>

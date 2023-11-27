@@ -84,7 +84,6 @@ const getThemesOfPlace = () => {
   themesOfPlace(
     place.value.placeId,
     ({ data }) => {
-      console.log(data);
       themeInfos.value = data;
     },
     (error) => {
@@ -97,7 +96,6 @@ const getCommentsOfPlace = () => {
   commentsOfPlace(
     place.value.placeId,
     ({ data }) => {
-      console.log(data);
       commentInfos.value = data;
     },
     (error) => {
@@ -107,13 +105,11 @@ const getCommentsOfPlace = () => {
 };
 
 const handelComment = (event) => {
-  console.log('Enter handelComment method');
   event.preventDefault();
   registComment(
     comment.value,
     () => {
       comment.value.content = '';
-      console.log('댓글 등록 완료!!');
       commentInfos.value.push({ ...comment.value });
       getCommentsOfPlace();
     },
@@ -142,7 +138,6 @@ const scoring = (event) => {
 const emit = defineEmits(['updateScore']);
 
 const updateScore = () => {
-  console.log('Enter updateScore method');
   raise(Number(scoreDto.value.score), 1);
   emit('updateScore', true);
 };
@@ -176,11 +171,11 @@ const onKeyDown = (event) => {
           <template v-if="!evaluated">
             <span style="color: white">후기를 남겨주세요!</span>
             <span>
-              <span class="star empty" id="1" @click="scoring">&#9734;</span>
-              <span class="star empty" id="2" @click="scoring">&#9734;</span>
-              <span class="star empty" id="3" @click="scoring">&#9734;</span>
-              <span class="star empty" id="4" @click="scoring">&#9734;</span>
-              <span class="star empty" id="5" @click="scoring">&#9734;</span>
+              <span class="star empty pointer" id="1" @click="scoring">&#9734;</span>
+              <span class="star empty pointer" id="2" @click="scoring">&#9734;</span>
+              <span class="star empty pointer" id="3" @click="scoring">&#9734;</span>
+              <span class="star empty pointer" id="4" @click="scoring">&#9734;</span>
+              <span class="star empty pointer" id="5" @click="scoring">&#9734;</span>
             </span>
           </template>
           <template v-else>
@@ -195,7 +190,9 @@ const onKeyDown = (event) => {
       <span style="color: white">여기는 이런 곳이에요!</span><br />
       <div class="themes">
         <template v-for="theme in themeInfos" :key="theme.themeId">
-          <router-link :to="{ name: 'detail', params: { themeId: theme.themeId } }">{{ theme.themeName }}</router-link>
+          <router-link :to="{ name: 'detail', params: { themeId: theme.themeId } }" class="themeItem">{{
+            theme.themeName
+          }}</router-link>
         </template>
       </div>
       <span style="color: white">이런 후기들이 있어요!</span><br />
@@ -313,5 +310,11 @@ textarea {
   border-radius: 5px;
   margin-top: 10px;
   cursor: pointer;
+}
+.pointer {
+  cursor: pointer;
+}
+.themeItem {
+  margin: 2px;
 }
 </style>

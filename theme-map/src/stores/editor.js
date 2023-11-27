@@ -160,17 +160,14 @@ export const useEditorStore = defineStore(
       );
     };
 
-    const editorLogout = async (id, token) => {
+    const editorLogout = async (id) => {
       await logout(
         id,
         (response) => {
           if (response.status === httpStatusCode.OK) {
             isLogin.value = false;
             editorInfo.value = null;
-            console.log('token', token);
-            if (!token) {
-              sEditorDto.value = null;
-            }
+
             isValidToken.value = false;
             console.log('로그아웃 완료!!');
           } else {

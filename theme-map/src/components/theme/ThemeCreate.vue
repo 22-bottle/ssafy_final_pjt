@@ -56,25 +56,33 @@ const selectedTags = ref({ 0: { tagId: '0', tagName: 'none', selected: false } }
 
 const onThemeCreate = (event) => {
   event.preventDefault();
-  createTheme(
-    theme.value,
-    ({ data }) => {
-      themeId.value = data;
-      onUpdateTag(selectedTags.value);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+  if (theme.value.themeName.replace(/^\s+|\s+$/gm, '') === '') {
+    window.alert('테마 이름을 입력해주세요!');
+  } else {
+    createTheme(
+      theme.value,
+      ({ data }) => {
+        themeId.value = data;
+        onUpdateTag(selectedTags.value);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 };
 
 const isPublic = ref(true);
-
+const isInit = ref(false);
 const checkPublic = () => {
   isPublic.value = true;
 };
 const checkPrivate = () => {
   isPublic.value = false;
+  isInit.value = true;
+};
+const notInit = () => {
+  isInit.value = false;
 };
 
 const tagListDto = ref({
@@ -134,11 +142,26 @@ const onUpdateTag = (tags) => {
         <span class="section">공개 여부</span>
         <div class="radios">
           <div>
-            <input type="radio" id="visible" name="visible" value="1" v-model="theme.visible" :checked="isPublic" />
+            <input
+              type="radio"
+              id="visible"
+              name="visible"
+              value="1"
+              v-model="theme.visible"
+              :checked="isPublic || isInit"
+            />
             <label for="visible">공개</label>
           </div>
           <div>
-            <input type="radio" id="invisible" name="visible" value="0" v-model="theme.visible" :disabled="isPublic" />
+            <input
+              type="radio"
+              id="invisible"
+              name="visible"
+              value="0"
+              v-model="theme.visible"
+              :disabled="isPublic"
+              @click="notInit"
+            />
             <label for="invisible">비공개</label><br />
           </div>
         </div>

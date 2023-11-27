@@ -50,15 +50,19 @@ const checkPrivate = () => {
 
 const onThemeModify = (event) => {
   event.preventDefault();
-  updateTheme(
-    theme.value,
-    () => {
-      onUpdateTag(selectedTags.value);
-    },
-    (error) => {
-      console.log(error);
-    }
-  );
+  if (theme.value.themeName.replace(/^\s+|\s+$/gm, '') === '') {
+    window.alert('테마 이름을 입력해주세요!');
+  } else {
+    updateTheme(
+      theme.value,
+      () => {
+        onUpdateTag(selectedTags.value);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
 };
 
 const getTags = () => {
