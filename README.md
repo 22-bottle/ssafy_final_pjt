@@ -46,20 +46,20 @@
   ![스크린샷 2023-12-12 225503](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/38851d1c-7090-4775-ad76-0a71053fbf49)
 
 ## 기술 스택
-**Environment**
+### Environment
 <div>
     <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
     <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 
-**Development**
+### Development
 <div>
     <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
     <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
     <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
 </div>
 
-**Environment**
+### Environment
 <div>
     <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
     <img src="https://img.shields.io/badge/googlemeet-00897B?style=for-the-badge&logo=googlemeet&logoColor=white">
