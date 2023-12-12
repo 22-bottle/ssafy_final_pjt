@@ -1,5 +1,9 @@
 # 갈만할지도
 
+## 프로젝트 개요
+- 삼성 청년 SW 아카데미 1학기 관통 프로젝트로 구현한 프로젝트입니다.
+- 프로젝트 기간 : 2023.11.20 ~2023.11.24
+
 ## 기획 의도
 ### 함께 만드는 테마 지도, '갈만할지도'
 - 기존의 지도 어플을 사용하면서 ‘그냥 카페 말고 카공하기 좋은 카페를 찾고 싶은데’, ‘그냥 술집 말고 조용히 얘기하기 좋은 술집을 찾고 싶은데’ 라는 생각해 보신 적 있으신가요?
@@ -42,8 +46,12 @@
   ![스크린샷 2023-12-12 225503](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/38851d1c-7090-4775-ad76-0a71053fbf49)
 
 ## 기술 스택
-
+<div align=center>
+    <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
+    <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
+    <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+</div>
 
 ## 팀 정보
-- 팀장 : 이희병
-- 팀원 : 정준수
+- 팀장 : [이희병](https://github.com/22-bottle)
+- 팀원 : [정준수](https://github.com/jungjunsu)
