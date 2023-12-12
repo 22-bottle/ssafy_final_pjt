@@ -22,5 +22,6 @@
 ## 실행 화면
 - 시연 영상 : <https://youtu.be/hzVyXYYJk6Q?feature=shared>
 - 메인 페이지
-  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8db9ad42-25e2-4c67-b5dc-7c3f3b7a5283/6851f173-7872-413e-832b-9c83661563e2/Untitled.png)
-  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8db9ad42-25e2-4c67-b5dc-7c3f3b7a5283/01c85625-8875-4996-a97d-bc85a1bc93dc/Untitled.png)
+![스크린샷 2023-12-12 224929](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/272de01d-d9c2-42e6-b401-da9946aac33f)
+![스크린샷 2023-12-12 225117](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/2056ef60-0872-4492-9105-386c045928b5)
+
