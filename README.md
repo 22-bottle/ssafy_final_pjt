@@ -22,14 +22,14 @@
 ## 실행 화면
 - 시연 영상 : <https://youtu.be/hzVyXYYJk6Q?feature=shared>
 - 메인 페이지
-![스크린샷 2023-12-12 224929](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/272de01d-d9c2-42e6-b401-da9946aac33f)
-![스크린샷 2023-12-12 225117](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/2056ef60-0872-4492-9105-386c045928b5)
+  ![스크린샷 2023-12-12 224929](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/272de01d-d9c2-42e6-b401-da9946aac33f)
+  ![스크린샷 2023-12-12 225117](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/2056ef60-0872-4492-9105-386c045928b5)
 
 - 마이페이지
   ![스크린샷 2023-12-12 225032](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/558006a5-399c-45a4-82ab-d7d066a2992e)
 
 - 테마 모아보기
-![스크린샷 2023-12-12 225140](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/df3b3a0a-f0c2-43ec-94f7-1ed7c67c0ca9)
+  ![스크린샷 2023-12-12 225140](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/df3b3a0a-f0c2-43ec-94f7-1ed7c67c0ca9)
 
 - 테마 등록 페이지
   ![스크린샷 2023-12-12 225251](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/af9b9971-e2d5-41cd-9da3-4f65b3c85137)
@@ -40,3 +40,10 @@
 
 - 파워 에디터
   ![스크린샷 2023-12-12 225503](https://github.com/22-bottle/ssafy_final_pjt/assets/101461544/38851d1c-7090-4775-ad76-0a71053fbf49)
+
+## 기술 스택
+
+
+## 팀 정보
+- 팀장 : 이희병
+- 팀원 : 정준수
