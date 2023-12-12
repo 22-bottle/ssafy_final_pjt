@@ -15,3 +15,12 @@
 - Private 테마 지도
     - 혼자만 장소를 등록할 수 있고, 공개 여부를 설정할 수 있습니다.
 - 테마 지도마다 태그를 등록할 수 있고, 태그로 테마 지도를 검색할 수 있습니다.
+
+**파워 에디터**
+- ‘좋아요’를 많이 받은 사용자를 파워 에디터로 선정하여 사용자들의 참여를 유도하였습니다.
+
+## 실행 화면
+- 시연 영상 : <https://youtu.be/hzVyXYYJk6Q?feature=shared>
+- 메인 페이지
+  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8db9ad42-25e2-4c67-b5dc-7c3f3b7a5283/6851f173-7872-413e-832b-9c83661563e2/Untitled.png)
+  ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/8db9ad42-25e2-4c67-b5dc-7c3f3b7a5283/01c85625-8875-4996-a97d-bc85a1bc93dc/Untitled.png)
